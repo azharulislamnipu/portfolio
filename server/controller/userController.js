@@ -48,7 +48,9 @@ module.exports = {
                     let token = jwt.sign({
                         _id:user.id,
                         name:user.name,
-                        email:user.email,role:user.role
+                        email:user.email,
+                        role:user.role,
+                        avatar:user.avatar
                     }, process.env.SECRET,{expiresIn:'2h'});
 
                     user.token = `Bearer ${token}`;
