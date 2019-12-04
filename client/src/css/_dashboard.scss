@@ -1417,30 +1417,26 @@ code {
     color: #707070;
 }
 
-.notification-list .dropdown-menu.dropdown-menu-right,
-.page-title-box .dropdown-menu.dropdown-menu-right {
-    -webkit-transform: none !important;
-    transform: none !important;
-    top: 100% !important;
-    right: 0 !important;
-    left: auto !important;
-}
-
-.notification-list .show>.dropdown-menu,
-.page-title-box .show>.dropdown-menu {
-    margin-top: 8px !important;
-}
-
-.profile-dropdown {
-    width: 170px;
-}
-
-.profile-dropdown i {
-    font-size: 16px;
-    vertical-align: middle;
-    margin-right: 7px;
-}
-
+// .notification-list .dropdown-menu.dropdown-menu-right,
+// .page-title-box .dropdown-menu.dropdown-menu-right {
+//     -webkit-transform: none !important;
+//     transform: none !important;
+//     top: 100% !important;
+//     right: 0 !important;
+//     left: auto !important;
+// }
+// .notification-list .show>.dropdown-menu,
+// .page-title-box .show>.dropdown-menu {
+//     margin-top: 8px !important;
+// }
+// .profile-dropdown {
+//     width: 170px;
+// }
+// .profile-dropdown i {
+//     font-size: 16px;
+//     vertical-align: middle;
+//     margin-right: 7px;
+// }
 .nav-user img {
     margin-top: -3px;
     height: 30px;
@@ -1544,24 +1540,22 @@ code {
     font-weight: 700;
 }
 
-.page-title-box .dropdown-menu.show {
-    margin-top: 10px;
-}
-
-.page-title-box .dropdown-menu.show:before {
-    content: "";
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    background: #ffffff;
-    top: -6px;
-    right: 18px;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-    -webkit-box-shadow: -2px -4px 0.5rem rgba(108, 118, 134, 0.1);
-    box-shadow: -2px -4px 0.5rem rgba(108, 118, 134, 0.1);
-}
-
+// .page-title-box .dropdown-menu.show {
+//     margin-top: 10px;
+// }
+// .page-title-box .dropdown-menu.show:before {
+//     content: "";
+//     position: absolute;
+//     width: 12px;
+//     height: 12px;
+//     background: #ffffff;
+//     top: -6px;
+//     right: 18px;
+//     -webkit-transform: rotate(45deg);
+//     transform: rotate(45deg);
+//     -webkit-box-shadow: -2px -4px 0.5rem rgba(108, 118, 134, 0.1);
+//     box-shadow: -2px -4px 0.5rem rgba(108, 118, 134, 0.1);
+// }
 .page-title-box .breadcrumb {
     padding: .75rem 0rem;
 }
