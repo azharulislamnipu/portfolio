@@ -8,9 +8,9 @@ import Home from './pages/Home';
 import Login from './pages/login';
 import Register from './pages/register';
 import Dashboard from './pages/dashboard';
-import Profile from './components/dashboard/profile';
-import Dboard from './pages/Dboard';
-import DashboardLayoutRoute from "./layouts/DashboardLayoutRoute";  
+import Banner from './pages/dashboard/banner';
+
+import Account from './pages/account';
 import {
   BrowserRouter as Router,
   Switch,
@@ -31,11 +31,9 @@ class App extends Component {
                     <Route path='/' exact component={Home}/>
                     <Route path='/login' component={Login}/>
                     <Route path='/register' component={Register}/>
-                    <Route path='/dboard' component={Dboard}/>
-    
-                    <Route path='/profile' component={Profile}/>
-                    <DashboardLayoutRoute path="/layout2" component={Profile} />  
+                    <PrivateRoute path="/banner" component={Banner} auth={this.props.auth}/>
                     <PrivateRoute path="/dashboard" component={Dashboard} auth={this.props.auth}/>
+                    <PrivateRoute path="/account" component={Account} auth={this.props.auth}/>
                     <Route path="*" component={Notfound} />
                    
                 </Switch>

@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import logo from '../../img/mylogo.png';
-import {Link} from 'react-router-dom'
-export default class Topbar extends Component {
+import {Link} from 'react-router-dom';
+import {logout} from '../../store/actions/authActions';
+import {connect} from 'react-redux';
+ class Topbar extends Component {
 
     constructor(props) {
         super(props);
@@ -29,14 +31,13 @@ export default class Topbar extends Component {
 
  
   render() {
-
-
+    let {auth} = this.props;
     return (
         <div className="topbar">
 
                
         <div className= {this.props.sibarSate? "d-none" : "topbar-left"}>
-           <Link to='/' className='logo'>  <img src={logo} alt="" height="50" class="logo-large"/></Link>
+           <Link to='/dashboard' className='logo'>  <img src={logo} alt="" height="50" class="logo-large"/></Link>
         </div>
 
         <nav className="navbar-custom" style={ this.props.sibarSate? {marginLeft: '0',   transition: '.5s ease-in'} : {marginLeft: '240px',  transition: '.5s ease-in-out'}} >
@@ -46,14 +47,17 @@ export default class Topbar extends Component {
                     <a className="nav-link dropdown-toggle arrow-none waves-effect nav-user" onClick={this.toogledropdonw} data-toggle="dropdown" href="javascript:void(0)" role="button"
                     aria-haspopup="false" aria-expanded={this.state.aria_expanded}>
                         <img src={logo} alt="user" class="rounded-circle"/>
-                        <span class="d-none d-md-inline-block ml-1">Donald T. <i class="fa fa-angle-down"></i> </span>
+                        <span class="d-none d-md-inline-block ml-1"> {auth.user.name} <i class="fa fa-angle-down ml-2"></i> </span>
                     </a>
                     <div className={this.state.aria_expanded ? "dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown show" : "dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown"}>
                         
-                       <Link className="dropdown-item"  to='/profile'> <i className="fa fa-user text-muted mr-2"></i> Profile</Link>
+                       <Link className="dropdown-item"  to='/account'> <i className="fa fa-user text-muted mr-2"></i> Profile</Link>
                     
                         <div className="dropdown-divider"></div>
-                        <a className="dropdown-item" href="#"><i className="fa fa-external-link text-muted mr-2"></i> Logout</a>
+
+                        <Link className="dropdown-item"    onClick={()=>{ this.props.logout(this.props.history)}}><i className="fa fa-external-link text-muted mr-2"></i> Logout</Link>
+                    
+            
                     </div>
                 </li>
 
@@ -73,3 +77,8 @@ export default class Topbar extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+    auth: state.auth
+ });
+export default connect(mapStateToProps,{logout})(Topbar);

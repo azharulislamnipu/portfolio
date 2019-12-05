@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import {Link} from 'react-router-dom'
 
 export default class LeftSideBar extends Component {
     render() {
@@ -13,14 +14,12 @@ export default class LeftSideBar extends Component {
                         <ul className="metismenu" id="side-menu">
                             <li className="menu-title text-center">Main</li>
                             <li>
-                                <a href="" className="waves-effect">
-                                <i className="fa fa-pie-chart fa-2x" aria-hidden="true"></i>
-                                  <span> Dashboard </span>
-                                </a>
+                            <Link to='dashboard' className="waves-effect"> <i className="fa fa-pie-chart fa-2x" aria-hidden="true"></i>
+                                  <span> Dashboard </span> </Link>     
                             </li>
                     
                             <li class="menu-title">
-                            <a href="javascript:void(0);" className="waves-effect"><i className="fa fa-archive fa-2x"></i> <span> Banner </span> </a>
+                               <Link to='/banner' className="waves-effect"><i className="fa fa-archive fa-2x"></i> <span> Banner </span></Link>   
                             </li>
 
                             <li className="menu-title">
