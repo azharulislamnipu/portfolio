@@ -10,6 +10,7 @@ import Register from './pages/register';
 import Dashboard from './pages/dashboard';
 import Profile from './components/dashboard/profile';
 import Dboard from './pages/Dboard';
+import DashboardLayoutRoute from "./layouts/DashboardLayoutRoute";  
 import {
   BrowserRouter as Router,
   Switch,
@@ -33,8 +34,10 @@ class App extends Component {
                     <Route path='/dboard' component={Dboard}/>
     
                     <Route path='/profile' component={Profile}/>
+                    <DashboardLayoutRoute path="/layout2" component={Profile} />  
                     <PrivateRoute path="/dashboard" component={Dashboard} auth={this.props.auth}/>
                     <Route path="*" component={Notfound} />
+                   
                 </Switch>
                 </Router>
 
