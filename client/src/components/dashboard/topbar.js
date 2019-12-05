@@ -5,21 +5,21 @@ export default class Topbar extends Component {
 
     constructor(props) {
         super(props);
-
+        // console.log(this.props.sibarSate);
         this.toogledropdonw = this.toogledropdonw.bind(this);
-        this.sibarExpendHandler = this.sibarExpendHandler.bind(this);
+        // this.sibarExpendHandler = this.sibarExpendHandler.bind(this);
 
         this.state = {
             aria_expanded: false,
-            sibarExpend:false
+            // sibarExpend:false
         };
 
     }
 
-    sibarExpendHandler() {
+    // sibarExpendHandler() {
 
-        this.setState({sibarExpend: !this.state.sibarExpend})
-    }
+    //     this.setState({sibarExpend: !this.state.sibarExpend})
+    // }
 
     toogledropdonw() {
 
@@ -29,15 +29,17 @@ export default class Topbar extends Component {
 
  
   render() {
+
+
     return (
         <div className="topbar">
 
                
-        <div className= {this.state.sibarExpend? "d-none" : "topbar-left"}>
+        <div className= {this.props.sibarSate? "d-none" : "topbar-left"}>
            <Link to='/' className='logo'>  <img src={logo} alt="" height="50" class="logo-large"/></Link>
         </div>
 
-        <nav className="navbar-custom" style={ this.state.sibarExpend? {marginLeft: '0'} : {marginLeft: '240'}} >
+        <nav className="navbar-custom" style={ this.props.sibarSate? {marginLeft: '0',   transition: '.5s ease-in'} : {marginLeft: '240px',  transition: '.5s ease-in-out'}} >
     
             <ul className="navbar-right d-flex list-inline float-right mb-0" >
                 <li className={this.state.aria_expanded ? 'list-inline-item dropdown notification-list show' :'list-inline-item dropdown notification-list'}>
@@ -47,9 +49,11 @@ export default class Topbar extends Component {
                         <span class="d-none d-md-inline-block ml-1">Donald T. <i class="fa fa-angle-down"></i> </span>
                     </a>
                     <div className={this.state.aria_expanded ? "dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown show" : "dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown"}>
-                        <a className="dropdown-item" href="#"><i className="fa fa-user text-muted mr-2"></i> Profile</a>
+                        
+                       <Link className="dropdown-item"  to='/profile'> <i className="fa fa-user text-muted mr-2"></i> Profile</Link>
+                    
                         <div className="dropdown-divider"></div>
-                        <a className="dropdown-item" href="#"><i className="fa fa-external-link text-muted"></i> Logout</a>
+                        <a className="dropdown-item" href="#"><i className="fa fa-external-link text-muted mr-2"></i> Logout</a>
                     </div>
                 </li>
 
@@ -57,7 +61,7 @@ export default class Topbar extends Component {
 
             <ul className="list-inline menu-left mb-0">
                 <li className="float-left">
-                    <button className="button-menu-mobile open-left waves-effect" onClick={this.sibarExpendHandler}>
+                    <button className="button-menu-mobile open-left waves-effect" onClick={this.props.sibarExpend}>
                         <i className="fa fa-bars"></i>
                     </button>
                 </li>                        

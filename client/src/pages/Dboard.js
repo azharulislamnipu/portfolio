@@ -1,85 +1,34 @@
 import React, { Component } from 'react'
 import logo from '../img/mylogo.png';
 import Topbar from '../components/dashboard/topbar';
+import LeftSideBar from '../components/dashboard/leftsidebar';
+import Footer from '../components/dashboard/dbFooter';
 export default class componentName extends Component {
+
+    constructor(props) {
+        super(props);
+        this.sibarExpendHandler = this.sibarExpendHandler.bind(this);
+        this.state = {
+            sibarExpend:false
+        };
+
+    }
+
+    sibarExpendHandler() {
+
+        this.setState({sibarExpend: !this.state.sibarExpend})
+    }
+
   render() {
     return (
       
    
         <div id="wrapper">
 
-            <Topbar/>
-           
-           
-            <div class="left side-menu">
-                <div class="slimscroll-menu" id="remove-scroll">
+            <Topbar sibarSate={this.state.sibarExpend} sibarExpend={ this.sibarExpendHandler} />
+            <LeftSideBar sibarSate={this.state.sibarExpend}/>
 
-                  
-                    <div id="sidebar-menu">
-                    
-                        <ul class="metismenu" id="side-menu">
-                            <li class="menu-title">Main</li>
-                            <li>
-                                <a href="" class="waves-effect">
-                                  <span> Dashboard </span>
-                                </a>
-                            </li>
-                    
-                            <li class="menu-title">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-archive fa-2x"></i> <span> Banner </span> </a>
-                            </li>
-
-                            <li class="menu-title">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-archive fa-2x"></i> <span> About </span> </a>
-                            </li>
-
-                            <li class="menu-title">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-archive fa-2x"></i> <span> Portfolio </span> </a>
-                            </li>
-
-                            <li class="menu-title">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-archive fa-2x"></i> <span> Banner </span> </a>
-                            </li>
-
-                            <li class="menu-title">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-archive fa-2x"></i> <span> Banner </span> </a>
-                            </li>
-
-
-                            <li class="menu-title">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-archive fa-2x"></i> <span> Banner </span> </a>
-                            </li>
-
-
-                            <li class="menu-title">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-archive fa-2x"></i> <span> Banner </span> </a>
-                            </li>
-
-
-
-                            <li class="menu-title">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-archive fa-2x"></i> <span> Experience </span> </a>
-                            </li>
-
-
-
-                            <li class="menu-title">
-                            <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-archive fa-2x"></i> <span> Contact </span> </a>
-                            </li>
-
-
-                        </ul>
-
-                    </div>
-                 
-                    <div class="clearfix"></div>
-
-                </div>
-             
-
-            </div>
-         
-            <div class="content-page">
+            <div class="content-page" style={ this.state.sibarExpend? {marginLeft: '70px',  transition: '.5s ease-in'} : {marginLeft: '240px',  transition: '.5s ease-in-out'}}>
              
                 <div class="content">
                     <div class="container-fluid">
@@ -330,9 +279,7 @@ export default class componentName extends Component {
 
                 </div> 
 
-                <footer class="footer">
-                    © 2018 - 2019 Foxia <span class="d-none d-sm-inline-block"> - Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand.</span>
-                </footer>
+                <Footer/>
             </div>
 
 

@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Login from './pages/login';
 import Register from './pages/register';
 import Dashboard from './pages/dashboard';
+import Profile from './components/dashboard/profile';
 import Dboard from './pages/Dboard';
 import {
   BrowserRouter as Router,
@@ -30,6 +31,8 @@ class App extends Component {
                     <Route path='/login' component={Login}/>
                     <Route path='/register' component={Register}/>
                     <Route path='/dboard' component={Dboard}/>
+    
+                    <Route path='/profile' component={Profile}/>
                     <PrivateRoute path="/dashboard" component={Dashboard} auth={this.props.auth}/>
                     <Route path="*" component={Notfound} />
                 </Switch>
