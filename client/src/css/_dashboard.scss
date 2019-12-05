@@ -1009,45 +1009,43 @@ code {
 .side-menu .slimScrollBar {
     background: #ffffff !important;
 }
-.slide-menu{ 
-    transition:  all .5s ease-in-out;
+
+.slide-menu {
+    transition: all .5s ease-in-out;
 }
 
-.slide-menu.side-menu{ 
+.slide-menu.side-menu {
     width: 70px;
     transition: .5s ease-in;
 }
 
-.slide-menu.side-menu{ 
+.slide-menu.side-menu {
     width: 70px;
     transition: .5s ease-in;
-    ul>li.menu-title{
+    ul>li.menu-title {
         padding: 0 !important;
-       
     }
-    ul>li>a>span{
+    ul>li>a>span {
         visibility: hidden !important;
         transition: .5s ease-in;
         display: none;
     }
-    ul>li>a{
+    ul>li>a {
         display: block;
         overflow: hidden;
         transition: .5s ease-in;
-
     }
-    ul>li>a:hover{
+    ul>li>a:hover {
         width: 240px;
         background-color: #5045e3;
         transition: .5s ease-in;
-        >span{
+        >span {
             visibility: visible !important;
             transition: .5s ease-in;
             display: inline-block;
         }
     }
 }
-
 
 .content-page {
     margin-left: 240px;
@@ -2176,7 +2174,6 @@ code {
 /* ==============
   Progressbar
 ===================*/
-
 
 .progress {
     height: 10px;
@@ -4330,6 +4327,7 @@ table.focus-on tbody tr.focused td {
 @media (max-width: 480px) {
     .side-menu {
         z-index: 10 !important;
+        width: 0;
     }
     .button-menu-mobile {
         display: block;
