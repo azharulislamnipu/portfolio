@@ -37,12 +37,7 @@ class Account extends Component {
                                                 <h3>name: {auth.user.name}</h3>
                                                 <h4>Eamil: {auth.user.email}</h4>
                                                 <h4>Role: {auth.user.role}</h4>
-    
-                                                {
-                                                  
-                                                    this.props.auth.isAuthenticated? <button type='button' onClick={()=>{ this.props.logout(this.props.history)}} className='btn badge-danger'>Log Out</button> :
-                                                    <Link to='/login' className='btn btn-primary'>Log In</Link>
-                                                }
+
                                         </div>
                                     </div>
                                 </div>  

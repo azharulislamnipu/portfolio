@@ -31,6 +31,7 @@ import {connect} from 'react-redux';
 
  
   render() {
+    let {auth} = this.props;
     return (
         <div className="topbar">
 
@@ -46,7 +47,7 @@ import {connect} from 'react-redux';
                     <a className="nav-link dropdown-toggle arrow-none waves-effect nav-user" onClick={this.toogledropdonw} data-toggle="dropdown" href="javascript:void(0)" role="button"
                     aria-haspopup="false" aria-expanded={this.state.aria_expanded}>
                         <img src={logo} alt="user" class="rounded-circle"/>
-                        <span class="d-none d-md-inline-block ml-1">Donald T. <i class="fa fa-angle-down"></i> </span>
+                        <span class="d-none d-md-inline-block ml-1"> {auth.user.name} <i class="fa fa-angle-down ml-2"></i> </span>
                     </a>
                     <div className={this.state.aria_expanded ? "dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown show" : "dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown"}>
                         
