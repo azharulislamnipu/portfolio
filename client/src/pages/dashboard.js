@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {logout} from '../store/actions/authActions';
-import { addFlashMessage } from '../store/actions/flashMessages';
 import logo from '../img/mylogo.png';
 class DashBoard extends Component {
   render() {
@@ -122,10 +121,6 @@ class DashBoard extends Component {
                                 <div className="card">
                                     <div className="card-body">
                                     <h2>Welcome To Dashboard Page</h2>
-
-                                <h3>name: {auth.user.name}</h3>
-                                <h4>Eamil: {auth.user.email}</h4>
-                                <h4>Eamil: {auth.user.role}</h4>
 
                                             {
                                               

@@ -8,7 +8,8 @@ import Home from './pages/Home';
 import Login from './pages/login';
 import Register from './pages/register';
 import Dashboard from './pages/dashboard';
-import Profile from './components/dashboard/profile';
+
+import Account from './pages/account';
 import {
   BrowserRouter as Router,
   Switch,
@@ -31,7 +32,7 @@ class App extends Component {
                     <Route path='/register' component={Register}/>
                
                     <PrivateRoute path="/dashboard" component={Dashboard} auth={this.props.auth}/>
-                    <PrivateRoute path="/account" component={Profile} auth={this.props.auth}/>
+                    <PrivateRoute path="/account" component={Account} auth={this.props.auth}/>
                     <Route path="*" component={Notfound} />
                    
                 </Switch>

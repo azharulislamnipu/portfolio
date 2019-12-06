@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import logo from '../../img/mylogo.png';
-import {Link} from 'react-router-dom'
-export default class Topbar extends Component {
+import {Link} from 'react-router-dom';
+import {logout} from '../../store/actions/authActions';
+import {connect} from 'react-redux';
+ class Topbar extends Component {
 
     constructor(props) {
         super(props);
@@ -29,14 +31,12 @@ export default class Topbar extends Component {
 
  
   render() {
-
-
     return (
         <div className="topbar">
 
                
         <div className= {this.props.sibarSate? "d-none" : "topbar-left"}>
-           <Link to='/' className='logo'>  <img src={logo} alt="" height="50" class="logo-large"/></Link>
+           <Link to='/dashboard' className='logo'>  <img src={logo} alt="" height="50" class="logo-large"/></Link>
         </div>
 
         <nav className="navbar-custom" style={ this.props.sibarSate? {marginLeft: '0',   transition: '.5s ease-in'} : {marginLeft: '240px',  transition: '.5s ease-in-out'}} >
@@ -53,7 +53,10 @@ export default class Topbar extends Component {
                        <Link className="dropdown-item"  to='/account'> <i className="fa fa-user text-muted mr-2"></i> Profile</Link>
                     
                         <div className="dropdown-divider"></div>
-                        <a className="dropdown-item" href="#"><i className="fa fa-external-link text-muted mr-2"></i> Logout</a>
+
+                        <Link className="dropdown-item"    onClick={()=>{ this.props.logout(this.props.history)}}><i className="fa fa-external-link text-muted mr-2"></i> Logout</Link>
+                    
+            
                     </div>
                 </li>
 
@@ -73,3 +76,8 @@ export default class Topbar extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+    auth: state.auth
+ });
+export default connect(mapStateToProps,{logout})(Topbar);

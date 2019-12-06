@@ -19,26 +19,19 @@ class DashboardLayout extends Component {
     }
 
     render() {
+    
         return (
 
               <div id="wrapper">
 
-<Topbar sibarSate={this.state.sibarExpend} sibarExpend={ this.sibarExpendHandler} />
+<Topbar sibarSate={this.state.sibarExpend} sibarExpend={ this.sibarExpendHandler} history={this.props.children.props.history} />
 <LeftSideBar sibarSate={this.state.sibarExpend}/>
 
 <div class="content-page" style={ this.state.sibarExpend? {marginLeft: '70px',  transition: '.5s ease-in'} : {marginLeft: '240px',  transition: '.5s ease-in-out'}}>
  
     <div class="content">
         
-
-
             {this.props.children}
-
-        
-           
-         
-        
-
     </div> 
 
     <Footer/>
