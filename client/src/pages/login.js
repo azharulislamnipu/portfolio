@@ -81,9 +81,7 @@ submitHandler = event => {
                                  {error.email}
                              </span>
                               )}
-                                {error.message && ( <span className= {error.message ? 'invalid-feedback d-block' : 'invalid-feedback' } >
-                                {error.message}
-                                </span>  )}
+                               
 
                         </Form.Group>
 
@@ -96,6 +94,10 @@ submitHandler = event => {
                                  {error.password}
                              </span>
                               )}
+
+                              {error.message && ( <span className= {error.message ? 'invalid-feedback d-block' : 'invalid-feedback' } >
+                                {error.message}
+                                </span>  )}
                         
                         </Form.Group>
                         <Form.Group className='row'>

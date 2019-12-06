@@ -50,7 +50,7 @@ export default class Topbar extends Component {
                     </a>
                     <div className={this.state.aria_expanded ? "dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown show" : "dropdown-menu dropdown-menu-right dropdown-menu-animated profile-dropdown"}>
                         
-                       <Link className="dropdown-item"  to='/profile'> <i className="fa fa-user text-muted mr-2"></i> Profile</Link>
+                       <Link className="dropdown-item"  to='/account'> <i className="fa fa-user text-muted mr-2"></i> Profile</Link>
                     
                         <div className="dropdown-divider"></div>
                         <a className="dropdown-item" href="#"><i className="fa fa-external-link text-muted mr-2"></i> Logout</a>
