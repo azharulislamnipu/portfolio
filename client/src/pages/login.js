@@ -11,10 +11,10 @@ import {login} from '../store/actions/authActions';
 import { addFlashMessage } from '../store/actions/flashMessages';
 class Login extends Component {
   
-  state ={
-    email:'',
-    password:'',
-    error:{}
+state ={
+email:'',
+password:'',
+error:{}
 }
 
 

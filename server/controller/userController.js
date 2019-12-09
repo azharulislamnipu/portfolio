@@ -7,10 +7,6 @@ const {serverError,resourceError} = require('../utils/error');
 
 module.exports = {
 
-    // all authinicate user
-    authnicateuser(req, res){
-
-    },
 
 //login controller
     login( req, res){
