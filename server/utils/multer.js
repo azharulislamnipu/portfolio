@@ -2,8 +2,8 @@ const multer = require('multer');
 const path = require('path');
 
 
-    // const DIR = path.resolve(__dirname, '/nodeapp/portfolio/server/uploads/');
-const DIR = path.resolve(__dirname, '/xampp/htdocs/portfolio/server/uploads/');
+  const DIR = path.resolve(__dirname, '/nodeapp/portfolio/server/uploads/');
+// const DIR = path.resolve(__dirname, '/xampp/htdocs/portfolio/server/uploads/');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       console.log(path);

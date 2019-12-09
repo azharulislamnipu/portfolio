@@ -1,4 +1,3 @@
-const formData = require("express-form-data");
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -18,7 +17,6 @@ mongoose.Promise = global.Promise;
 
 app.use(morgan('combined'));
 app.use(cors());
-app.use(formData.parse())
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());

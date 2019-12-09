@@ -5,13 +5,13 @@ module.exports = {
 
    create(req, res, next ){
 
-      let {  title, description, degination, cv } = req.body;
+      let {  title, description, degination, cv , image} = req.body;
   
        let  user_id =  req.user._id
         const url = req.protocol + '://' + req.get('host');
-        let image = url+'/'+req.file.filename;
+         image = url+'/nodeapp/portfolio/server/uploads/'+image;
 
-      console.log(req.file);
+      console.log( req.body);
 
     
         let banner = new Banner({title, description, degination, cv, image, user_id})

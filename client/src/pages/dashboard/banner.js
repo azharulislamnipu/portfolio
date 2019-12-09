@@ -7,6 +7,12 @@ import {connect} from 'react-redux';
 import { createBanner } from '../../store/actions/bannerActions';
  class Banner extends Component {
 
+    constructor()
+    {
+        super();
+       
+    }
+
     state ={
         title:'',
         description:'',
@@ -33,7 +39,13 @@ import { createBanner } from '../../store/actions/bannerActions';
             [event.target.name]:event.target.value
         })
     }
+     onChange = (e) => {
+        this.setState({
+            image: e.target.files[0].name
+        })
+      }
 
+    
     submitHandler = event => {
         event.preventDefault();
             let {  title, description, degination, cv, image } = this.state;
@@ -102,8 +114,10 @@ import { createBanner } from '../../store/actions/bannerActions';
                                       </Form.Group>
                                       <Form.Group controlId="image">
                                       <Form.Label>Image Upload</Form.Label>
-                                      <Form.Control type="file" name='image' autoComplete="new-image"  placeholder="Upload Banner Image"
-                                       value={image} onChange={this.changeHandler} />
+
+                        
+                                      <Form.Control type="file" name='image' onChange={this.changeHandler}  multiple {...this.props} />
+                                 
                                       </Form.Group>
                                        <Form.Group className='row'>
                                            <div className="col-sm-12 text-right">
