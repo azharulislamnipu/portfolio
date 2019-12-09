@@ -23,9 +23,7 @@ const BannerSchema = new Schema({
         type: String
     },
     user_id:{
-        type: Schema.Types.ObjectId,
-        ref:'User',
-        required: true,
+        type: String,
     },
     create_at: {
         type: Date,

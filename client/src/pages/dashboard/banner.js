@@ -15,6 +15,7 @@ import { createBanner } from '../../store/actions/bannerActions';
         image:'',
         error:{}
     }
+
     addDegination(e){
 
         this.setState({degination:[...this.state.degination, ""]})
@@ -27,24 +28,24 @@ import { createBanner } from '../../store/actions/bannerActions';
     }
 
     changeHandler = event =>{
-    
+
         this.setState({
             [event.target.name]:event.target.value
         })
     }
+
     submitHandler = event => {
         event.preventDefault();
             let {  title, description, degination, cv, image } = this.state;
 
-            
             this.props.createBanner({  title, description, degination, cv, image });
             // console.log( this.state);
     } 
 
+
     render() {
         let {  title, description, degination, cv, image } = this.state;
 
-      console.log(this.props);
         return (
             <div class="container-fluid"> 
               
@@ -74,20 +75,16 @@ import { createBanner } from '../../store/actions/bannerActions';
                                     <h2 className="text-uppercase text-center">Create Banner</h2>
 
 
-                                    <Form  onSubmit={this.submitHandler}>
+                                    <Form  onSubmit={this.submitHandler}  enctype="multipart/form-data">
                                         
                                       <Form.Group controlId="title">
                                       <Form.Label>Title</Form.Label>
                                       <Form.Control type="text" name='title' autoComplete="new-title"  placeholder="Enter Your title" value={title} onChange={this.changeHandler} />
                                       </Form.Group>
-
                                       <Form.Group controlId="description">
                                       <Form.Label>Description</Form.Label>
                                       <Form.Control type="text" name='description' autoComplete="new-description"  placeholder="Enter Your Description" value={description} onChange={this.changeHandler} />
                                       </Form.Group>
-
-
-
                                       <Form.Group controlId="degination">
                                       <Form.Label>Degination</Form.Label>
                                       {this.state.degination.map((value, index) => {
@@ -97,29 +94,22 @@ import { createBanner } from '../../store/actions/bannerActions';
                                             
                                           )
                                       })}
-                                     
-
                                       <button className="btn btn-primary float-right mt-2" onClick={(e) => { e.preventDefault(); this.addDegination(e)}}>Add new Degination</button>
                                       </Form.Group>
-
                                       <Form.Group controlId="cv">
                                       <Form.Label>CV Upload</Form.Label>
                                       <Form.Control type="file" name='cv' autoComplete="new-cv"  placeholder="Upload You Cv" value={cv} onChange={this.changeHandler} />
                                       </Form.Group>
-
                                       <Form.Group controlId="image">
                                       <Form.Label>Image Upload</Form.Label>
-                                      <Form.Control type="file" name='image' autoComplete="new-image"  placeholder="Upload Banner Image" value={image} onChange={this.changeHandler} />
+                                      <Form.Control type="file" name='image' autoComplete="new-image"  placeholder="Upload Banner Image"
+                                       value={image} onChange={this.changeHandler} />
                                       </Form.Group>
-
-
                                        <Form.Group className='row'>
                                            <div className="col-sm-12 text-right">
                                             <button className="btn submit-btn btn-primary" type="submit">Add Banner</button>
                                             </div>
                                        </Form.Group>
-
-
 
                                      </Form>
         
@@ -138,8 +128,4 @@ import { createBanner } from '../../store/actions/bannerActions';
     }
 }
 
-
-const mapStateToProps = state => ({
-    createBanner
- });
-export default connect(mapStateToProps)(Banner);
+export default connect(null, { createBanner })(Banner)

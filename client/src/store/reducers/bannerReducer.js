@@ -1,24 +1,15 @@
 import * as Types from '../actions/types';
 
-const init ={
-    banner:{},
-    error:{}
-}
 
-const bannerReducer = (state=init, action) => {
+
+const bannerReducer = (state = [], action) => {
     switch(action.type){
         case Types.ADD_BANNER: {
-            return{
-                user: action.payload.banner,
-                error:{}
-            }
+            let banner = [...state]
+            banner.unshift(action.payload.banner)
+            return banner;
         }
-    case Types.BANNER_ERROR: {
-        return {
-            ...state,
-            error: action.payload.error
-        }
-    }
+
     default: return state;
     }
 

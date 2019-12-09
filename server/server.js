@@ -1,3 +1,4 @@
+const formData = require("express-form-data");
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -17,6 +18,7 @@ mongoose.Promise = global.Promise;
 
 app.use(morgan('combined'));
 app.use(cors());
+app.use(formData.parse())
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -47,7 +49,8 @@ app.get('/', (req, res)=>{
 })
 
 
-const DIR = path.resolve(__dirname, '/nodeapp/portfolio/server/uploads/');
+// const DIR = path.resolve(__dirname, '/nodeapp/portfolio/server/uploads/');
+const DIR = path.resolve(__dirname, '/xampp/htdocs/portfolio/server/uploads/');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       console.log(path);
@@ -71,17 +74,21 @@ var upload = multer({
     }
 });
 
-let Testuser = require('./models/TestUser');
+let Banner = require('./models/Banner');
 
-app.post('/user-profile', upload.single('profileImg'), (req, res, next) => {
+app.post('/user-profile', upload.single('image'), (req, res, next) => {
+
+
 
   const url = req.protocol + '://' + req.get('host')
-  const testuser = new Testuser({
-      _id: new mongoose.Types.ObjectId(),
+  const banner = new Banner({
+      title: req.body.title,
       name: req.body.name,
-      profileImg: url+'/'+req.file.filename
+      description:req.body.description,
+      image: url+'/'+req.file.filename,
+      user_id: '234234'
   });
-  testuser.save().then(result => {
+  banner.save().then(result => {
       res.status(201).json({
           message: "User registered successfully!"
         
