@@ -27,7 +27,8 @@ require('./utils/passport')(passport);
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
-    
+
+
     res.header(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept, Authorization"
@@ -47,8 +48,8 @@ app.get('/', (req, res)=>{
 })
 
 
-// const DIR = path.resolve(__dirname, '/nodeapp/portfolio/server/uploads/');
-const DIR = path.resolve(__dirname, '/xampp/htdocs/portfolio/server/uploads/');
+ const DIR = path.resolve(__dirname, '/nodeapp/portfolio/server/uploads/');
+// const DIR = path.resolve(__dirname, '/xampp/htdocs/portfolio/server/uploads/');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       console.log(path);
