@@ -11,7 +11,7 @@ module.exports = {
         // const url = req.protocol + '://' + req.get('host');
         //  image = url+'/nodeapp/portfolio/server/uploads/'+image;
 
-      console.log( req.body);
+      console.log( req.file);
 
     
         let banner = new Banner({title, description, degination, cv, image, user_id})

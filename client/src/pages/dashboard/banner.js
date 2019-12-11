@@ -42,22 +42,20 @@ import { createBanner } from '../../store/actions/bannerActions';
 
 
       uploadSingleFile = (e) =>{
-          
-
         this.setState({
-            image: URL.createObjectURL(e.target.files[0])
+            image: e.target.files[0]
         })
+
     }
 
     
     submitHandler = event => {
         event.preventDefault();
 
-        console.log(this.state.image)
             let {  title, description, degination, cv, image } = this.state;
 
-            this.props.createBanner({  title, description, degination, cv, image });
-            // console.log( this.state);
+         this.props.createBanner({  title, description, degination, cv, image });
+    
     } 
 
 
@@ -93,7 +91,7 @@ import { createBanner } from '../../store/actions/bannerActions';
                                     <h2 className="text-uppercase text-center">Create Banner</h2>
 
 
-                                    <Form  onSubmit={this.submitHandler}  enctype="multipart/form-data">
+                                    <Form  onSubmit={this.submitHandler}  method="post"  enctype="multipart/form-data">
                                         
                                       <Form.Group controlId="title">
                                       <Form.Label>Title</Form.Label>

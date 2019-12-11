@@ -27,7 +27,7 @@ require('./utils/passport')(passport);
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
-
+    res.set('Content-Type', 'multipart/form-data');
 
     res.header(
       "Access-Control-Allow-Headers",

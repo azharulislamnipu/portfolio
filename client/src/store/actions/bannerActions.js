@@ -3,7 +3,7 @@ import * as Types from './types';
 
 //regiser
 export const createBanner = banner => dispatch => {
-    Axios.post('/api/banner/create', banner)
+    Axios.post('/user-profile', banner)
         .then((res) => {
             dispatch({
                 type: Types.ADD_BANNER,
