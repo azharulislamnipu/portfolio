@@ -8,12 +8,11 @@ module.exports = {
       let {  title, description, degination, cv , image} = req.body;
   
        let  user_id =  req.user._id
-        // const url = req.protocol + '://' + req.get('host');
-        //  image = url+'/nodeapp/portfolio/server/uploads/'+image;
+        const url = req.protocol + '://' + req.get('host');
+        console.log(req.file);
+         image = url+'/nodeapp/portfolio/server/uploads/';
 
-      console.log( req.file);
-
-    
+  
         let banner = new Banner({title, description, degination, cv, image, user_id})
 
         banner.save()
