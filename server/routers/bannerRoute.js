@@ -6,8 +6,8 @@ const multer = require('multer');
 const path = require('path');
 
 
-const DIR = path.resolve(__dirname, '/nodeapp/portfolio/server/uploads/');
-// const DIR = path.resolve(__dirname, '/xampp/htdocs/portfolio/server/uploads/');
+// const DIR = path.resolve(__dirname, '/nodeapp/portfolio/server/uploads/');
+const DIR = path.resolve(__dirname, '/xampp/htdocs/portfolio/server/uploads/');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, DIR);
@@ -33,6 +33,5 @@ var upload = multer({
 //get all authenicate user
 // router.get('/auth', authnicateuser);
 router.post('/create',auth, admin, upload.single('image'),  create);
-
 
 module.exports = router;

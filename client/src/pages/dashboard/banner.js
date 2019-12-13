@@ -34,27 +34,16 @@ import { createBanner } from '../../store/actions/bannerActions';
     }
 
     changeHandler = event =>{
-
-        const formData = new FormData();
-
-          formData.append('image[]', event.target.files);
-          var options = { content: formData };
-          console.log(options);
-
         this.setState({
-            [event.target.name]: event.target.name == 'image'? formData : event.target.value
+            [event.target.name]: event.target.name == 'image'? event.target.files[0]: event.target.value
         })
     }
 
-
-    
-    
     submitHandler = event => {
         event.preventDefault();
 
         let {  title, description, degination, cv , image} = this.state;
-
-        this.props.createBanner({  title, description, degination, cv, image });
+        this.props.createBanner({  title, description, degination, cv });
     
     } 
 

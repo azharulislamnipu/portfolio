@@ -1,6 +1,9 @@
 import Axios from 'axios';
 import * as Types from './types';
-const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+const config = { headers: { 
+    'Content-Type': 'multipart/form-data;boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+    "Accept": "application/json",
+    "type": "formData"} };
 //regiser
 export const createBanner = banner => dispatch => {
     Axios.post('/api/banner/create', banner,config)
