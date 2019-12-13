@@ -42,10 +42,13 @@ import { createBanner } from '../../store/actions/bannerActions';
 
 
       uploadSingleFile = (e) =>{
+    
+
         this.setState({
-            image: e.target.files[0]
+            image: e.target.files[0].name
         })
 
+        console.log(e.target.files[0])
     }
 
     
@@ -54,7 +57,7 @@ import { createBanner } from '../../store/actions/bannerActions';
 
             let {  title, description, degination, cv, image } = this.state;
 
-         this.props.createBanner({  title, description, degination, cv, image });
+        this.props.createBanner({  title, description, degination, cv, image });
     
     } 
 
@@ -120,7 +123,7 @@ import { createBanner } from '../../store/actions/bannerActions';
                                       <Form.Label>Image Upload</Form.Label>
 
                         
-                                      <Form.Control type="file" name='image' onChange={this.uploadSingleFile} />
+                                      <Form.Control type="file" name='image' value={image} onChange={this.uploadSingleFile} />
                                  
                                       </Form.Group>
                                        <Form.Group className='row'>
