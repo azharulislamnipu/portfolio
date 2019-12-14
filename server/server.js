@@ -9,6 +9,10 @@ const bannerRoute = require('./routers/bannerRoute');
 const passport = require('passport');
 const app = express();
 
+const multer = require('multer');
+const path = require('path');
+const {serverError,resourceError} = require('./utils/error');
+
 require('dotenv').config();
 mongoose.Promise = global.Promise;
 
@@ -22,6 +26,7 @@ app.use(cookieParser())
 app.use(passport.initialize());
 require('./utils/passport')(passport);
 
+const ImageModel = require('./models/imageModel');
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -43,6 +48,58 @@ app.use('/api/banner', bannerRoute);
 app.get('/', (req, res)=>{
     res.send('Welcome to Server side');
 })
+
+
+
+// const DIR = path.resolve(__dirname, '/nodeapp/portfolio/server/uploads/');
+const DIR = path.resolve(__dirname, '/xampp/htdocs/portfolio/server/uploads/');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null,'-' + fileName)
+    }
+});
+
+var upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+    }
+});
+
+
+
+app.post('/api/upload', upload.single('image'), (req, res) => {
+  const url = req.protocol + '://' + req.get('host');
+  let image = url+'/nodeapp/portfolio/server/uploads/'+req.file.filename;
+
+  // let { image } = req.body;
+
+  console.log(image);
+
+   let imageModel = new ImageModel({image})
+
+   imageModel.save()
+   .then(result => {
+             res.status(201).json({
+                 message: 'Image Created Successfully',
+                 Banner: result
+             })
+     
+ })
+ .catch(error => serverError(res, error))
+
+
+  
+ });
 
 
 

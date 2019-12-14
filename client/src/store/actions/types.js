@@ -7,3 +7,6 @@ export const DELETE_FLASH_MESSAGE = 'DELETE_FLASH_MESSAGE';
 export const ADD_BANNER = 'ADD_BANNER';
 export const BANNER_ERROR = 'BANNER_ERROR';
 
+
+export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
+
