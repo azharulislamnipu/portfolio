@@ -9,8 +9,6 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Dashboard from './pages/dashboard';
 import Banner from './pages/dashboard/banner';
-import Uploadimage from './pages/dashboard/uploadimage';
-
 import Account from './pages/account';
 import {
   BrowserRouter as Router,
@@ -32,7 +30,7 @@ class App extends Component {
                     <Route path='/' exact component={Home}/>
                     <Route path='/login' component={Login}/>
                     <Route path='/register' component={Register}/>
-                    <Route path='/uploadimage' component={Uploadimage}/>
+     
                     <PrivateRoute path="/banner" component={Banner} auth={this.props.auth}/>
                     <PrivateRoute path="/dashboard" component={Dashboard} auth={this.props.auth}/>
                     <PrivateRoute path="/account" component={Account} auth={this.props.auth}/>

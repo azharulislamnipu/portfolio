@@ -34,4 +34,5 @@ var upload = multer({
 // router.get('/auth', authnicateuser);
 router.post('/create',auth, admin, upload.single('image'),  create);
 
+
 module.exports = router;
