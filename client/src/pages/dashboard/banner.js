@@ -34,17 +34,32 @@ import { createBanner } from '../../store/actions/bannerActions';
     }
 
     changeHandler = event =>{
-        this.setState({
-            [event.target.name]: event.target.name == 'image'? event.target.files[0]: event.target.value
-        })
+
+           this.setState({
+               [event.target.name]: event.target.value
+          })
+            
     }
+
+    filehander = event =>{
+
+
+        let reader = new FileReader();
+
+        if(event.target.files != null ){
+        reader.readAsDataURL(event.target.files[0]);
+        }
+        reader.onload = (e) => {
+            this.setState({ 'image':e.target.result  })
+        }
+   }
 
     submitHandler = event => {
         event.preventDefault();
-
         let {  title, description, degination, cv , image} = this.state;
-        this.props.createBanner({  title, description, degination, cv });
-    
+
+        this.props.createBanner({  title, description, degination, cv, image });
+
     } 
 
 
@@ -108,7 +123,7 @@ import { createBanner } from '../../store/actions/bannerActions';
                                       <Form.Group controlId="image">
                                       <Form.Label>Image Upload</Form.Label>
 
-                                      <Form.Control type="file" name='image' multiple  onChange={this.changeHandler} />
+                                      <Form.Control type="file" name='image' multiple  onChange={this.filehander} />
                                  
                                       </Form.Group>
                                        <Form.Group className='row'>

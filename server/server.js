@@ -8,6 +8,8 @@ const userRoute = require('./routers/userRoute');
 const bannerRoute = require('./routers/bannerRoute');
 const passport = require('passport');
 const app = express();
+const multer = require('multer');
+const path = require('path');
 
 require('dotenv').config();
 mongoose.Promise = global.Promise;
@@ -42,7 +44,40 @@ app.use('/api/users', userRoute);
 app.use('/api/banner', bannerRoute);
 app.get('/', (req, res)=>{
     res.send('Welcome to Server side');
-})
+});
+
+// const DIR = path.resolve(__dirname, '/nodeapp/portfolio/server/uploads/');
+const DIR = path.resolve(__dirname, '/xampp/htdocs/portfolio/server/uploads/');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, DIR);
+    },
+    filename: (req, file, cb) => {
+        const fileName = file.originalname.toLowerCase().split(' ').join('-');
+        cb(null,'-' + fileName)
+    }
+});
+
+var upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+    }
+});
+
+
+
+// Upload Endpoint
+app.post('/upload', upload.single('file') ,(req, res) => {
+
+  console.log('uploaded');
+ 
+});
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT,()=>{

@@ -5,16 +5,17 @@ module.exports = {
 
    create(req, res, next ){
 
-      let {  title, description, degination, cv, image } = req.body;
+      let {  title, description, degination, cv, image } = req.body; 
+
+      console.log(image);
 
        let  user_id =  req.user._id
-          const url = req.protocol + '://' + req.get('host');
-         image = url+'/nodeapp/portfolio/server/uploads/'+req.file.filename;
-         console.log(req.file.filename);
-         console.log(req.file);
+        //   const url = req.protocol + '://' + req.get('host');
+        //  image = url+'/nodeapp/portfolio/server/uploads/'+req.file.filename;
+        //  console.log(req.file.filename);
+        //  console.log(req.file);
     
-        let banner = new Banner({title, description, degination, cv, image, user_id})
-
+        let banner = new Banner({title, description, degination, cv, image, user_id});
         banner.save()
         .then(result => {
                   res.status(201).json({

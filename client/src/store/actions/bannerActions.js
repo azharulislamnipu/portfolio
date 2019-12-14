@@ -6,7 +6,7 @@ const config = { headers: {
     "type": "formData"} };
 //regiser
 export const createBanner = banner => dispatch => {
-    Axios.post('/user-profile', banner)
+    Axios.post('/api/banner/create', banner)
         .then((res) => {
             dispatch({
                 type: Types.ADD_BANNER,

@@ -32,7 +32,7 @@ var upload = multer({
 
 //get all authenicate user
 // router.get('/auth', authnicateuser);
-router.post('/create',auth, admin, upload.single('image'),  create);
+router.post('/create',auth, admin,  create);
 
 
 module.exports = router;
