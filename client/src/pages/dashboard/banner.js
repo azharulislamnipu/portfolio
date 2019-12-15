@@ -16,21 +16,24 @@ import { createBanner } from '../../store/actions/bannerActions';
     state ={
         title:'',
         description:'',
-        degination:[''],
+        designation:[''],
         cv:'',
-        image:null,
+        selectedFile:'',
+        filename: '',
+        cvfile:'',
+        cvname:'',
         error:{}
     }
 
-    addDegination(e){
+    addDesignation(e){
 
-        this.setState({degination:[...this.state.degination, ""]})
+        this.setState({designation:[...this.state.designation, ""]})
     }
  
 
     chanevalue = (event, index) => {
-        this.state.degination[index] = event.target.value;
-        this.setState({degination: this.state.degination});
+        this.state.designation[index] = event.target.value;
+        this.setState({designation: this.state.designation});
     }
 
     changeHandler = event =>{
@@ -41,24 +44,39 @@ import { createBanner } from '../../store/actions/bannerActions';
             
     }
 
-    filehander = event =>{
 
 
-        let reader = new FileReader();
+   filehander = e => {
+    this.setState({selectedFile: e.target.files});
+    this.setState({filename: e.target.files[0].name});
+  };
 
-        if(event.target.files != null ){
-        reader.readAsDataURL(event.target.files[0]);
-        }
-        reader.onload = (e) => {
-            this.setState({ 'image':e.target.result  })
-        }
-   }
+  cvhander = e => {
+    this.setState({cvfile: e.target.files});
+    this.setState({cvname: e.target.files[0].name});
+  };
+
+
 
     submitHandler = event => {
         event.preventDefault();
-        let {  title, description, degination, cv , image} = this.state;
+        let {  title, description, designation, cv , image} = this.state;
 
-        this.props.createBanner({  title, description, degination, cv, image });
+        console.log(title);
+
+        const formData = new FormData();
+       
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('designation', designation);
+        formData.append('cv', this.state.cvfile[0]);
+        formData.append('cvname', this.state.cvname);
+        formData.append('image', this.state.selectedFile[0]);
+        formData.append('imagename', this.state.filename);
+
+        console.log(formData.title);
+ 
+        this.props.createBanner(formData);
 
     } 
 
@@ -106,19 +124,19 @@ import { createBanner } from '../../store/actions/bannerActions';
                                       <Form.Control type="text" name='description' autoComplete="new-description"  placeholder="Enter Your Description" value={description} onChange={this.changeHandler} />
                                       </Form.Group>
                                       <Form.Group controlId="degination">
-                                      <Form.Label>Degination</Form.Label>
-                                      {this.state.degination.map((value, index) => {
+                                      <Form.Label>Designation</Form.Label>
+                                      {this.state.designation.map((value, index) => {
                                           return(
                                         
                                                 <Form.Control type = "text" key={index}   placeholder='Enter Your Degination' value={value} onChange={(e) => this.chanevalue(e, index)}/>
                                             
                                           )
                                       })}
-                                      <button className="btn btn-primary float-right mt-2" onClick={(e) => { e.preventDefault(); this.addDegination(e)}}>Add new Degination</button>
+                                      <button className="btn btn-primary float-right mt-2" onClick={(e) => { e.preventDefault(); this.addDesignation(e)}}>Add new Degination</button>
                                       </Form.Group>
                                       <Form.Group controlId="cv">
                                       <Form.Label>CV Upload</Form.Label>
-                                      <Form.Control type="file" name='cv' autoComplete="new-cv"  placeholder="Upload You Cv" value={cv} onChange={this.changeHandler} />
+                                      <Form.Control type="file" name='cv' autoComplete="new-cv"  placeholder="Upload You Cv" multiple onChange={this.cvhander} />
                                       </Form.Group>
                                       <Form.Group controlId="image">
                                       <Form.Label>Image Upload</Form.Label>
