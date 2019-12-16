@@ -8,11 +8,11 @@ const BannerSchema = new Schema({
         trim:true
     },
     description: {
-        type: String
+        type: String,
+        trim:true
     },
-    degination: {
+    designation: {
         type: Array,
-        required: true,
         trim:true,
         default:[]
     },

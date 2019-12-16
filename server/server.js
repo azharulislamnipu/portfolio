@@ -8,8 +8,6 @@ const userRoute = require('./routers/userRoute');
 const bannerRoute = require('./routers/bannerRoute');
 const passport = require('passport');
 const app = express();
-const {upload} = require('./utils/multer');
-
 require('dotenv').config();
 mongoose.Promise = global.Promise;
 
@@ -45,16 +43,6 @@ app.get('/', (req, res)=>{
     res.send('Welcome to Server side');
 });
 
-
-
-
-
-// Upload Endpoint
-app.post('/upload', upload('file') ,(req, res) => {
-    const bodydata = JSON.parse(JSON.stringify(req.body))
-  console.log(bodydata.title);
- 
-});
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT,()=>{

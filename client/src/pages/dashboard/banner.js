@@ -25,6 +25,17 @@ import { createBanner } from '../../store/actions/bannerActions';
         error:{}
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (
+          JSON.stringify(nextProps.banner.error) !== JSON.stringify(prevState.error)
+        ) {
+          return {
+            error: nextProps.banner.error
+          };
+        }
+        return null;
+      }
+
     addDesignation(e){
 
         this.setState({designation:[...this.state.designation, ""]})
@@ -62,28 +73,33 @@ import { createBanner } from '../../store/actions/bannerActions';
         event.preventDefault();
         let {  title, description, designation, cv , image} = this.state;
 
-        console.log(title);
+     
 
         const formData = new FormData();
        
         formData.append('title', title);
         formData.append('description', description);
-        formData.append('designation', designation);
+    
+        for (var i = 0; i < designation.length; i++) {
+            formData.append('designation[]', designation[i]);
+        }
+
         formData.append('cv', this.state.cvfile[0]);
         formData.append('cvname', this.state.cvname);
         formData.append('image', this.state.selectedFile[0]);
         formData.append('imagename', this.state.filename);
-
-        console.log(formData.title);
- 
+    
         this.props.createBanner(formData);
+
+
 
     } 
 
 
     render() {
-        let {  title, description, degination, cv, image } = this.state;
+        let {  title, description, designation, cv, image, error } = this.state;
 
+   
         return (
             <div class="container-fluid"> 
               
@@ -118,10 +134,19 @@ import { createBanner } from '../../store/actions/bannerActions';
                                       <Form.Group controlId="title">
                                       <Form.Label>Title</Form.Label>
                                       <Form.Control type="text" name='title' autoComplete="new-title"  placeholder="Enter Your title" value={title} onChange={this.changeHandler} />
+                                      {error.title && (<span className= {error.title ? 'invalid-feedback d-block' : 'invalid-feedback' } >
+                                            {error.title}
+                                        </span>
+                                        )}
                                       </Form.Group>
                                       <Form.Group controlId="description">
                                       <Form.Label>Description</Form.Label>
                                       <Form.Control type="text" name='description' autoComplete="new-description"  placeholder="Enter Your Description" value={description} onChange={this.changeHandler} />
+                                      {error.description && (<span className= {error.description ? 'invalid-feedback d-block' : 'invalid-feedback' } >
+                                            {error.description}
+                                        </span>
+                                        )}
+                                     
                                       </Form.Group>
                                       <Form.Group controlId="degination">
                                       <Form.Label>Designation</Form.Label>
@@ -137,12 +162,19 @@ import { createBanner } from '../../store/actions/bannerActions';
                                       <Form.Group controlId="cv">
                                       <Form.Label>CV Upload</Form.Label>
                                       <Form.Control type="file" name='cv' autoComplete="new-cv"  placeholder="Upload You Cv" multiple onChange={this.cvhander} />
+                                      {error.cv && (<span className= {error.cv ? 'invalid-feedback d-block' : 'invalid-feedback' } >
+                                            {error.cv}
+                                        </span>
+                                        )}
                                       </Form.Group>
                                       <Form.Group controlId="image">
                                       <Form.Label>Image Upload</Form.Label>
 
                                       <Form.Control type="file" name='image' multiple  onChange={this.filehander} />
-                                 
+                                      {error.image && (<span className= {error.image ? 'invalid-feedback d-block' : 'invalid-feedback' } >
+                                            {error.image}
+                                        </span>
+                                        )}
                                       </Form.Group>
                                        <Form.Group className='row'>
                                            <div className="col-sm-12 text-right">
@@ -167,4 +199,8 @@ import { createBanner } from '../../store/actions/bannerActions';
     }
 }
 
-export default connect(null, { createBanner })(Banner)
+const mapStateToProps = state => ({
+    banner: state.bannerReducer
+})
+
+export default connect(mapStateToProps, { createBanner })(Banner)

@@ -1,14 +1,14 @@
 const multer = require('multer');
 const path = require('path');
-const DIR = path.resolve(__dirname, '/nodeapp/portfolio/server/uploads/');
-// const DIR = path.resolve(__dirname, '/xampp/htdocs/portfolio/server/uploads/');
+const DIR = path.resolve(__dirname, '../uploads/');
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, DIR);
     },
     filename: (req, file, cb) => {
         const fileName = file.originalname.toLowerCase().split(' ').join('-');
-        cb( null, `${ Date.now() }-${ fileName }` );
+        cb( null, fileName );
     }
 });
 
@@ -28,5 +28,13 @@ var upload = multer({
 module.exports = {
      upload(image){
        return upload.single(image);
-     }
+     },
+
+     multiUpload(image){
+        return upload.array(image,10);
+      },
+
+      uploadany(){
+        return upload.any();
+      }
 }
