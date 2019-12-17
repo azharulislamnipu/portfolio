@@ -35,6 +35,22 @@ module.exports = {
    
 
 
-    }
+    },
+
+
+    getAll(req, res,next) {
+        let {_id} = req.user;
+        Banner.find({user_id: _id})
+            .then(banners => {
+                if (banners.length === 0) {
+                    res.status(200).json({
+                        message: 'No Banner Found'
+                    })
+                } else {
+                    res.status(200).json(banners)
+                }
+            })
+            .catch(error => serverError(res, error))
+    },
 
 }

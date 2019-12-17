@@ -4,16 +4,37 @@ const config = { headers: {
     'Content-Type': 'multipart/form-data;boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
     "Accept": "application/json",
     "type": "formData"} };
-//regiser
-export const createBanner = banner => dispatch => {
-    Axios.post('/api/banner/create', banner)
+
+ export const loadBanners = () => dispatch => {
+        Axios.get('/api/banners/')
+        .then(response => {
+            dispatch({
+                type: Types.LOAD_BANNER,
+                payload: {
+                    banners: response.data
+                }
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
+
+export const createBanner = (banner, addFlashMessage) => dispatch => {
+    Axios.post('/api/banners/', banner)
         .then((res) => {
             dispatch({
                 type: Types.ADD_BANNER,
                 payload: {
+                    error:{},
                     banner: res.data
                 }
             });
+            addFlashMessage({
+                type: 'success',
+                text: res.data.message
+            })
   
         })
         .catch(error => {

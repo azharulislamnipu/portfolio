@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Topbar from '../components/dashboard/topbar';
 import LeftSideBar from '../components/dashboard/leftsidebar';
 import Footer from '../components/dashboard/dbFooter';
+import FlashMessagesList from '../components/flash/FlashMessagesList';
 class DashboardLayout extends Component {
     
     constructor(props) {
@@ -23,7 +24,7 @@ class DashboardLayout extends Component {
         return (
 
               <div id="wrapper">
-
+   <FlashMessagesList/>
 <Topbar sibarSate={this.state.sibarExpend} sibarExpend={ this.sibarExpendHandler} history={this.props.children.props.history} />
 <LeftSideBar sibarSate={this.state.sibarExpend}/>
 

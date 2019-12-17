@@ -5,6 +5,9 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import {connect} from 'react-redux';
 import { createBanner } from '../../store/actions/bannerActions';
+import { addFlashMessage } from '../../store/actions/flashMessages';
+
+
  class Banner extends Component {
 
     constructor()
@@ -89,16 +92,16 @@ import { createBanner } from '../../store/actions/bannerActions';
         formData.append('image', this.state.selectedFile[0]);
         formData.append('imagename', this.state.filename);
     
-        this.props.createBanner(formData);
+        this.props.createBanner(formData, this.props.addFlashMessage);
 
 
 
     } 
-
-
+  
     render() {
         let {  title, description, designation, cv, image, error } = this.state;
-
+     
+            console.log(this.props)
    
         return (
             <div class="container-fluid"> 
@@ -200,7 +203,8 @@ import { createBanner } from '../../store/actions/bannerActions';
 }
 
 const mapStateToProps = state => ({
-    banner: state.bannerReducer
+    banner: state.bannerReducer,
+    addFlashMessage,
 })
 
-export default connect(mapStateToProps, { createBanner })(Banner)
+export default connect(mapStateToProps, { createBanner, addFlashMessage })(Banner)
