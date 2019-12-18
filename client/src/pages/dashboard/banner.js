@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import {connect} from 'react-redux';
-import { createBanner } from '../../store/actions/bannerActions';
+import { createBanner, loadBanners } from '../../store/actions/bannerActions';
 import { addFlashMessage } from '../../store/actions/flashMessages';
 
 
@@ -30,10 +30,10 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (
-          JSON.stringify(nextProps.banner.error) !== JSON.stringify(prevState.error)
+          JSON.stringify(nextProps.banners.error) !== JSON.stringify(prevState.error)
         ) {
           return {
-            error: nextProps.banner.error
+            error: nextProps.banners.error
           };
         }
         return null;
@@ -75,9 +75,6 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
     submitHandler = event => {
         event.preventDefault();
         let {  title, description, designation, cv , image} = this.state;
-
-     
-
         const formData = new FormData();
        
         formData.append('title', title);
@@ -97,11 +94,20 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
 
 
     } 
+
+    componentDidMount(){
+        this.props.loadBanners()
+    }
   
     render() {
         let {  title, description, designation, cv, image, error } = this.state;
-     
-            console.log(this.props)
+
+
+       
+        let { banners} = this.props;
+
+
+            console.log( banners.banner);
    
         return (
             <div class="container-fluid"> 
@@ -195,16 +201,15 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
                             </div>  
                         </div>
 
-
-
+        
            </div>
     )
     }
 }
 
 const mapStateToProps = state => ({
-    banner: state.bannerReducer,
-    addFlashMessage,
+    banners: state.banners,
+    addFlashMessage
 })
 
-export default connect(mapStateToProps, { createBanner, addFlashMessage })(Banner)
+export default connect(mapStateToProps, { createBanner, addFlashMessage, loadBanners })(Banner)
