@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import {connect} from 'react-redux';
-import { createBanner } from '../../store/actions/bannerActions';
+import { createBanner, loadBanners } from '../../store/actions/bannerActions';
 import { addFlashMessage } from '../../store/actions/flashMessages';
 
 
@@ -97,6 +97,8 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
 
 
     } 
+
+
   
     render() {
         let {  title, description, designation, cv, image, error } = this.state;
@@ -203,7 +205,6 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
 }
 
 const mapStateToProps = state => ({
-    banner: state.bannerReducer,
     addFlashMessage,
 })
 
