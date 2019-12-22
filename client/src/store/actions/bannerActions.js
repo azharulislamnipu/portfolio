@@ -16,7 +16,12 @@ const config = { headers: {
             })
         })
         .catch(error => {
-            console.log(error)
+            dispatch({
+                type: Types.BANNER_ERROR,
+                payload: {
+                    error:{}
+                }
+            })
         })
     }
 

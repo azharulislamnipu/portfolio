@@ -41,13 +41,13 @@ module.exports = {
     getAll(req, res,next) {
         let {_id} = req.user;
         Banner.find({user_id: _id})
-            .then(banners => {
-                if (banners.length === 0) {
+            .then(banner => {
+                if (banner.length === 0) {
                     res.status(200).json({
                         message: 'No Banner Found'
                     })
                 } else {
-                    res.status(200).json(banners)
+                    res.status(200).json(banner)
                 }
             })
             .catch(error => serverError(res, error))

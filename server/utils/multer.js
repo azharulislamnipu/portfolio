@@ -1,6 +1,12 @@
+const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const DIR = path.resolve(__dirname, '../uploads/');
+const app = express();
+// const DIR = path.resolve(__dirname, '../../uploads/');
+const DIR = path.join(__dirname, '../client/public/uploads/');
+
+app.use(express.static(DIR));
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {

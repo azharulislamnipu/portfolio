@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 class Account extends Component {
     render() {
         let {auth} = this.props;
-
+        
 
         return (
                 <div class="container-fluid"> 

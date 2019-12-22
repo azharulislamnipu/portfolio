@@ -9,6 +9,7 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Dashboard from './pages/dashboard';
 import Banner from './pages/dashboard/banner';
+import Counter from './pages/dashboard/counterList';
 import FileUpload from './pages/dashboard/fileupload';
 import Account from './pages/account';
 import {
@@ -19,7 +20,8 @@ import {
 import FlashMessagesList from './components/flash/FlashMessagesList';
 import PrivateRoute from './ui/PrivateRoute';
 import {connect} from 'react-redux';
-import Notfound from './pages/404'
+import Notfound from './pages/404';
+import BannerList from './pages/dashboard/bannerList';
 class App extends Component {
     render() {
      
@@ -34,6 +36,8 @@ class App extends Component {
                     <Route path='/fileupload' component={FileUpload}/>
 
                     <PrivateRoute path="/banner" component={Banner} auth={this.props.auth}/>
+                    <PrivateRoute path="/counter" component={Counter} auth={this.props.auth}/>
+                    <PrivateRoute path="/bannerlist" component={BannerList} auth={this.props.auth}/>
                     <PrivateRoute path="/dashboard" component={Dashboard} auth={this.props.auth}/>
                     <PrivateRoute path="/account" component={Account} auth={this.props.auth}/>
                     <Route path="*" component={Notfound} />

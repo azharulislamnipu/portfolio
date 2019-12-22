@@ -8,6 +8,8 @@ export const LOAD_BANNER = 'LOAD_BANNER';
 export const ADD_BANNER = 'ADD_BANNER';
 export const BANNER_ERROR = 'BANNER_ERROR';
 
+export const LOAD_COUNTER = 'LOAD_COUNTER';
+
 
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 

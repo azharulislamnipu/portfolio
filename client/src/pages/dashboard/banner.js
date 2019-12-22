@@ -7,14 +7,10 @@ import {connect} from 'react-redux';
 import { createBanner, loadBanners } from '../../store/actions/bannerActions';
 import { addFlashMessage } from '../../store/actions/flashMessages';
 
+import { Link } from 'react-router-dom'
+
 
  class Banner extends Component {
-
-    constructor()
-    {
-        super();
-       
-    }
 
     state ={
         title:'',
@@ -30,10 +26,10 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (
-          JSON.stringify(nextProps.banners.error) !== JSON.stringify(prevState.error)
+          JSON.stringify(nextProps.banner.error) !== JSON.stringify(prevState.error)
         ) {
           return {
-            error: nextProps.banners.error
+            error: nextProps.banner.error
           };
         }
         return null;
@@ -95,19 +91,14 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
 
     } 
 
-    componentDidMount(){
-        this.props.loadBanners()
-    }
+
   
     render() {
         let {  title, description, designation, cv, image, error } = this.state;
 
+    //    let { banner } = this.props.banners;
+      console.log(this.props);
 
-       
-        let { banners} = this.props;
-
-
-            console.log( banners.banner);
    
         return (
             <div class="container-fluid"> 
@@ -201,15 +192,20 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
                             </div>  
                         </div>
 
-        
+             <div className="row">
+                 <div className="col-12">
+               
+           
+                 </div>
+             </div>
            </div>
     )
     }
 }
 
 const mapStateToProps = state => ({
-    banners: state.banners,
+    banner: state.banner,
     addFlashMessage
 })
 
-export default connect(mapStateToProps, { createBanner, addFlashMessage, loadBanners })(Banner)
+export default connect(mapStateToProps, { createBanner, addFlashMessage})(Banner)

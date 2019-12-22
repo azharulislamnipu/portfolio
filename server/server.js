@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const userRoute = require('./routers/userRoute');
 const bannerRoute = require('./routers/bannerRoute');
+const counterRoute = require('./routers/counterRoute');
 const passport = require('passport');
 const app = express();
 require('dotenv').config();
@@ -20,8 +21,6 @@ app.use(bodyParser.json());
 app.use(cookieParser())
 app.use(passport.initialize());
 require('./utils/passport')(passport);
-
-
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -39,6 +38,7 @@ app.use((req, res, next) => {
 
 app.use('/api/users', userRoute);
 app.use('/api', bannerRoute);
+app.use('/api', counterRoute);
 app.get('/', (req, res)=>{
     res.send('Welcome to Server side');
 });

@@ -2,24 +2,22 @@ import * as Types from '../actions/types';
 
 
 const init ={
-    error:{}
+    error:{},
+    banner:{}
 }
 const bannerReducer = (state = init, action) => {
     switch(action.type){
         case Types.ADD_BANNER: {
-            let banners = [...state]
-            banners.unshift(action.payload.banners)
+            let banner = [...state]
+            banner.unshift(action.payload.banner)
 
             return{
-                banners: banners,
+                banner: banner,
                 error:{}    
             }
         }
         case Types.LOAD_BANNER: {
-            return{
-                 banner:action.payload.banners,
-                error:{}    
-            }
+            return action.payload.banners
         }
 
 
