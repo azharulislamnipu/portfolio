@@ -4,8 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import {connect} from 'react-redux';
-import { loadCounters } from '../../store/actions/counterActions';
-import { addFlashMessage } from '../../store/actions/flashMessages';
+import { loadCounters } from '../../../store/actions/counterActions';
+import { addFlashMessage } from '../../../store/actions/flashMessages';
 
 import { Link } from 'react-router-dom'
 
@@ -17,9 +17,19 @@ import { Link } from 'react-router-dom'
         this.props.loadCounters();
     }
 
-    submitHandler = () => {
+            changeHandler = event =>{
 
-    }
+                this.setState({
+                    [event.target.name]: event.target.value
+            })
+                
+        }
+        submitHandler = event => {
+            event.preventDefault();
+            let {  title, description, designation, cv , image} = this.state;
+        
+
+        } 
   
     render() {
 
@@ -60,12 +70,12 @@ import { Link } from 'react-router-dom'
                                         
                                       <Form.Group controlId="title">
                                       <Form.Label>Title</Form.Label>
-                                      <Form.Control type="text" name='title' autoComplete="new-title"  placeholder="Enter Your title" value={title} onChange={this.changeHandler} />
+                                      <Form.Control type="text" name='title' autoComplete="new-title"  placeholder="Enter Your title"  onChange={this.changeHandler} />
                                     
                                       </Form.Group>
                                       <Form.Group controlId="description">
                                       <Form.Label>Description</Form.Label>
-                                      <Form.Control type="text" name='description' autoComplete="new-description"  placeholder="Enter Your Description" value={description} onChange={this.changeHandler} />
+                                      <Form.Control type="text" name='description' autoComplete="new-description"  placeholder="Enter Your Description"  onChange={this.changeHandler} />
                                      
                                      
                                       </Form.Group>

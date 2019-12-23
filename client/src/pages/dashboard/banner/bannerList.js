@@ -4,8 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import {connect} from 'react-redux';
-import { loadBanners } from '../../store/actions/bannerActions';
-import { addFlashMessage } from '../../store/actions/flashMessages';
+import { loadBanners } from '../../../store/actions/bannerActions';
+import { addFlashMessage } from '../../../store/actions/flashMessages';
 
  class BannerList extends Component {
 
@@ -17,11 +17,7 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
     render() {
 
 
-        let {banner} = this.props;
-       console.log(banner);
-     
-
-   
+       let { banners } = this.props.banner;
         return (
             <div class="container-fluid"> 
               
@@ -46,23 +42,7 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
 
              <div className="row">
                  <div className="col-12">
-                 <h1>banners: </h1>
-                    {banner.length > 0 ? <ul className='list-group'>
-                        {
-                            banner.map(bnr => (
-                                <li
-                                    key={bnr._id}
-                                    className='list-group-item'>
-                                    <p>Title: {bnr.title}</p>
-                                    <p>description: {bnr.description}</p>
-                                  
-                                    <img src={`${bnr.image_url}/uploads/${bnr.image}`} className="img-fluid" />
-                                    
-                                   
-                                </li>
-                            ))
-                        }
-                    </ul> : <p>There is no Counter</p>}
+                 
                  
            
                  </div>

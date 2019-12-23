@@ -4,8 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import {connect} from 'react-redux';
-import { createBanner, loadBanners } from '../../store/actions/bannerActions';
-import { addFlashMessage } from '../../store/actions/flashMessages';
+import { createBanner, loadBanners } from '../../../store/actions/bannerActions';
+import { addFlashMessage } from '../../../store/actions/flashMessages';
 
 import { Link } from 'react-router-dom'
 
@@ -92,11 +92,15 @@ import { Link } from 'react-router-dom'
     } 
 
 
+    componentDidMount(){
+        this.props.loadBanners()
+    }
+
   
     render() {
         let {  title, description, designation, cv, image, error  } = this.state;
 
-    //    let { banner } = this.props.banners;
+       let { banners } = this.props.banner;
       console.log(this.props);
 
    
@@ -194,10 +198,74 @@ import { Link } from 'react-router-dom'
 
              <div className="row">
                  <div className="col-12">
-               
-           
+
+                 <div class="card">
+                        <div class="card-body">
+                            <h4 class="mt-0 header-title">Latest Transactions</h4>
+                            <div class="table-responsive mt-4">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">(#) Id</th>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Descrition</th>
+                                            <th scope="col">Desination</th>
+                                            <th scope="col">CV</th>
+                                            <th scope="col">Actions</th>
+                                      
+                                            
+                                        </tr>
+                                    </thead>
+
+ 
+                                  {banners.length > 0 ? 
+                                    <tbody>
+                                    {
+                                        banners.map(banner => (
+
+                                            <tr key={banner._id}>
+                                            <th scope="row">#{banner._id}</th>
+                                            <td>
+                                                <div>
+                                                    <img src={`${banner.image_url}/uploads/${banner.image}`} alt="" class="thumb-lg rounded-circle mr-2"/>
+                                                </div>
+                                            </td>
+                                            <td>{banner.title}</td>
+                                            <td>{banner.description}</td>
+                                            <td>
+                                            {
+                                                banner.designation.map(degintion => (
+                                                <span>{`${degintion},`}</span>
+                                                ))
+                                            }
+                                            </td>
+                                          
+                                            <td>
+                                                <a href={`${banner.image_url}/uploads/${banner.cv}`} className='btn btn-info'> Doawnload CV</a>
+                                           
+                                            </td>
+                                        
+                                            <td>
+                                                <div>
+                                                    <a href="#" class="btn btn-primary btn-sm mr-2">Edit</a>
+                                                    <a href="#" class="btn btn-danger btn-sm ml-2">Delete</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        ))
+                                    }
+                                 </tbody> : <p>There is no Banner</p>}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                  </div>
              </div>
+
+             
            </div>
     )
     }
@@ -208,4 +276,4 @@ const mapStateToProps = state => ({
     addFlashMessage
 })
 
-export default connect(mapStateToProps, { createBanner, addFlashMessage})(Banner)
+export default connect(mapStateToProps, { createBanner, addFlashMessage,loadBanners})(Banner)

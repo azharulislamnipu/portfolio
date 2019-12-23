@@ -3,7 +3,7 @@ import * as Types from '../actions/types';
 
 const init ={
     error:{},
-    banner:{}
+    banners:[]
 }
 const bannerReducer = (state = init, action) => {
     switch(action.type){
@@ -12,12 +12,15 @@ const bannerReducer = (state = init, action) => {
             banner.unshift(action.payload.banner)
 
             return{
-                banner: banner,
+                banners: banner,
                 error:{}    
             }
         }
         case Types.LOAD_BANNER: {
-            return action.payload.banners
+            return {
+                error:{} ,
+                banners: action.payload.banners
+            }
         }
         case Types.BANNER_ERROR: {
             return {

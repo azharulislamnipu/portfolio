@@ -11,6 +11,7 @@ const config = { headers: {
             dispatch({
                 type: Types.LOAD_BANNER,
                 payload: {
+                    error:{},
                     banners: response.data
                 }
             })
