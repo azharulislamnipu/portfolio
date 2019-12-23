@@ -30,10 +30,10 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
 
     static getDerivedStateFromProps(nextProps, prevState) {
         if (
-          JSON.stringify(nextProps.banner.error) !== JSON.stringify(prevState.error)
+          JSON.stringify(nextProps.banners.error) !== JSON.stringify(prevState.error)
         ) {
           return {
-            error: nextProps.banner.error
+            error: nextProps.banners.error
           };
         }
         return null;
@@ -75,9 +75,6 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
     submitHandler = event => {
         event.preventDefault();
         let {  title, description, designation, cv , image} = this.state;
-
-     
-
         const formData = new FormData();
        
         formData.append('title', title);
@@ -98,13 +95,18 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
 
     } 
 
-
+    componentDidMount(){
+        this.props.loadBanners()
+    }
   
     render() {
-        let {  title, description, designation, cv, image, error } = this.state;
-     
-            console.log(this.props)
-   
+        let {  title, description, designation, cv, image, error  } = this.state;
+
+        console.log(this.props)
+
+
+        
+  
         return (
             <div class="container-fluid"> 
               
@@ -197,15 +199,15 @@ import { addFlashMessage } from '../../store/actions/flashMessages';
                             </div>  
                         </div>
 
-
-
+        
            </div>
     )
     }
 }
 
 const mapStateToProps = state => ({
-    addFlashMessage,
+    banners: state.banners,
+    addFlashMessage
 })
 
-export default connect(mapStateToProps, { createBanner, addFlashMessage })(Banner)
+export default connect(mapStateToProps, { createBanner, addFlashMessage, loadBanners })(Banner)

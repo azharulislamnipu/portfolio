@@ -29,11 +29,6 @@ module.exports = {
           .catch(error => serverError(res, error))
 
         }
-       
-
-      
-   
-
 
     },
 

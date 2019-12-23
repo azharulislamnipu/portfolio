@@ -16,7 +16,12 @@ const config = { headers: {
             })
         })
         .catch(error => {
-            console.log(error)
+            dispatch({
+                type: Types.BANNER_ERROR,
+                payload: {
+                    error: error.response.data
+                }
+            })
         })
     }
 
@@ -28,7 +33,7 @@ export const createBanner = (banner, addFlashMessage) => dispatch => {
                 type: Types.ADD_BANNER,
                 payload: {
                     error:{},
-                    banner: res.data
+                    banners: res.data
                 }
             });
             addFlashMessage({

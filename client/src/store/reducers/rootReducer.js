@@ -3,7 +3,7 @@ import authReducer from './authReducer';
 import bannerReducer from './bannerReducer';
 import flashMessages from './flashMessages';
 const rootReducer = combineReducers({
- auth:authReducer,  flashMessages, bannerReducer
+ auth:authReducer,  flashMessages, banners:bannerReducer
 })
 
 export default rootReducer;
