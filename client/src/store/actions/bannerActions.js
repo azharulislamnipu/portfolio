@@ -19,7 +19,7 @@ const config = { headers: {
             dispatch({
                 type: Types.BANNER_ERROR,
                 payload: {
-                    error: error.response.data
+                    error:{}
                 }
             })
         })

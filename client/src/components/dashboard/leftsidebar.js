@@ -23,7 +23,8 @@ export default class LeftSideBar extends Component {
                             </li>
 
                             <li className="menu-title">
-                            <a href="javascript:void(0);" className="waves-effect"><i className="fa fa-archive fa-2x"></i> <span> About </span> </a>
+                            <Link to='/counter' className="waves-effect"><i className="fa fa-glass fa-2x"></i> <span> Counters </span></Link> 
+                        
                             </li>
 
                             <li className="menu-title">

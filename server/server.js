@@ -6,7 +6,9 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const userRoute = require('./routers/userRoute');
 const bannerRoute = require('./routers/bannerRoute');
+const counterRoute = require('./routers/counterRoute');
 const passport = require('passport');
+const path = require('path');
 const app = express();
 require('dotenv').config();
 mongoose.Promise = global.Promise;
@@ -20,8 +22,6 @@ app.use(bodyParser.json());
 app.use(cookieParser())
 app.use(passport.initialize());
 require('./utils/passport')(passport);
-
-
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -39,11 +39,11 @@ app.use((req, res, next) => {
 
 app.use('/api/users', userRoute);
 app.use('/api', bannerRoute);
+app.use('/api', counterRoute);
 app.get('/', (req, res)=>{
     res.send('Welcome to Server side');
 });
-
-
+app.use( express.static('public'));
 const PORT = process.env.PORT || 4000
 app.listen(PORT,()=>{
     console.log(`server is running on PORT ${PORT}`);

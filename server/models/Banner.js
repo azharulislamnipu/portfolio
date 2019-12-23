@@ -22,6 +22,9 @@ const BannerSchema = new Schema({
     image: {
         type: String
     },
+    image_url: {
+        type: String
+    },
     user_id:{
         type: String,
     },
