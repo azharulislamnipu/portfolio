@@ -120,8 +120,6 @@ import { Link } from 'react-router-dom'
                     </div>
                 </div>
                 
-
-
                 <div className="row">
                             <div className="col-xl-12">
                                 <div className="card">
