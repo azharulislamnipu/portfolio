@@ -7,9 +7,12 @@ export const DELETE_FLASH_MESSAGE = 'DELETE_FLASH_MESSAGE';
 export const LOAD_BANNER = 'LOAD_BANNER';
 export const ADD_BANNER = 'ADD_BANNER';
 export const BANNER_ERROR = 'BANNER_ERROR';
+export const REMOVE_BANNER = 'REMOVE_BANNER';
 
 export const LOAD_COUNTER = 'LOAD_COUNTER';
-
+export const ADD_COUNTER = 'ADD_COUNTER';
+export const ERROR_COUNTER = 'ERROR_COUNTER';
+export const REMOVE_COUNTER = 'REMOVE_COUNTER';
 
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 

@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import {connect} from 'react-redux';
-import { loadBanners } from '../../../store/actions/bannerActions';
+import { loadBanners, removeBanner } from '../../../store/actions/bannerActions';
 import { addFlashMessage } from '../../../store/actions/flashMessages';
 
  class Banners extends Component {
@@ -18,6 +18,8 @@ import { addFlashMessage } from '../../../store/actions/flashMessages';
 
 
        let { banners } = this.props.banner;
+
+       console.log(this.props)
    
         return (
             <div class="container-fluid"> 
@@ -100,13 +102,13 @@ import { addFlashMessage } from '../../../store/actions/flashMessages';
                                             <td>
                                                 <div>
                                                     <a href="#" class="btn btn-primary btn-sm mr-2">Edit</a>
-                                                    <a href="#" class="btn btn-danger btn-sm ml-2">Delete</a>
+                                                    <button className='btn btn-danger btn-sm ml-2' onClick={ ()=> { this.props.removeBanner(banner._id)}} >Delete</button>
                                                 </div>
                                             </td>
                                         </tr>
                                             )
                                             
-                                            
+
                                           
                                         })
                                     }
@@ -132,4 +134,4 @@ const mapStateToProps = state => ({
     banner: state.banner,
 })
 
-export default connect(mapStateToProps, { loadBanners})(Banners)
+export default connect(mapStateToProps, { loadBanners, removeBanner})(Banners)

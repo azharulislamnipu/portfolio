@@ -23,6 +23,14 @@ const bannerReducer = (state = init, action) => {
                 banners: action.payload.banners
             }
         }
+        case Types.REMOVE_BANNER: {
+
+            let banners = [...state]
+            return banners.filter(banner => {
+                return banner._id !== action.payload.id
+            })
+
+        }
         case Types.BANNER_ERROR: {
             return {
                 ...state,
