@@ -9,7 +9,7 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Dashboard from './pages/dashboard';
 import Banner from './pages/dashboard/banner';
-import Counter from './pages/dashboard/counterList';
+import Counter from './pages/dashboard/counter';
 import FileUpload from './pages/dashboard/fileupload';
 import Account from './pages/account';
 import {
@@ -21,7 +21,7 @@ import FlashMessagesList from './components/flash/FlashMessagesList';
 import PrivateRoute from './ui/PrivateRoute';
 import {connect} from 'react-redux';
 import Notfound from './pages/404';
-import BannerList from './pages/dashboard/bannerList';
+import BannerList from './pages/dashboard/banner/bannerList';
 class App extends Component {
     render() {
      
