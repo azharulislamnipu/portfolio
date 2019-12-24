@@ -27,16 +27,17 @@ const config = { headers: {
     }
 
 
-export const createBanner = (banner, addFlashMessage) => dispatch => {
+export const createBanner = (banner, addFlashMessage, history) => dispatch => {
     Axios.post('/api/banners/', banner)
         .then((res) => {
             dispatch({
                 type: Types.ADD_BANNER,
                 payload: {
                     error:{},
-                    banners: res.data
+                    banner: res.data
                 }
             });
+            history.push('/banners');
             addFlashMessage({
                 type: 'success',
                 text: res.data.message

@@ -38,7 +38,7 @@ app.use((req, res, next) => {
   });
 
 app.use('/api/users', userRoute);
-app.use('/api', bannerRoute);
+app.use('/api/banners', bannerRoute)
 app.use('/api', counterRoute);
 app.get('/', (req, res)=>{
     res.send('Welcome to Server side');

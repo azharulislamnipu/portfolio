@@ -21,7 +21,7 @@ import FlashMessagesList from './components/flash/FlashMessagesList';
 import PrivateRoute from './ui/PrivateRoute';
 import {connect} from 'react-redux';
 import Notfound from './pages/404';
-import BannerList from './pages/dashboard/banner/bannerList';
+import Banners from './pages/dashboard/banner/banners';
 class App extends Component {
     render() {
      
@@ -37,7 +37,7 @@ class App extends Component {
 
                     <PrivateRoute path="/banner" component={Banner} auth={this.props.auth}/>
                     <PrivateRoute path="/counter" component={Counter} auth={this.props.auth}/>
-                    <PrivateRoute path="/bannerlist" component={BannerList} auth={this.props.auth}/>
+                    <PrivateRoute path="/banners" component={Banners} auth={this.props.auth}/>
                     <PrivateRoute path="/dashboard" component={Dashboard} auth={this.props.auth}/>
                     <PrivateRoute path="/account" component={Account} auth={this.props.auth}/>
                     <Route path="*" component={Notfound} />

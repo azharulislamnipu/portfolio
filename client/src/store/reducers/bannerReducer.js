@@ -8,12 +8,13 @@ const init ={
 const bannerReducer = (state = init, action) => {
     switch(action.type){
         case Types.ADD_BANNER: {
-            let banner = [...state]
-            banner.unshift(action.payload.banner)
+            let banners = [...state]
+            banners.unshift(action.payload.banner)
 
             return{
-                banners: banner,
-                error:{}    
+                error:{},
+                banners: banners
+                  
             }
         }
         case Types.LOAD_BANNER: {
