@@ -10,6 +10,7 @@ import Register from './pages/register';
 import Dashboard from './pages/dashboard';
 import Banner from './pages/dashboard/banner';
 import Counter from './pages/dashboard/counter';
+import Counters from './pages/dashboard/counter/counters';
 import FileUpload from './pages/dashboard/fileupload';
 import Account from './pages/account';
 import {
@@ -37,6 +38,7 @@ class App extends Component {
 
                     <PrivateRoute path="/banner" component={Banner} auth={this.props.auth}/>
                     <PrivateRoute path="/counter" component={Counter} auth={this.props.auth}/>
+                    <PrivateRoute path="/counters" component={Counters} auth={this.props.auth}/>
                     <PrivateRoute path="/banners" component={Banners} auth={this.props.auth}/>
                     <PrivateRoute path="/dashboard" component={Dashboard} auth={this.props.auth}/>
                     <PrivateRoute path="/account" component={Account} auth={this.props.auth}/>

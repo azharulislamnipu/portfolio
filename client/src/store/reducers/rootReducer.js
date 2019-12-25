@@ -7,7 +7,7 @@ const rootReducer = combineReducers({
  auth:authReducer, 
   flashMessages, 
   banner:bannerReducer,
-  counters:counterReducer
+  counter:counterReducer
 })
 
 export default rootReducer;

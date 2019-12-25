@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import {connect} from 'react-redux';
-import { loadCounters } from '../../../store/actions/counterActions';
+import {creatCounter } from '../../../store/actions/counterActions';
 import { addFlashMessage } from '../../../store/actions/flashMessages';
 
 import { Link } from 'react-router-dom'
@@ -12,13 +12,28 @@ import { Link } from 'react-router-dom'
 
  class CounterList extends Component {
 
+    
+            state ={
+                title:'',
+                counter_number:'',
+                counter_icon:'',
+                error:{}
+            }
 
-    componentDidMount(){
-        this.props.loadCounters();
-    }
 
-            changeHandler = event =>{
 
+        static getDerivedStateFromProps(nextProps, prevState) {
+            if (
+              JSON.stringify(nextProps.counters.error) !== JSON.stringify(prevState.error)
+            ) {
+              return {
+                error: nextProps.counters.error
+              };
+            }
+            return null;
+          }
+
+        changeHandler = event =>{
                 this.setState({
                     [event.target.name]: event.target.value
             })
@@ -26,18 +41,26 @@ import { Link } from 'react-router-dom'
         }
         submitHandler = event => {
             event.preventDefault();
-            let {  title, description, designation, cv , image} = this.state;
-        
+     
+            let { title, counter_number, counter_icon} = this.state;
 
+            this.props.creatCounter({title, counter_number, counter_icon},this.props.addFlashMessage ,this.props.history)
+            
+    
         } 
+
+
   
     render() {
 
+        let { title, counter_number, counter_icon, error} = this.state;
 
-
-        let {counters} = this.props;
-   
+    
+       
         console.log(this.props);
+
+
+     
    
         return (
             <div class="container-fluid"> 
@@ -49,7 +72,7 @@ import { Link } from 'react-router-dom'
                                 <div class="col-md-8">
                                     <h4 class="page-title mb-0">Dashboard</h4>
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="#">azhardevs</a></li>
+                                        <li class="breadcrumb-item"><Link to={'/dashboard'}>dashboard</Link></li>
                                         <li class="breadcrumb-item active" aria-current="page">Counter</li>
                                     </ol>
                                 </div>
@@ -63,26 +86,46 @@ import { Link } from 'react-router-dom'
                             <div className="col-xl-12">
                                 <div className="card">
                                     <div className="card-body">
-                                    <h2 className="text-uppercase text-center">Create Banner</h2>
+                                    <h2 className="text-uppercase text-center">Create Counter</h2>
 
 
-                                    <Form  onSubmit={this.submitHandler}  method="post"  enctype="multipart/form-data">
+                                    <Form  onSubmit={this.submitHandler}>
                                         
                                       <Form.Group controlId="title">
                                       <Form.Label>Title</Form.Label>
-                                      <Form.Control type="text" name='title' autoComplete="new-title"  placeholder="Enter Your title"  onChange={this.changeHandler} />
-                                    
+                                      <Form.Control type="text" name='title' autoComplete="new-title"  placeholder="Enter Your title" value={title}  onChange={this.changeHandler} />
+                            
+
+                                      {error.title && (<span className= {error.title ? 'invalid-feedback d-block' : 'invalid-feedback' } >
+                                            {error.title}
+                                        </span>
+                                        )}
                                       </Form.Group>
-                                      <Form.Group controlId="description">
-                                      <Form.Label>Description</Form.Label>
-                                      <Form.Control type="text" name='description' autoComplete="new-description"  placeholder="Enter Your Description"  onChange={this.changeHandler} />
+
+                                      <Form.Group controlId="counterNumber">
+                                      <Form.Label>Counter Number</Form.Label>
+                                      <Form.Control type="text" name='counter_number' autoComplete="new-counter_number"  placeholder="Enter Your Coutner Number" value={counter_number}  onChange={this.changeHandler} />
                                      
-                                     
+                                      {error.counter_number && (<span className= {error.counter_number ? 'invalid-feedback d-block' : 'invalid-feedback' } >
+                                            {error.counter_number}
+                                            </span>
+                                        )}
+                                      </Form.Group>
+
+                                             
+                                      <Form.Group controlId="counterIcon">
+                                      <Form.Label>Counter Icon</Form.Label>
+                                      <Form.Control type="text" name='counter_icon' autoComplete="new-counter_icon"  placeholder="Enter Your Counter Icon" value={counter_icon}  onChange={this.changeHandler} />
+                                      {error.counter_icon && (<span className= {error.counter_icon ? 'invalid-feedback d-block' : 'invalid-feedback' } >
+                                            {error.counter_icon}
+                                            </span>
+                                        )}
                                       </Form.Group>
                                 
                                        <Form.Group className='row'>
                                            <div className="col-sm-12 text-right">
-                                            <button className="btn submit-btn btn-primary" type="submit">Add Banner</button>
+                                           <Link className="btn btn-primary mr-2" to='/counters'>View List</Link>
+                                            <button className="btn submit-btn btn-primary" type="submit">Add Counter</button>
                                             </div>
                                        </Form.Group>
 
@@ -96,39 +139,14 @@ import { Link } from 'react-router-dom'
                             </div>  
                 </div>
 
-                
-
-
-             
-
-             <div className="row">
-                 <div className="col-12">
-               
-           
-                 <h1>Counters: </h1>
-                    {counters.length > 0 ? <ul className='list-group'>
-                        {
-                            counters.map(counter => (
-                                <li
-                                    key={counter._id}
-                                    className='list-group-item'>
-                                    <p>Title: {counter.title}</p>
-                                    <p>Number: {counter.countnumber}</p>
-                                    <p>Icon: {counter.counter_icon}</p>
-                                </li>
-                            ))
-                        }
-                    </ul> : <p>There is no Counter</p>}
-                 
-                 </div>
-             </div>
+            
            </div>
     )
     }
 }
 
 const mapStateToProps = state => ({
-    counters:state.counters
+    counters:state.counter
 })
 
-export default connect(mapStateToProps, {loadCounters })(CounterList)
+export default connect(mapStateToProps, {creatCounter, addFlashMessage })(CounterList)

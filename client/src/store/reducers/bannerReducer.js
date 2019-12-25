@@ -13,8 +13,7 @@ const bannerReducer = (state = init, action) => {
 
             return{
                 error:{},
-                banners: banners
-                  
+                banners: banners  
             }
         }
         case Types.LOAD_BANNER: {
@@ -24,11 +23,15 @@ const bannerReducer = (state = init, action) => {
             }
         }
         case Types.REMOVE_BANNER: {
-
             let banners = [...state]
-            return banners.filter(banner => {
-                return banner._id !== action.payload.id
-            })
+        
+            banners = banners.filter(banner => {
+            return banner._id !== action.payload.id
+            });
+            return {
+                error:{} ,
+                banners: action.payload.banners
+            }
 
         }
         case Types.BANNER_ERROR: {

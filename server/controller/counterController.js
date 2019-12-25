@@ -1,27 +1,32 @@
 const Counter = require('../models/Counter');
 const {serverError,resourceError} = require('../utils/error');
-
-
+const counterValidator= require('../validators/counterValidator');
 module.exports = {
 
    create(req, res, next ){
-  
+   
  
-        let {  title, countnumber, counter_icon } = req.body; 
+        let {  title, counter_number, counter_icon } = req.body; 
         let  user_id =  req.user._id
     
-            let counters = new Counter({title, countnumber, counter_icon, user_id});
-       
-            counters.save()
-            .then(result => {
-                      res.status(201).json({
-                          message: 'Counter Created Successfully'
-                      })
-              
-          })
-          .catch(error => serverError(res, error))
-
-    
+        
+            let validate = counterValidator({title, counter_number, counter_icon})
+  
+            if(!validate.isValid){
+                return res.status(400).json(validate.error);
+            }else{
+                let counters = new Counter({title, counter_number, counter_icon, user_id});
+                counters.save()
+                .then(counts => {
+                    res.status(201).json({
+                        message: 'Counter Created Successfully',
+                        ...counts._doc,
+                    })
+                  
+              })
+              .catch(error => serverError(res, error))
+            }
+        
     },
 
 
@@ -39,5 +44,18 @@ module.exports = {
             })
             .catch(error => serverError(res, error))
     },
+
+    removeCounter(req, res){
+        let { counterId } = req.params
+  
+        Counter.findOneAndDelete({ _id: counterId })
+        .then(result => {
+                res.status(200).json({
+                    message: 'Deleted Successfully',
+                   ...result._doc
+                })
+            })
+            .catch(error => serverError(res, error))
+    }
 
 }

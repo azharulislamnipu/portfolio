@@ -57,9 +57,13 @@ export const createBanner = (banner, addFlashMessage, history) => dispatch => {
 
   export const removeBanner = id => dispatch => {
     Axios.delete(`/api/banners/${id}`)
-    .then(response => {
-        dispatch({type: Types.REMOVE_BANNER,
-             payload: {id: response.data._id}})
+    .then(res => {
+        dispatch({
+            type: Types.REMOVE_BANNER,
+            payload: {
+                id: res.data._id,
+                ...res.data
+            }})
     })
     .catch(error => {
         dispatch({

@@ -7,7 +7,7 @@ const CouterSchema = new Schema({
         required: true,
         trim:true
     },
-    countnumber: {
+    counter_number: {
         type: String,
         trim:true
     },
