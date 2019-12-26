@@ -47,15 +47,22 @@ module.exports = {
 
     removeCounter(req, res){
         let { counterId } = req.params
-  
+
         Counter.findOneAndDelete({ _id: counterId })
         .then(result => {
+            let {_id} = req.user;
+            Counter.find({user_id: _id})
+            .then(counter => {
                 res.status(200).json({
                     message: 'Deleted Successfully',
-                   ...result._doc
+                   ...result._doc,
+                   counters:counter
                 })
             })
-            .catch(error => serverError(res, error))
+            .catch(error => serverError(res, error));
+        })
+        .catch(error => serverError(res, error));
+           
     }
 
 }
