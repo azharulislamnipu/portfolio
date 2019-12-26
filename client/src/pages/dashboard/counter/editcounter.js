@@ -10,7 +10,7 @@ import { addFlashMessage } from '../../../store/actions/flashMessages';
 import { Link } from 'react-router-dom'
 
 
- class Counter extends Component {
+ class EditCounter extends Component {
 
     
             state ={
@@ -86,7 +86,7 @@ import { Link } from 'react-router-dom'
                             <div className="col-xl-12">
                                 <div className="card">
                                     <div className="card-body">
-                                    <h2 className="text-uppercase text-center">Create Counter</h2>
+                                    <h2 className="text-uppercase text-center">Update Counter</h2>
 
 
                                     <Form  onSubmit={this.submitHandler}>
@@ -125,7 +125,7 @@ import { Link } from 'react-router-dom'
                                        <Form.Group className='row'>
                                            <div className="col-sm-12 text-right">
                                            <Link className="btn btn-primary mr-2" to='/counters'>View List</Link>
-                                            <button className="btn submit-btn btn-primary" type="submit">Add Counter</button>
+                                            <button className="btn btn-secondary ml-2" type="submit">Update Counter</button>
                                             </div>
                                        </Form.Group>
 
@@ -149,4 +149,4 @@ const mapStateToProps = state => ({
     counters:state.counter
 })
 
-export default connect(mapStateToProps, {creatCounter, addFlashMessage })(Counter)
+export default connect(mapStateToProps, {creatCounter, addFlashMessage })(EditCounter)

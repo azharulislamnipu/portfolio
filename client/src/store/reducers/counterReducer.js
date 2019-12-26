@@ -25,13 +25,15 @@ const counterReducer = (state = init, action) => {
         case Types.REMOVE_COUNTER: {
 
             let counters = [...state]   ;
-            counters = counters.filter(counter => {
+            
+                counters = counters.filter(counter => {
                 return counter._id !== action.payload.id
                 });
-            return{
-                error:{},
-                counters : counters
-            }
+
+                return{
+                    error:{},
+                    counters: action.payload.counters
+                }
 
         }
         case Types.ERROR_COUNTER: {

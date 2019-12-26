@@ -59,7 +59,7 @@ import * as Types from './types';
                 type: Types.REMOVE_COUNTER,
                 payload: {
                     id: res.data._id,
-                    counters: res.data
+                    ...res.data
                 }})
         })
         .catch(error => {

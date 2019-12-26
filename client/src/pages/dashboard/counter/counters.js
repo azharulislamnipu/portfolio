@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import {connect} from 'react-redux';
 import {  loadCounters, removeCounter } from '../../../store/actions/counterActions';
+import { addFlashMessage } from '../../../store/actions/flashMessages';
 import { Link } from 'react-router-dom'
  class Counters extends Component {
 
@@ -12,6 +13,13 @@ import { Link } from 'react-router-dom'
     componentDidMount(){
         this.props.loadCounters()
     }
+  
+
+    gotoEdit = event => {
+        event.preventDefault();
+        this.props.history.push('/editcounter');
+    } 
+    
   
     render() {
 
@@ -81,7 +89,8 @@ import { Link } from 'react-router-dom'
                                             <td>{counter.counter_icon}</td>
                                             <td>
                                                 <div>
-                                                    <a href="#" class="btn btn-primary btn-sm mr-2">Edit</a>
+                                                    
+                                                    <button className='btn btn-primary btn-sm mr-2' onClick={ this.gotoEdit} >Edit</button>
                                                     <button className='btn btn-danger btn-sm ml-2' onClick={ ()=> { this.props.removeCounter(counter._id)}} >Delete</button>
                                                 </div>
                                             </td>
