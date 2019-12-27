@@ -59,8 +59,6 @@ showCounterItem = () => (
 
  
   render() {
-      let { counters } = this.props.counters;
-    console.log(this.props);
     return (
       <section className="counter-area">
         <Container>
