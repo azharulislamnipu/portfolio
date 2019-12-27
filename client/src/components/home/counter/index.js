@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import CounterItem from './CounterItem';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-export default class Counters extends Component {
+import {connect} from 'react-redux';
+import {  loadCounters } from '../../../store/actions/counterActions';
+class Counters extends Component {
 
   state = {
     counterItems: [{
@@ -37,18 +39,28 @@ export default class Counters extends Component {
     ]
 }
 
+componentDidMount(){
+  this.props.loadCounters()
+}
 
 
 
 showCounterItem = () => (
-  this.state.counterItems.map((items,key) => (
-      <CounterItem key={key} number={items.counternumber} type={items.type} icon={items.icon} duration={items.duration} />
-  ))
+  // this.state.counterItems.map((items,key) => (
+  //     <CounterItem key={key} number={items.counternumber} type={items.type} icon={items.icon} duration={items.duration} />
+  // ))
+ 
+  this.props.counters.counters.map((counter,key) =>{
+      if(counter.status === 'publish'){
+        return ( <CounterItem key={key} number={counter.counter_number} type={counter.title} icon={counter.counter_icon} duration='4' />)
+      }
+  })
 )
 
  
   render() {
-
+      let { counters } = this.props.counters;
+    console.log(this.props);
     return (
       <section className="counter-area">
         <Container>
@@ -60,3 +72,8 @@ showCounterItem = () => (
     )
   }
 }
+const mapStateToProps = state => ({
+  counters: state.counter,
+})
+
+export default connect(mapStateToProps, { loadCounters })(Counters)
