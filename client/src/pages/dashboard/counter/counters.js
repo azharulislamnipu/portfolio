@@ -1,13 +1,34 @@
 import React, { Component } from 'react'
 import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col';
 import {connect} from 'react-redux';
 import {  loadCounters, removeCounter } from '../../../store/actions/counterActions';
 import { addFlashMessage } from '../../../store/actions/flashMessages';
-import { Link } from 'react-router-dom'
+import  UpdateCounter from './updateCounter';
+import { Link } from 'react-router-dom';
  class Counters extends Component {
+
+
+    state = {
+        updateModalOpen: false,
+        id: ''
+    }
+    openUpdateModal = (id) => {
+        this.setState({
+            updateModalOpen: true,
+            id
+        })
+    }
+
+    closeUpdateModal = () => {
+        this.setState({
+            updateModalOpen: false,
+            id: ''
+        })
+    }
 
 
     componentDidMount(){
@@ -25,9 +46,8 @@ import { Link } from 'react-router-dom'
 
 
        let { counters } = this.props.counters;
+    
 
-       console.log(this.props)
-   
         return (
             <div class="container-fluid"> 
               
@@ -53,7 +73,6 @@ import { Link } from 'react-router-dom'
             
                 <div className="row">
                  <div className="col-12">
-
                  <div class="card">
                         <div class="card-body">
                             <h4 class="mt-0 header-title">Latest Counter</h4>
@@ -65,8 +84,9 @@ import { Link } from 'react-router-dom'
                                             <th scope="col">Title</th>
                                             <th scope="col">Counter Number</th>
                                             <th scope="col">Counter Icon</th>
+                                            <th scope="col">Status</th>
                                           
-                                            <th scope="col">Actions</th>
+                                            <th scope="col" className='text-center'>Actions</th>
                                       
                                             
                                         </tr>
@@ -87,10 +107,14 @@ import { Link } from 'react-router-dom'
                                             <td>{counter.title}</td>
                                             <td>{counter.counter_number}</td>
                                             <td>{counter.counter_icon}</td>
-                                            <td>
-                                                <div>
-                                                    
-                                                    <button className='btn btn-primary btn-sm mr-2' onClick={ this.gotoEdit} >Edit</button>
+                                            <td>{counter.status =='publish' ? <span class="badge badge-success">{counter.status}</span> : <span class="badge badge-danger">{counter.status}</span> }</td>
+                                            <td className='text-center'>
+                                            <div> 
+
+                                            {this.state.id === counter._id?   <UpdateCounter show={this.state.updateModalOpen}
+        onHide={this.closeUpdateModal}  counter={counter} /> : null }
+
+                                                    <button className='btn btn-primary btn-sm mr-2' onClick={() => this.openUpdateModal(counter._id)} >Edit</button>
                                                     <button className='btn btn-danger btn-sm ml-2' onClick={ ()=> { this.props.removeCounter(counter._id)}} >Delete</button>
                                                 </div>
                                             </td>
@@ -107,8 +131,7 @@ import { Link } from 'react-router-dom'
                         </div>
                     </div>
 
-                 
-                 
+                    
                  </div>
              </div>
 

@@ -15,6 +15,10 @@ const CouterSchema = new Schema({
         type: String,
         trim:true
     },
+    status: {
+        type: String,
+        trim:true
+    },
     user_id:{
         type: String,
     },

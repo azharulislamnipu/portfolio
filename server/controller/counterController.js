@@ -6,7 +6,7 @@ module.exports = {
    create(req, res, next ){
    
  
-        let {  title, counter_number, counter_icon } = req.body; 
+        let {  title, counter_number, counter_icon, status } = req.body; 
         let  user_id =  req.user._id
     
         
@@ -15,7 +15,7 @@ module.exports = {
             if(!validate.isValid){
                 return res.status(400).json(validate.error);
             }else{
-                let counters = new Counter({title, counter_number, counter_icon, user_id});
+                let counters = new Counter({title, counter_number, counter_icon, status, user_id});
                 counters.save()
                 .then(counts => {
                     res.status(201).json({

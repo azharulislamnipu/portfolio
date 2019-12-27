@@ -12,16 +12,23 @@ import { Link } from 'react-router-dom'
 
  class Counter extends Component {
 
+
+    constructor(props){
+        super();
+        this.state = {
+          status: 'publish',
+          title:'',
+          counter_number:'',
+          counter_icon:'',
+          error:{}
+        };
+      }
     
-            state ={
-                title:'',
-                counter_number:'',
-                counter_icon:'',
-                error:{}
-            }
-
-
-
+            handleChange(e){
+                this.setState({
+                    status: e.target.value
+                })
+              }
         static getDerivedStateFromProps(nextProps, prevState) {
             if (
               JSON.stringify(nextProps.counters.error) !== JSON.stringify(prevState.error)
@@ -42,9 +49,9 @@ import { Link } from 'react-router-dom'
         submitHandler = event => {
             event.preventDefault();
      
-            let { title, counter_number, counter_icon} = this.state;
+            let { title, counter_number, counter_icon, status} = this.state;
 
-            this.props.creatCounter({title, counter_number, counter_icon},this.props.addFlashMessage ,this.props.history)
+            this.props.creatCounter({title, counter_number, counter_icon, status},this.props.addFlashMessage ,this.props.history)
             
     
         } 
@@ -121,6 +128,16 @@ import { Link } from 'react-router-dom'
                                             </span>
                                         )}
                                       </Form.Group>
+
+                                      <Form.Group controlId="status.ControlSelect1">
+                                             <Form.Label>Status</Form.Label>
+                                                        <Form.Control as="select" name='status'  onChange={this.handleChange.bind(this)} value={this.state.status}>
+                                                        <option value='publish'>Publish</option>
+                                                        <option value='revoke'>Revoke</option>
+                                                       
+                                                        </Form.Control>
+                                        </Form.Group>
+
                                 
                                        <Form.Group className='row'>
                                            <div className="col-sm-12 text-right">
