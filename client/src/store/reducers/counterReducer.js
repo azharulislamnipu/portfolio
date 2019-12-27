@@ -36,6 +36,21 @@ const counterReducer = (state = init, action) => {
                 }
 
         }
+        case Types.UPDATE_COUNTER: {
+            let counters = [...state]
+            counters = counters.map(counter => {
+                if (counter._id === action.payload.counter._id) {
+                    return action.payload.counters
+                }
+                return counter
+            })
+
+            return{
+                error:{},
+                counters:action.payload.counters
+            }
+
+        }
         case Types.ERROR_COUNTER: {
             return {
                 ...state,

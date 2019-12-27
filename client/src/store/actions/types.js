@@ -11,6 +11,7 @@ export const REMOVE_BANNER = 'REMOVE_BANNER';
 
 export const LOAD_COUNTER = 'LOAD_COUNTER';
 export const ADD_COUNTER = 'ADD_COUNTER';
+export const UPDATE_COUNTER = 'UPDATE_COUNTER';
 export const ERROR_COUNTER = 'ERROR_COUNTER';
 export const REMOVE_COUNTER = 'REMOVE_COUNTER';
 

@@ -48,6 +48,7 @@ import { Link } from 'react-router-dom';
        let { counters } = this.props.counters;
     
 
+    //    console.log(this.props);
         return (
             <div class="container-fluid"> 
               
