@@ -98,16 +98,18 @@ state = {
         formData.append('about_image', this.state.filename);
     
     
-        // for(var i=0;i<this.state.taskList.length;i++)
-        // {
-        //         if(this.state.taskList[i].projectName==='' || this.state.taskList[i].task==='')
-        //         {
-                    
-        //             return false;
-        //         }
-        // }
+        for(var i=0;i<this.state.taskList.length;i++)
+        {
+                if(this.state.taskList[i].projectName !='' || this.state.taskList[i].task !='')
+                {
+                  
+                    formData.append('projectName[]',this.state.taskList[i].projectName);
+                    formData.append('task[]',this.state.taskList[i].task);
+                }
+        }
 
-        console.log(this.state);
+
+        console.log(formData);
 
     } 
 
