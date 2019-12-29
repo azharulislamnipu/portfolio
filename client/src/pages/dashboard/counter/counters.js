@@ -14,11 +14,13 @@ import { Link } from 'react-router-dom';
 
     state = {
         updateModalOpen: false,
+        error:'',
         id: ''
     }
     openUpdateModal = (id) => {
         this.setState({
             updateModalOpen: true,
+            error:this.props.counters.error,
             id
         })
     }
@@ -30,9 +32,11 @@ import { Link } from 'react-router-dom';
         })
     }
 
-
     componentDidMount(){
         this.props.loadCounters()
+        this.setState({
+            error:this.props.counters.error
+        })
     }
   
 
@@ -48,7 +52,7 @@ import { Link } from 'react-router-dom';
        let { counters } = this.props.counters;
     
 
-    //    console.log(this.props);
+     
         return (
             <div class="container-fluid"> 
               
@@ -85,6 +89,7 @@ import { Link } from 'react-router-dom';
                                             <th scope="col">Title</th>
                                             <th scope="col">Counter Number</th>
                                             <th scope="col">Counter Icon</th>
+                                            <th scope="col">Counter Duration</th>
                                             <th scope="col">Status</th>
                                           
                                             <th scope="col" className='text-center'>Actions</th>
@@ -108,12 +113,13 @@ import { Link } from 'react-router-dom';
                                             <td>{counter.title}</td>
                                             <td>{counter.counter_number}</td>
                                             <td>{counter.counter_icon}</td>
+                                            <td>{counter.duration}</td>
                                             <td>{counter.status =='publish' ? <span class="badge badge-success">{counter.status}</span> : <span class="badge badge-danger">{counter.status}</span> }</td>
                                             <td className='text-center'>
                                             <div> 
 
                                             {this.state.id === counter._id?   <UpdateCounter show={this.state.updateModalOpen}
-        onHide={this.closeUpdateModal}  counter={counter} /> : null }
+        onHide={this.closeUpdateModal}  counter={counter} error={this.state.error} /> : null }
 
                                                     <button className='btn btn-primary btn-sm mr-2' onClick={() => this.openUpdateModal(counter._id)} >Edit</button>
                                                     <button className='btn btn-danger btn-sm ml-2' onClick={ ()=> { this.props.removeCounter(counter._id)}} >Delete</button>

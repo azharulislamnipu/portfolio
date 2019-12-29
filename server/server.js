@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const userRoute = require('./routers/userRoute');
 const bannerRoute = require('./routers/bannerRoute');
 const counterRoute = require('./routers/counterRoute');
+const aboutRoute = require('./routers/aboutRoute');
 const passport = require('passport');
 const path = require('path');
 const app = express();
@@ -40,6 +41,7 @@ app.use((req, res, next) => {
 app.use('/api/users', userRoute);
 app.use('/api/banners', bannerRoute)
 app.use('/api/counters', counterRoute);
+app.use('/api/abouts', aboutRoute);
 app.get('/', (req, res)=>{
     res.send('Welcome to Server side');
 });

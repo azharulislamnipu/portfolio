@@ -66,10 +66,7 @@ export const updateCounter = (id, counter) => dispatch => {
           error: error.response.data
         }
       });
-      if(error.response.data){
-        //  onHide(false);
-      }
-  
+      
     });
 };
 

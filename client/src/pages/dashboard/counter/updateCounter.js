@@ -11,30 +11,24 @@ import { connect } from "react-redux";
 import { updateCounter } from "../../../store/actions/counterActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
 class UpdateCounter extends Component {
-  state = {
+
+
+    state = {
     status: "",
     title: "",
     counter_number: "",
     counter_icon: "",
+    duration: "",
     error: {}
-  };
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      JSON.stringify(nextProps.counters.error) !==
-      JSON.stringify(prevState.error)
-    ) {
-      return {
-        error: nextProps.counters.error
-      };
-    }
-    return null;
-  }
+    };
+
 
   componentDidMount() {
     this.setState({
       title: this.props.counter.title,
       counter_number: this.props.counter.counter_number,
       counter_icon: this.props.counter.counter_icon,
+      duration: this.props.counter.duration,
       status: this.props.counter.status
     });
   }
@@ -60,9 +54,20 @@ class UpdateCounter extends Component {
     event.preventDefault();
     // console.log(title, counter_number, counter_icon, status);
     // this.props.updateCounter({ title, counter_number, counter_icon, status })
-    this.props.updateCounter(this.props.counter._id, this.state);
+    
+ 
 
-    this.props.onHide(true);
+
+    this.props.updateCounter(this.props.counter._id, this.state);
+    // console.log(this.props);
+   
+      this.props.onHide();
+    
+
+
+
+
+   
   //  if(this.isObjectEmpty(this.props.counters.error)){
   //    console.log(this.props.counters.error);
   //  }else{
@@ -71,16 +76,29 @@ class UpdateCounter extends Component {
     // if(this.props.counters.error.counter_number !== ''){
     //   this.props.onHide(true);
     // }else{
-    //   this.props.onHide(false);
+    // this.props.onHide();
     // }
  
   };
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      JSON.stringify(nextProps.counters.error) !==
+      JSON.stringify(prevState.error)
+    ) {
+      return {
+        error: nextProps.counters.error
+      };
+    }
+    return null;
+  }
 
   render() {
    
-  
 
-    let { title, counter_number, counter_icon, status, error } = this.state;
+
+    let { title, counter_number, counter_icon, duration, status, error } = this.state;
+
+    console.log(this.props);
 
     return (
       <Modal
@@ -159,6 +177,28 @@ class UpdateCounter extends Component {
                         }
                       >
                         {error.counter_icon}
+                      </span>
+                    )}
+            </Form.Group>
+
+            <Form.Group controlId="duration">
+              <Form.Label>Duration</Form.Label>
+              <Form.Control
+                type="text"
+                name="duration"
+                placeholder="Enter Duration"
+                value={duration}
+                onChange={this.changeHandler}
+              />
+              {error.duration && (
+                      <span
+                        className={
+                          error.duration
+                            ? "invalid-feedback d-block"
+                            : "invalid-feedback"
+                        }
+                      >
+                        {error.duration}
                       </span>
                     )}
             </Form.Group>

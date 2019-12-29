@@ -5,11 +5,17 @@ const validate = counter =>{
     if(!counter.title){
         error.title = 'Please Provide Counter title';
     }
-  
+
     if(!counter.counter_number){
         error.counter_number = 'Please Provide Counter Number';
     }else if(!validator.isNumeric(counter.counter_number)){
         error.counter_number = 'Input Numeric number please';
+    }
+  
+    if(!counter.duration){
+        error.counter_number = 'Please Provide Counter Number';
+    }else if(!validator.isNumeric(counter.duration)){
+        error.duration = 'Input Numeric number please';
     }
 
     if(!counter.counter_icon){

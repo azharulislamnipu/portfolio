@@ -52,14 +52,14 @@ showCounterItem = () => (
  
   this.props.counters.counters.map((counter,key) =>{
       if(counter.status === 'publish'){
-        return ( <CounterItem key={key} number={counter.counter_number} type={counter.title} icon={counter.counter_icon} duration='4' />)
+        return ( <CounterItem key={key} number={counter.counter_number} type={counter.title} icon={counter.counter_icon} duration={counter.duration} />)
       }
   })
 )
 
  
   render() {
-    return (
+     return (
       <section className="counter-area">
         <Container>
           <Row className="align-items-center">

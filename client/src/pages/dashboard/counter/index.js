@@ -4,10 +4,10 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { creatCounter } from "../../../store/actions/counterActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
 
-import { Link } from "react-router-dom";
 
 class Counter extends Component {
   constructor(props) {
@@ -17,6 +17,7 @@ class Counter extends Component {
       title: "",
       counter_number: "",
       counter_icon: "",
+      duration: "",
       error: {}
     };
   }
@@ -46,19 +47,19 @@ class Counter extends Component {
   submitHandler = event => {
     event.preventDefault();
 
-    let { title, counter_number, counter_icon, status } = this.state;
+    let { title, counter_number, counter_icon, duration, status } = this.state;
 
     this.props.creatCounter(
-      { title, counter_number, counter_icon, status },
+      { title, counter_number, counter_icon, duration, status },
       this.props.addFlashMessage,
       this.props.history
     );
   };
 
   render() {
-    let { title, counter_number, counter_icon, error } = this.state;
+    let { title, counter_number, counter_icon, duration, error } = this.state;
 
-    console.log(this.props);
+  
 
     return (
       <div class="container-fluid">
@@ -156,6 +157,29 @@ class Counter extends Component {
                         }
                       >
                         {error.counter_icon}
+                      </span>
+                    )}
+                  </Form.Group>
+
+                  <Form.Group controlId="duration">
+                    <Form.Label>Counter Duration</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="duration"
+                      autoComplete="new-duration"
+                      placeholder="Enter duration"
+                      value={duration}
+                      onChange={this.changeHandler}
+                    />
+                    {error.duration && (
+                      <span
+                        className={
+                          error.duration
+                            ? "invalid-feedback d-block"
+                            : "invalid-feedback"
+                        }
+                      >
+                        {error.duration}
                       </span>
                     )}
                   </Form.Group>

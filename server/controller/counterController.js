@@ -3,9 +3,9 @@ const { serverError, resourceError } = require("../utils/error");
 const counterValidator = require("../validators/counterValidator");
 module.exports = {
   create(req, res, next) {
-    let { title, counter_number, counter_icon, status } = req.body;
+    let { title, counter_number, counter_icon, duration, status } = req.body;
     let user_id = req.user._id;
-    let validate = counterValidator({ title, counter_number, counter_icon });
+    let validate = counterValidator({ title, counter_number, counter_icon, duration });
 
     if (!validate.isValid) {
       return res.status(400).json(validate.error);
@@ -14,6 +14,7 @@ module.exports = {
         title,
         counter_number,
         counter_icon,
+        duration,
         status,
         user_id
       });
@@ -30,8 +31,8 @@ module.exports = {
   },
 
   getAll(req, res, next) {
-    let { _id } = req.user;
-    Counter.find({ user_id: _id })
+    // let { _id } = req.user;
+    Counter.find()
       .then(counter => {
         if (counter.length === 0) {
           res.status(200).json({
@@ -47,9 +48,9 @@ module.exports = {
   update(req, res) {
     let { counterId } = req.params;
 
-    let { title, counter_number, counter_icon, status } = req.body;
+    let { title, counter_number, counter_icon, duration, status } = req.body;
     let user_id = req.user._id;
-    let validate = counterValidator({ title, counter_number, counter_icon });
+    let validate = counterValidator({ title, counter_number, counter_icon, duration });
 
     if (!validate.isValid) {
         return res.status(400).json(validate.error);
@@ -59,6 +60,7 @@ module.exports = {
       { title,
         counter_number,
         counter_icon,
+        duration,
         status,
         user_id},
       { new: true }
