@@ -2,8 +2,9 @@ import React from "react"
 const TaskList = (props) => {
   return (
     props.taskList.map((val, idx) => {
-      let projectName = `projectName-${idx}`, task = `task-${idx}`, taskNotes = `taskNotes-${idx}`, taskStatus = `taskStatus-${idx}`
+      let projectName = `projectName-${idx}`, task = `task-${idx}`;
       return (
+          <table className='w-100'>
         <tr key={val.index}>
           <td>
             <input type="text"  name="projectName" data-id={idx} id={projectName} className="form-control " onChange={props.handlechange} />
@@ -19,6 +20,7 @@ const TaskList = (props) => {
             }
           </td>
         </tr >
+        </table>
       )
     })
   )
