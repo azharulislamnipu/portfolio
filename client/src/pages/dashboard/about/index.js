@@ -160,8 +160,11 @@ state = {
                                       <Form.Control type="file" name='about_image' multiple  onChange={this.filehander} />
                                       
                                       </Form.Group>
-
+                                      <table className='w-100'>
                                       <TaskList add={this.addNewRow} delete={this.clickOnDelete.bind(this)}taskList={taskList}  handlechange={this.handleChange} />
+                                   
+                                      </table>
+
                                    
                                      
                                        <Form.Group className='row'>
