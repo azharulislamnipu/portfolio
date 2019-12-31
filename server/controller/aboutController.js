@@ -123,7 +123,7 @@ module.exports = {
       //   req.protocol + "://" + req.get("host") + "/uploads/" + about_image;
 
 console.log(bodydata);
-console.log(bodydata);
+console.log(req.body);
 
 
     // let user_id = req.user._id;

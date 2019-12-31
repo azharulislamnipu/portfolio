@@ -11,7 +11,7 @@ const {upload,uploadany} = require('../utils/multer');
  router.post('/',auth, admin, upload('about_image'), create);
 router.get('/',  getAll);
 // router.get('/', getAll);
-router.get('/:aboutId', getAboutDetails)
-router.put('/', auth, admin, update)
-router.delete('/:aboutId', auth, admin, removeAbout)
+router.get('/:aboutId', getAboutDetails);
+router.put('/:aboutId', auth, admin, upload('about_image'), update);
+router.delete('/:aboutId', auth, admin, removeAbout);
 module.exports = router;
