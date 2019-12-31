@@ -7,6 +7,6 @@ const {admin,supperadmin} = require('../middleware/admin');
 router.post('/',auth, admin, create);
 // router.get('/',auth, admin,  getAll);
 router.get('/', getAll);
-router.put('/:counterId', auth, update)
-router.delete('/:counterId', auth, removeCounter)
+router.put('/:counterId', auth, admin, update)
+router.delete('/:counterId', auth, admin, removeCounter)
 module.exports = router;

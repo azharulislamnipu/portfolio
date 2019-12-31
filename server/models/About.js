@@ -49,11 +49,6 @@ const AboutSchema = new Schema({
             trim:true
         }
     },
-    social_info:[ {
-        social_icon: [],
-        social_link : []
-      }],
-
     status: {
         type: String,
         trim:true

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {create, getAll, getAboutDetails} = require('../controller/aboutController');
+const {create, getAll, getAboutDetails, removeAbout} = require('../controller/aboutController');
 const auth = require('../middleware/auth');
 const {admin,supperadmin} = require('../middleware/admin');
 const {upload,uploadany} = require('../utils/multer');
@@ -13,5 +13,5 @@ router.get('/',  getAll);
 // router.get('/', getAll);
 router.get('/:aboutId', getAboutDetails)
 // router.put('/:aboutId', auth, update)
-// router.delete('/:aboutId', auth, removeCounter)
+router.delete('/:aboutId', auth, admin, removeAbout)
 module.exports = router;

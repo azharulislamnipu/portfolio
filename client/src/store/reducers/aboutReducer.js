@@ -7,6 +7,12 @@ const init ={
 }
 const aboutReducer = (state = init, action) => {
     switch(action.type){
+        case Types.LOAD_ABOUT: {
+            return {
+                error:{},
+                abouts: action.payload.abouts
+            };
+        }
         case Types.CREATE_ABOUT: {
             let abouts = [...state]
             abouts.unshift(action.payload.about)
@@ -14,6 +20,20 @@ const aboutReducer = (state = init, action) => {
                 error:{},
                 abouts: abouts  
             }
+        }
+        case Types.REMOVE_ABOUT: {
+
+            let abouts = [...state]   ;
+            
+                abouts = abouts.filter(about => {
+                return about._id !== action.payload.id
+                });
+
+                return{
+                    error:{},
+                    abouts: action.payload.abouts
+                }
+
         }
         case Types.ERROR_ABOUT: {
             return {

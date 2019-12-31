@@ -6,43 +6,23 @@ module.exports = {
 
         const bodydata = JSON.parse(JSON.stringify(req.body));
 
-     
-
     
- 
-         let {  title, sub_title, about_info, name, email, phone, address, age, nationality, social_info, status, about_image_name, social_icon , social_link } = bodydata; 
+         let {  title, sub_title, about_info, name, email, phone, address, age, nationality, social_info, status, about_image_name } = bodydata; 
         // let  user_id =  req.user._id
       
         let about_image = bodydata.about_image_name.toLowerCase().split(' ').join('-');
       
         let about_image_url = req.protocol + '://' + req.get('host')+'/uploads/'+about_image;
       
-        // console.log(social_info);
-        
-   
-        
-        // let { title, sub_title, about_image,
-        //     about_info, name, email, phone, address, age, nationality, social_icon, social_link, status } = req.body;
-        //     let about_image_url = req.protocol + '://' + req.get('host')+'/uploads/'+about_image;
-        //     console.log(about_image_url);
+         let validate = aboutValidator({ title, sub_title, about_image, name, email, phone, address, age, nationality})
 
-
-
-
-        // let validate = aboutValidator({ title, sub_title, about_image, about_image_url, name, email, phone, address, age, nationality, social_icon, social_link})
-
-        // if (!validate.isValid) {
-        //     return res.status(400).json(validate.error);
-        // } else {
-
-
+        if (!validate.isValid) {
+            return res.status(400).json(validate.error);
+        } else {
             let user_id = req.user._id;
             let about = new About({
-                title, sub_title, about_image, about_image_url, about_info, bio: { name, email, phone, address, age, nationality },
-                social_info:{
-                    social_icon,
-                    social_link
-                }, status, user_id
+                title, sub_title, about_image, about_image_url, about_info,
+                 bio: { name, email, phone, address, age, nationality }, status, user_id
             });
             about.save()
                 .then(abt => {
@@ -53,13 +33,12 @@ module.exports = {
 
                 })
                 .catch(error => serverError(res, error))
-        // }
+        }
 
 
     },
 
     getAll(req, res,next) {
-        // let {_id} = req.user;
         About.find()
             .then(about => {
                 if (about.length === 0) {
@@ -72,6 +51,7 @@ module.exports = {
             })
             .catch(error => serverError(res, error))
     },
+
 
     getAboutDetails(req, res) {
         let { aboutId } = req.params
@@ -87,5 +67,25 @@ module.exports = {
             })
             .catch(error => serverError(res, error))
     },
+
+   
+    removeAbout(req, res) {
+        let { aboutId } = req.params
+    
+        About.findOneAndDelete({ _id: aboutId })
+          .then(result => {
+            let { _id } = req.user;
+            About.find({ user_id: _id })
+              .then(about => {
+                res.status(200).json({
+                  message: "Deleted Successfully",
+                  ...result._doc,
+                  abouts: about
+                });
+              })
+              .catch(error => serverError(res, error));
+          })
+          .catch(error => serverError(res, error));
+      }
    
 };

@@ -12,7 +12,7 @@ export const createAbout = (about, addFlashMessage, history) => dispatch => {
                     about: res.data
                 }
             });
-            // history.push('/banners');
+            history.push('/abouts');
             addFlashMessage({
                 type: 'success',
                 text: res.data.message
@@ -30,3 +30,44 @@ export const createAbout = (about, addFlashMessage, history) => dispatch => {
   }
   
 
+  export const loadAbouts = () => dispatch => {
+    Axios.get("/api/abouts/")
+      .then(response => {
+        dispatch({
+          type: Types.LOAD_ABOUT,
+          payload: {
+            erorr: {},
+            abouts: response.data
+          }
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: Types.ERROR_ABOUT,
+          payload: {
+            error: error.response.data
+          }
+        });
+      });
+  };
+
+  export const removeAbout = id => dispatch => {
+    Axios.delete(`/api/abouts/${id}`)
+      .then(res => {
+        dispatch({
+          type: Types.REMOVE_ABOUT,
+          payload: {
+            id: res.data._id,
+            ...res.data
+          }
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: Types.ERROR_ABOUT,
+          payload: {
+            error: error.response.data
+          }
+        });
+      });
+  };

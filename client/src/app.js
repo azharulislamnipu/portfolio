@@ -15,6 +15,7 @@ import EditCounter from './pages/dashboard/counter/editcounter';
 import Counters from './pages/dashboard/counter/counters';
 
 import About from './pages/dashboard/about'
+import Abouts from './pages/dashboard/about/abouts'
 
 import FileUpload from './pages/dashboard/fileupload';
 import Account from './pages/account';
@@ -48,6 +49,7 @@ class App extends Component {
                     <PrivateRoute path="/editcounter" component={EditCounter} auth={this.props.auth}/>
 
                     <PrivateRoute path="/about" component={About} auth={this.props.auth}/>
+                    <PrivateRoute path="/abouts" component={Abouts} auth={this.props.auth}/>
 
                     <PrivateRoute path="/banners" component={Banners} auth={this.props.auth}/>
                     <PrivateRoute path="/dashboard" component={Dashboard} auth={this.props.auth}/>
