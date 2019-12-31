@@ -21,6 +21,22 @@ const aboutReducer = (state = init, action) => {
                 abouts: abouts  
             }
         }
+        case Types.UPDATE_ABOUT: {
+            let abouts = [...state]
+            abouts = abouts.map(about => {
+                if (about._id === action.payload.about._id) {
+                    return action.payload.abouts
+                }
+                return about
+            })
+
+            return{
+                error:{},
+                abouts:action.payload.abouts
+            }
+
+        }
+
         case Types.REMOVE_ABOUT: {
 
             let abouts = [...state]   ;

@@ -29,6 +29,27 @@ export const createAbout = (about, addFlashMessage, history) => dispatch => {
         })
   }
   
+  export const updateAbout = (id, about) => dispatch => {
+    Axios.put(`/api/abouts/${id}`, about)
+      .then(res => {
+        dispatch({
+          type: Types.UPDATE_ABOUT,
+          payload: {
+              error: {},
+              ...res.data
+           }
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: Types.ERROR_ABOUT,
+          payload: {
+            error: error.response.data
+          }
+        });
+        
+      });
+  };
 
   export const loadAbouts = () => dispatch => {
     Axios.get("/api/abouts/")

@@ -9,6 +9,7 @@ import Form from "react-bootstrap/Form";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
+import { updateAbout } from '../../../store/actions/aboutActions';
 class UpdateAbout extends Component {
 
     constructor(props) {
@@ -35,26 +36,25 @@ class UpdateAbout extends Component {
         this.changeHandler = this.changeHandler.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.filehander = this.filehander.bind(this);
-    this.submitHandler = this.submitHandler.bind(this);
       }
  
 
   componentDidMount() {
-    this.setState({
-      title: this.props.about.title,
-      sub_title: this.props.about.sub_title,
-      about_image:  this.props.about.about_image, 
-      about_image_url:  this.props.about.about_image_url, 
-      about_info:  this.props.about.about_info,
+    // this.setState({
+    //   title: this.props.about.title,
+    //   sub_title: this.props.about.sub_title,
+    //   about_image:  this.props.about.about_image, 
+    //   about_image_url:  this.props.about.about_image_url, 
+    //   about_info:  this.props.about.about_info,
 
-      name:this.props.bio.name,
-      email: this.props.bio.email,
-      phone: this.props.bio.phone,
-      address:this.props.bio.address,
-      age: this.props.bio.age,
-      nationality: this.props.bio.nationality,
-      status: this.props.about.status
-    });
+    //   name:this.props.bio.name,
+    //   email: this.props.bio.email,
+    //   phone: this.props.bio.phone,
+    //   address:this.props.bio.address,
+    //   age: this.props.bio.age,
+    //   nationality: this.props.bio.nationality,
+    //   status: this.props.about.status
+    // });
   }
 
 
@@ -75,26 +75,47 @@ class UpdateAbout extends Component {
     this.setState({ filename: e.target.files[0].name });
   };
 
- isObjectEmpty = obj => {
-
-    return Object.getOwnPropertyNames(obj).length >= 1
- 
- }
 
 
   submitHandler = event => {
     event.preventDefault();
-    // console.log(title, counter_number, counter_icon, status);
-    // this.props.updateCounter({ title, counter_number, counter_icon, status })
-    
- 
+    let {
+      title,
+      sub_title,
+      about_image,
+      about_info,
+      name,
+      email,
+      phone,
+      address,
+      age,
+      nationality,
+      status,
+      error
+    } = this.state;
 
-      this.props.onHide();
-    
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("sub_title", sub_title);
+    formData.append("about_info", about_info);
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("address", address);
+    formData.append("age", age);
+    formData.append("nationality", nationality);
+    formData.append("status", status);
+    formData.append("about_image_name", this.state.filename);
+    formData.append("about_image", this.state.selectedFile[0]);
+
+    this.props.updateAbout(this.props.about._id, this.state);
+    this.props.onHide();
 
 
- 
   };
+
+
+
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
       JSON.stringify(nextProps.abouts.error) !==
@@ -109,7 +130,7 @@ class UpdateAbout extends Component {
 
   render() {
    
-
+console.log(this.props);
 
     let {
         title,
@@ -407,4 +428,4 @@ const mapStateToProps = state => ({
   abouts: state.about
 });
 
-export default connect(mapStateToProps, {  addFlashMessage })(UpdateAbout);
+export default connect(mapStateToProps, { updateAbout , addFlashMessage })(UpdateAbout);

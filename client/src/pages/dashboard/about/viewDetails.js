@@ -12,10 +12,6 @@ class ViewDetails extends Component {
       about_image: "",
       about_image_url: "",
       about_info: "",
-
-      selectedFile: "",
-      filename: "",
-
       name: "",
       email: "",
       phone: "",
