@@ -15,5 +15,11 @@ export const UPDATE_COUNTER = 'UPDATE_COUNTER';
 export const ERROR_COUNTER = 'ERROR_COUNTER';
 export const REMOVE_COUNTER = 'REMOVE_COUNTER';
 
-export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
+
+export const LOAD_ABOUT = 'LOAD_ABOUT';
+export const CREATE_ABOUT = 'CREATE_ABOUT';
+export const UPDATE_ABOUT = 'UPDATE_ABOUT';
+export const ERROR_ABOUT = 'ERROR_ABOUT';
+export const REMOVE_ABOUT = 'REMOVE_ABOUT';
+
 

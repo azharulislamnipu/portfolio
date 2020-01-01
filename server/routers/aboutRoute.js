@@ -1,12 +1,17 @@
 const router = require('express').Router();
-const {create,getAll,removeCounter, update} = require('../controller/aboutController');
+const {create, getAll, getAboutDetails, removeAbout, update} = require('../controller/aboutController');
 const auth = require('../middleware/auth');
 const {admin,supperadmin} = require('../middleware/admin');
+const {upload,uploadany} = require('../utils/multer');
 //get all authenicate user
 // router.get('/auth', authnicateuser);
-router.post('/',auth, admin, create);
-// router.get('/',auth, admin,  getAll);
-router.get('/', getAll);
-router.put('/:aboutId', auth, update)
-router.delete('/:aboutId', auth, removeCounter)
+ 
+//get all authenicate user
+// router.get('/auth', authnicateuser);
+ router.post('/',auth, admin, upload('about_image'), create);
+router.get('/',  getAll);
+// router.get('/', getAll);
+router.get('/:aboutId', getAboutDetails);
+router.put('/:aboutId', auth, admin, upload('about_image'), update);
+router.delete('/:aboutId', auth, admin, removeAbout);
 module.exports = router;

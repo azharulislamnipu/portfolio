@@ -49,7 +49,7 @@ import { addFlashMessage } from '../../../store/actions/flashMessages';
 
                  <div class="card">
                         <div class="card-body">
-                            <h4 class="mt-0 header-title">Latest Transactions</h4>
+                            <h4 class="mt-0 header-title">Latest Banners</h4>
                             <div class="table-responsive mt-4">
                                 <table class="table table-hover mb-0">
                                     <thead>

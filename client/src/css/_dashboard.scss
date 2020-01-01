@@ -495,7 +495,9 @@ code {
 .bg-info {
     background-color: #1699dd !important;
 }
-
+.bg-dark {
+    color: #0f1f3e !important;
+}
 .bg-warning {
     background-color: #fdba45 !important;
 }
@@ -596,6 +598,17 @@ code {
     color: #ffffff;
 }
 
+.bio-text{
+    p{
+        color: #ffffff;
+    }
+    a{
+        color: #ffffff;
+        &:hover{
+           color: #655be6;
+        }
+    }
+}
 
 /* Navs & Tabs */
 

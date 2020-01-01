@@ -33,18 +33,13 @@ import { Link } from 'react-router-dom';
     }
 
     componentDidMount(){
-        this.props.loadCounters()
+        this.props.loadCounters();
         this.setState({
             error:this.props.counters.error
         })
     }
   
 
-    gotoEdit = event => {
-        event.preventDefault();
-        this.props.history.push('/editcounter');
-    } 
-    
   
     render() {
 
