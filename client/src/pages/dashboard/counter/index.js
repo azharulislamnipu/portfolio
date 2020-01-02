@@ -58,9 +58,6 @@ class Counter extends Component {
 
   render() {
     let { title, counter_number, counter_icon, duration, error } = this.state;
-
-  
-
     return (
       <div class="container-fluid">
         <div class="row">

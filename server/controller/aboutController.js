@@ -69,7 +69,7 @@ module.exports = {
       .then(about => {
         if (about.length === 0) {
           res.status(200).json({
-            message: "No Banner Found"
+            message: "No About Found"
           });
         } else {
           res.status(200).json(about);
@@ -116,7 +116,6 @@ module.exports = {
      let about_image,  about_image_url;
 
       if(about_image_name == ''){
-      
         let res = about_current_url.replace(req.protocol + "://" + req.get("host") + "/uploads/","");
           about_image = res;
           about_image_url = about_current_url;

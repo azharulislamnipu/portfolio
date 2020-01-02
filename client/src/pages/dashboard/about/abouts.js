@@ -117,7 +117,7 @@ import ViewDetails from "./viewDetails";
                                             <td><img src={about.about_image_url} class="thumb-lg rounded-circle mr-2" alt="about-image"/></td>
                                             <td>{about.title}</td>
                                             <td>{about.sub_title}</td>
-                                            <td>{about.about_info}</td>
+                                            <td className='w-25'>{about.about_info}</td>
                                         
                                             <td>{about.status =='publish' ? <span class="badge badge-success">{about.status}</span> : <span class="badge badge-danger">{about.status}</span> }</td>
                                             <td>
