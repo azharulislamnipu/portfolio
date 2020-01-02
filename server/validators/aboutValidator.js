@@ -41,15 +41,7 @@ const validate = about =>{
         error.nationality = 'Please Provide Bio nationality';
     }
     
-    // if(!about.social_icon){
-    //     error.social_icon = 'Please Provide social Icon ';
-    // }
-
-    // if(!about.social_link){
-    //     error.social_link = 'Please Provide social link';
-    // }else if(!validator.isURL(about.social_link, {protocols: ['http','https','ftp'], require_tld: true, require_protocol: true, require_host: true})){
-    //     error.social_link = 'Please Provide valid social link ';
-    // }
+  
 
     return{
         error,

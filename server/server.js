@@ -8,6 +8,7 @@ const userRoute = require('./routers/userRoute');
 const bannerRoute = require('./routers/bannerRoute');
 const counterRoute = require('./routers/counterRoute');
 const aboutRoute = require('./routers/aboutRoute');
+const socialRoute = require('./routers/socialRoute');
 const passport = require('passport');
 const path = require('path');
 const app = express();
@@ -42,6 +43,7 @@ app.use('/api/users', userRoute);
 app.use('/api/banners', bannerRoute)
 app.use('/api/counters', counterRoute);
 app.use('/api/abouts', aboutRoute);
+app.use('/api/socials', socialRoute);
 app.get('/', (req, res)=>{
     res.send('Welcome to Server side');
 });

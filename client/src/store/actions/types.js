@@ -9,6 +9,7 @@ export const ADD_BANNER = 'ADD_BANNER';
 export const BANNER_ERROR = 'BANNER_ERROR';
 export const REMOVE_BANNER = 'REMOVE_BANNER';
 
+
 export const LOAD_COUNTER = 'LOAD_COUNTER';
 export const ADD_COUNTER = 'ADD_COUNTER';
 export const UPDATE_COUNTER = 'UPDATE_COUNTER';
@@ -23,3 +24,8 @@ export const ERROR_ABOUT = 'ERROR_ABOUT';
 export const REMOVE_ABOUT = 'REMOVE_ABOUT';
 
 
+export const LOAD_SOCIAL = 'LOAD_SOCIAL';
+export const CREATE_SOCIAL = 'CREATE_SOCIAL';
+export const UPDATE_SOCIAL = 'UPDATE_SOCIAL';
+export const ERROR_SOCIAL = 'ERROR_SOCIAL';
+export const REMOVE_SOCIAL = 'REMOVE_SOCIAL';

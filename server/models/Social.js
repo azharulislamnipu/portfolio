@@ -37,6 +37,6 @@ const SocialSchema = new Schema({
     },
 });
 
-const Social = mongoose.model('Counter', SocialSchema);
+const Social = mongoose.model('Social', SocialSchema);
 
 module.exports = Social;
