@@ -47,7 +47,7 @@ export const creatCounter = (counter, addFlashMessage, history) => dispatch => {
     });
 };
 
-export const updateCounter = (id, counter) => dispatch => {
+export const updateCounter = (id, counter, addFlashMessage, props) => dispatch => {
   Axios.put(`/api/counters/${id}`, counter)
     .then(res => {
       dispatch({
@@ -57,7 +57,13 @@ export const updateCounter = (id, counter) => dispatch => {
             ...res.data
          }
       });
-    //   onHide(true);
+    addFlashMessage({
+                type: 'success',
+                text: res.data.message
+            })
+            if (res.data.message) {
+                props.onHide();
+            }
     })
     .catch(error => {
       dispatch({

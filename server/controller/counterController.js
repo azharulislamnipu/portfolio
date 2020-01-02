@@ -49,6 +49,7 @@ module.exports = {
     let { counterId } = req.params;
 
     let { title, counter_number, counter_icon, duration, status } = req.body;
+    console.log('counter_number'+counter_number);
     let user_id = req.user._id;
     let validate = counterValidator({ title, counter_number, counter_icon, duration });
 

@@ -17,10 +17,22 @@ import ViewDetails from "./viewDetails";
         error:'',
         id: ''
     }
+
+      static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      JSON.stringify(nextProps.abouts.error) !== JSON.stringify(prevState.error)
+    ) {
+      return {
+        error: nextProps.abouts.error
+      };
+    }
+    return null;
+  }
+
+
     openUpdateModal = (id) => {
         this.setState({
             updateModalOpen: true,
-            error:this.props.abouts.error,
             id
         })
     }
@@ -46,8 +58,6 @@ import ViewDetails from "./viewDetails";
     render() {
         let { abouts } = this.props.abouts;
 
-      
-   
         return (
             <div class="container-fluid"> 
               

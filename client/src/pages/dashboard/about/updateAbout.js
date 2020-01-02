@@ -19,6 +19,7 @@ class UpdateAbout extends Component {
           sub_title: "",
           about_image: "",
           about_image_url: "",
+          about_current_url: "",
           about_info: "",
     
           selectedFile: "",
@@ -34,25 +35,26 @@ class UpdateAbout extends Component {
           error: {}
         };
         this.changeHandler = this.changeHandler.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.filehander = this.filehander.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.filehander = this.filehander.bind(this);
       }
  
 
   componentDidMount() {
     this.setState({
-      title: this.props.about.title,
-      sub_title: this.props.about.sub_title,
-      about_image:  this.props.about.about_image, 
+      title: this.props.abouts.error.title?  this.state.title : this.props.about.title,
+      sub_title: this.props.abouts.error.sub_title?  this.state.sub_title : this.props.about.sub_title,
+      about_image:  this.props.abouts.error.about_image?  this.state.about_image : this.props.about.about_image, 
       about_image_url:  this.props.about.about_image_url, 
-      about_info:  this.props.about.about_info,
+      about_current_url:  this.props.about.about_image_url, 
+      about_info: this.props.about.about_info,
 
-      name:this.props.bio.name,
-      email: this.props.bio.email,
-      phone: this.props.bio.phone,
-      address:this.props.bio.address,
-      age: this.props.bio.age,
-      nationality: this.props.bio.nationality,
+      name: this.props.abouts.error.name?  this.state.name : this.props.bio.name,
+      email:  this.props.abouts.error.email?  this.state.email : this.props.bio.email,
+      phone:  this.props.abouts.error.phone?  this.state.phone : this.props.bio.phone,
+      address:  this.props.abouts.error.address?  this.state.address :this.props.bio.address,
+      age:  this.props.abouts.error.age?  this.state.age : this.props.bio.age,
+      nationality:  this.props.abouts.error.nationality?  this.state.nationality : this.props.bio.nationality,
       status: this.props.about.status
     });
   }
@@ -83,6 +85,7 @@ class UpdateAbout extends Component {
       title,
       sub_title,
       about_image,
+      about_image_url,
       about_info,
       name,
       email,
@@ -106,10 +109,10 @@ class UpdateAbout extends Component {
     formData.append("nationality", nationality);
     formData.append("status", status);
     formData.append("about_image_name", this.state.filename);
+    formData.append("about_current_url", about_image_url);
     formData.append("about_image", this.state.selectedFile[0]);
 
-    this.props.updateAbout(this.props.about._id, formData);
-    this.props.onHide();
+    this.props.updateAbout(this.props.about._id, formData, this.props.addFlashMessage, this.props);
 
 
   };
@@ -130,8 +133,6 @@ class UpdateAbout extends Component {
 
   render() {
    
-console.log(this.props);
-
     let {
         title,
         sub_title,
@@ -224,6 +225,12 @@ console.log(this.props);
                   name="about_image"
                   multiple
                   onChange={this.filehander}
+                />
+                
+                  <Form.Control id='hidden_img'
+                  type="hidden"
+                  name="about_current_url"
+                  value={about_image_url}
                 />
                 {error.about_image && (
                   <span

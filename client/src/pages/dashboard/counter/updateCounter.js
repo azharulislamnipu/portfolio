@@ -13,22 +13,40 @@ import { addFlashMessage } from "../../../store/actions/flashMessages";
 class UpdateCounter extends Component {
 
 
-    state = {
-    status: "",
-    title: "",
-    counter_number: "",
-    counter_icon: "",
-    duration: "",
-    error: {}
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+          status: "",
+          title: "",
+          counter_number: "",
+          counter_icon: "",
+          duration: "",
+          error: {}
+        };
+        this.changeHandler = this.changeHandler.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.submitHandler = this.submitHandler.bind(this);
+      }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      JSON.stringify(nextProps.counters.error) !==
+      JSON.stringify(prevState.error)
+    ) {
+      return {
+        error: nextProps.counters.error
+      };
+    }
+    return null;
+  }
 
   componentDidMount() {
     this.setState({
-      title: this.props.counter.title,
-      counter_number: this.props.counter.counter_number,
-      counter_icon: this.props.counter.counter_icon,
-      duration: this.props.counter.duration,
+  
+      title: this.props.counters.error.title?  this.state.title : this.props.counter.title,
+      counter_number: this.props.counters.error.counter_number?  this.state.counter_number : this.props.counter.counter_number,
+      counter_icon: this.props.counters.error.counter_icon?  this.state.counter_icon : this.props.counter.counter_icon,
+      duration:  this.props.counters.error.duration?  this.state.duration :  this.props.counter.duration,
       status: this.props.counter.status
     });
   }
@@ -43,62 +61,17 @@ class UpdateCounter extends Component {
     });
   }
 
- isObjectEmpty = obj => {
-
-    return Object.getOwnPropertyNames(obj).length >= 1
- 
- }
-
-
   submitHandler = event => {
     event.preventDefault();
-    // console.log(title, counter_number, counter_icon, status);
-    // this.props.updateCounter({ title, counter_number, counter_icon, status })
-    
- 
+    this.props.updateCounter(this.props.counter._id, this.state, this.props.addFlashMessage, this.props);
 
-
-    this.props.updateCounter(this.props.counter._id, this.state);
-    // console.log(this.props);
-   
-      this.props.onHide();
-    
-
-
-
-
-   
-  //  if(this.isObjectEmpty(this.props.counters.error)){
-  //    console.log(this.props.counters.error);
-  //  }else{
-  //   this.props.onHide(true);
-  //  }
-    // if(this.props.counters.error.counter_number !== ''){
-    //   this.props.onHide(true);
-    // }else{
-    // this.props.onHide();
-    // }
- 
   };
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      JSON.stringify(nextProps.counters.error) !==
-      JSON.stringify(prevState.error)
-    ) {
-      return {
-        error: nextProps.counters.error
-      };
-    }
-    return null;
-  }
+
 
   render() {
    
 
-
     let { title, counter_number, counter_icon, duration, status, error } = this.state;
-
-    console.log(this.props);
 
     return (
       <Modal

@@ -110,20 +110,25 @@ module.exports = {
         age,
         nationality,
         status,
-        about_image_name
+        about_image_name,
+        about_current_url
       } = bodydata;
-      let about_image = bodydata.about_image_name
+     let about_image,  about_image_url;
+
+      if(about_image_name == ''){
+      
+        let res = about_current_url.replace(req.protocol + "://" + req.get("host") + "/uploads/","");
+          about_image = res;
+          about_image_url = about_current_url;
+      }else{
+      about_image = bodydata.about_image_name
         .toLowerCase()
         .split(" ")
         .join("-");
   
-      let about_image_url =
-        req.protocol + "://" + req.get("host") + "/uploads/" + about_image;
-
-console.log(bodydata);
-console.log(req.body);
-
-
+      about_image_url = req.protocol + "://" + req.get("host") + "/uploads/" + about_image;
+      }
+    
     let user_id = req.user._id;
     let validate = aboutValidator({
       title,
@@ -161,7 +166,7 @@ console.log(req.body);
             res.status(200).json({
               message: "Update Successfully",
               ...result._doc,
-              Abouts: about
+              abouts: about
             });
           })
           .catch(error => serverError(res, error));

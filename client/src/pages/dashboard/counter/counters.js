@@ -9,18 +9,25 @@ import {  loadCounters, removeCounter } from '../../../store/actions/counterActi
 import { addFlashMessage } from '../../../store/actions/flashMessages';
 import  UpdateCounter from './updateCounter';
 import { Link } from 'react-router-dom';
+import ViewDetails from './viewDetails'
  class Counters extends Component {
 
 
     state = {
         updateModalOpen: false,
-        error:'',
+         viewModalOpen: false,
         id: ''
     }
     openUpdateModal = (id) => {
         this.setState({
             updateModalOpen: true,
-            error:this.props.counters.error,
+            id
+        })
+    }
+
+        openViewModal = (id) => {
+        this.setState({
+            viewModalOpen: true,
             id
         })
     }
@@ -28,26 +35,21 @@ import { Link } from 'react-router-dom';
     closeUpdateModal = () => {
         this.setState({
             updateModalOpen: false,
+             viewModalOpen: false,
             id: ''
         })
     }
 
     componentDidMount(){
         this.props.loadCounters();
-        this.setState({
-            error:this.props.counters.error
-        })
     }
   
 
   
     render() {
 
-
        let { counters } = this.props.counters;
     
-
-     
         return (
             <div class="container-fluid"> 
               
@@ -111,14 +113,17 @@ import { Link } from 'react-router-dom';
                                             <td>{counter.duration}</td>
                                             <td>{counter.status =='publish' ? <span class="badge badge-success">{counter.status}</span> : <span class="badge badge-danger">{counter.status}</span> }</td>
                                             <td className='text-center'>
-                                            <div> 
+                                            
 
                                             {this.state.id === counter._id?   <UpdateCounter show={this.state.updateModalOpen}
-        onHide={this.closeUpdateModal}  counter={counter} error={this.state.error} /> : null }
+        onHide={this.closeUpdateModal}  counter={counter} /> : null }
 
-                                                    <button className='btn btn-primary btn-sm mr-2' onClick={() => this.openUpdateModal(counter._id)} >Edit</button>
-                                                    <button className='btn btn-danger btn-sm ml-2' onClick={ ()=> { this.props.removeCounter(counter._id)}} >Delete</button>
-                                                </div>
+             {this.state.id === counter._id?   <ViewDetails show={this.state.viewModalOpen}
+        onHide={this.closeUpdateModal}   counter={counter} /> : null }
+
+                                                    <button className='btn btn-primary btn-sm m-1' onClick={() => this.openUpdateModal(counter._id)} >Edit</button>
+                                                    <button className='btn btn-danger btn-sm m-1' onClick={ ()=> { this.props.removeCounter(counter._id)}} >Delete</button>
+                                                    <button className='btn btn-secondary btn-sm m-1'  onClick={() => this.openViewModal(counter._id)}  >View</button>
                                             </td>
                                         </tr>
                                             )

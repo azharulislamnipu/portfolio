@@ -29,7 +29,7 @@ export const createAbout = (about, addFlashMessage, history) => dispatch => {
         })
   }
   
-  export const updateAbout = (id, about) => dispatch => {
+  export const updateAbout = (id, about,addFlashMessage, props) => dispatch => {
     Axios.put(`/api/abouts/${id}`, about)
       .then(res => {
         dispatch({
@@ -39,6 +39,14 @@ export const createAbout = (about, addFlashMessage, history) => dispatch => {
               ...res.data
            }
         });
+           addFlashMessage({
+                type: 'success',
+                text: res.data.message
+            })
+            if (res.data.message) {
+                props.onHide();
+            }
+         
       })
       .catch(error => {
         dispatch({

@@ -11,7 +11,6 @@ import Dashboard from './pages/dashboard';
 import Banner from './pages/dashboard/banner';
 
 import Counter from './pages/dashboard/counter';
-import EditCounter from './pages/dashboard/counter/editcounter';
 import Counters from './pages/dashboard/counter/counters';
 
 import About from './pages/dashboard/about'
@@ -46,7 +45,7 @@ class App extends Component {
 
                     <PrivateRoute path="/counter" component={Counter} auth={this.props.auth}/>
                     <PrivateRoute path="/counters" component={Counters} auth={this.props.auth}/>
-                    <PrivateRoute path="/editcounter" component={EditCounter} auth={this.props.auth}/>
+                  
 
                     <PrivateRoute path="/about" component={About} auth={this.props.auth}/>
                     <PrivateRoute path="/abouts" component={Abouts} auth={this.props.auth}/>
