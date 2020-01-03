@@ -3,7 +3,24 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Title from '../../../../src/ui/title';
+import {connect} from 'react-redux';
+import { loadSocials } from '../../../store/actions/socialActions';
+import SocialMediaItem from './SocialMediaItem';
 export class SocialMedia extends Component {
+    
+    componentDidMount(){
+        this.props.loadSocials();
+    }
+    showSocialmediaItem = () => (
+      
+        this.props.socials.socials.map((social,key) =>{
+            if(social.status === 'publish'){
+              return (  
+                   <SocialMediaItem Key={key} social={social} />
+              )
+            }
+        })
+      )
     render() {
         return (
            <section className="social-media">
@@ -12,6 +29,9 @@ export class SocialMedia extends Component {
               </Container>
               <Container>
               <Row>
+
+                  {this.showSocialmediaItem()}
+
                   <Col lg={4} md={6} sm={12}>
                   <div className="social-media-nfo">
 				    <div className="social-media-container">
@@ -106,6 +126,9 @@ export class SocialMedia extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    socials: state.social,
+  })
+export default connect(mapStateToProps, { loadSocials })(SocialMedia)
 
 
-export default SocialMedia;
