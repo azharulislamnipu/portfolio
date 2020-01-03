@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
-import {  loadCounters, removeCounter } from '../../../store/actions/counterActions';
-import  UpdateCounter from './updateCounter';
+import {  loadSocials, removeSocial } from '../../../store/actions/socialActions';
+import  UpdateSocial from './updateSocial';
 import { Link } from 'react-router-dom';
 import ViewDetails from './viewDetails'
- class Counters extends Component {
+ class Socials extends Component {
 
 
     state = {
@@ -35,14 +35,14 @@ import ViewDetails from './viewDetails'
     }
 
     componentDidMount(){
-        this.props.loadCounters();
+        this.props.loadSocials();
     }
   
 
   
     render() {
 
-       let { counters } = this.props.counters;
+       let { socials } = this.props.socials;
     
         return (
             <div class="container-fluid"> 
@@ -54,7 +54,7 @@ import ViewDetails from './viewDetails'
                                 <div class="col-md-8">
                                     <h4 class="page-title mb-0">Dashboard</h4>
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><Link to={'/counter'}>Counter</Link> </li>
+                                        <li class="breadcrumb-item"><Link to={'/social'}>Social</Link> </li>
                                         <li class="breadcrumb-item active" aria-current="page">List</li>
                                     </ol>
                                 </div>
@@ -78,9 +78,10 @@ import ViewDetails from './viewDetails'
                                         <tr>
                                             <th scope="col">(#) Id</th>
                                             <th scope="col">Title</th>
-                                            <th scope="col">Counter Number</th>
-                                            <th scope="col">Counter Icon</th>
-                                            <th scope="col">Counter Duration</th>
+                                            <th scope="col">Social Type</th>
+                                            <th scope="col">Social Icon</th>
+                                            <th scope="col">Social Tag Line</th>
+                                            <th scope="col">Social Link</th>
                                             <th scope="col">Status</th>
                                           
                                             <th scope="col" className='text-center'>Actions</th>
@@ -90,34 +91,35 @@ import ViewDetails from './viewDetails'
                                     </thead>
 
  
-                                  { (Array.isArray(counters) && counters.length) > 0 ? 
+                                  { (Array.isArray(socials) && socials.length) > 0 ? 
                                     <tbody>
                                     {
-                                        counters.map((counter, index) => {
+                                        socials.map((social, index) => {
                                         
                                             let count = index + 1;
                                        
                                                 return(
-                                                <tr key={counter._id}>
+                                                <tr key={social._id}>
                                             <th scope="row">#{count}</th>
                                         
-                                            <td>{counter.title}</td>
-                                            <td>{counter.counter_number}</td>
-                                            <td>{counter.counter_icon}</td>
-                                            <td>{counter.duration}</td>
-                                            <td>{counter.status =='publish' ? <span class="badge badge-success">{counter.status}</span> : <span class="badge badge-danger">{counter.status}</span> }</td>
+                                            <td>{social.title}</td>
+                                            <td>{social.type}</td>
+                                            <td>{social.social_icon}</td>
+                                            <td>{social.social_tag}</td>
+                                            <td>{social.social_link}</td>
+                                            <td>{social.status =='publish' ? <span class="badge badge-success">{social.status}</span> : <span class="badge badge-danger">{social.status}</span> }</td>
                                             <td className='text-center'>
                                             
 
-                                            {this.state.id === counter._id?   <UpdateCounter show={this.state.updateModalOpen}
-        onHide={this.closeUpdateModal}  counter={counter} /> : null }
+                                            {this.state.id === social._id?   <UpdateSocial show={this.state.updateModalOpen}
+        onHide={this.closeUpdateModal}  social={social} /> : null }
 
-             {this.state.id === counter._id?   <ViewDetails show={this.state.viewModalOpen}
-        onHide={this.closeUpdateModal}   counter={counter} /> : null }
+             {this.state.id === social._id?   <ViewDetails show={this.state.viewModalOpen}
+        onHide={this.closeUpdateModal}   social={social} /> : null }
 
-                                                    <button className='btn btn-primary btn-sm m-1' onClick={() => this.openUpdateModal(counter._id)} >Edit</button>
-                                                    <button className='btn btn-danger btn-sm m-1' onClick={ ()=> { this.props.removeCounter(counter._id)}} >Delete</button>
-                                                    <button className='btn btn-secondary btn-sm m-1'  onClick={() => this.openViewModal(counter._id)}  >View</button>
+                                                    <button className='btn btn-primary btn-sm m-1' onClick={() => this.openUpdateModal(social._id)} >Edit</button>
+                                                    <button className='btn btn-danger btn-sm m-1' onClick={ ()=> { this.props.removeSocial(social._id)}} >Delete</button>
+                                                    <button className='btn btn-secondary btn-sm m-1'  onClick={() => this.openViewModal(social._id)}  >View</button>
                                             </td>
                                         </tr>
                                             )
@@ -126,7 +128,7 @@ import ViewDetails from './viewDetails'
                                           
                                         })
                                     }
-                                 </tbody> : <p>There is no Counter</p>}
+                                 </tbody> : <p>There is no Socials</p>}
                                 </table>
                             </div>
                         </div>
@@ -144,7 +146,7 @@ import ViewDetails from './viewDetails'
 }
 
 const mapStateToProps = state => ({
-    counters: state.counter,
+    socials: state.social,
 })
 
-export default connect(mapStateToProps, { loadCounters, removeCounter })(Counters)
+export default connect(mapStateToProps, { loadSocials, removeSocial })(Socials)

@@ -84,31 +84,33 @@ module.exports = {
         if (!validate.isValid) {
             return res.status(400).json(validate.error);
           } else { 
-          Social.findOneAndUpdate(
-          { _id: socialId },
-          { title,
-            type,
-            social_icon,
-            social_tag,
-            social_link,
-            status,
-            user_id},
-          { new: true }
-        )
-          .then(result => {
-            let { _id } = req.user;
-            Social.find({ user_id: _id })
-              .then(social => {
-                res.status(200).json({
-                  message: "Update Successfully",
-                  ...result._doc,
-                  socials: social
-                });
-              })
-              .catch(error => serverError(res, error));
-          })
-          .catch(error => serverError(res, error));
-    
+
+              Social.findOneAndUpdate(
+                { _id: socialId },
+                { title,
+                  type,
+                  social_icon,
+                  social_tag,
+                  social_link,
+                  status,
+                  user_id},
+                { new: true }
+              )
+                .then(result => {
+                  let { _id } = req.user;
+                  Social.find({ user_id: _id })
+                    .then(social => {
+                      res.status(200).json({
+                        message: "Update Successfully",
+                        ...result._doc,
+                        socials: social
+                      });
+                    })
+                    .catch(error => serverError(res, error));
+                })
+                .catch(error => serverError(res, error));
+
+
         }
       },
 

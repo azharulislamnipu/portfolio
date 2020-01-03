@@ -2,40 +2,43 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { creatCounter } from "../../../store/actions/counterActions";
+import { creatSocial } from "../../../store/actions/socialActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
 
 
-class Counter extends Component {
+class Social extends Component {
   constructor(props) {
     super();
     this.state = {
-      status: "publish",
       title: "",
-      counter_number: "",
-      counter_icon: "",
-      duration: "",
+      type:"",
+      social_icon:"",
+      social_tag:"",
+      social_link:"",
+      status: "publish",
       error: {}
     };
-  }
 
+    this.changeHandler = this.changeHandler.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.submitHandler = this.submitHandler.bind(this);
+  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      JSON.stringify(nextProps.socials.error) !==
+      JSON.stringify(prevState.error)
+    ) {
+      return {
+        error: nextProps.socials.error
+      };
+    }
+    return null;
+  }
   handleChange(e) {
     this.setState({
       status: e.target.value
     });
   }
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      JSON.stringify(nextProps.counters.error) !==
-      JSON.stringify(prevState.error)
-    ) {
-      return {
-        error: nextProps.counters.error
-      };
-    }
-    return null;
-  }
-
   changeHandler = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -43,18 +46,32 @@ class Counter extends Component {
   };
   submitHandler = event => {
     event.preventDefault();
+    let { title,
+        type,
+        social_icon,
+        social_tag,
+        social_link, status } =  this.state;
 
-    let { title, counter_number, counter_icon, duration, status } = this.state;
 
-    this.props.creatCounter(
-      { title, counter_number, counter_icon, duration, status },
+    this.props.creatSocial(
+      { title,
+        type,
+        social_icon,
+        social_tag,
+        social_link,
+         status },
       this.props.addFlashMessage,
       this.props.history
     );
   };
 
   render() {
-    let { title, counter_number, counter_icon, duration, error } = this.state;
+
+    let { title,
+        type,
+        social_icon,
+        social_tag,
+        social_link, status ,error} =  this.state;
     return (
       <div class="container-fluid">
         <div class="row">
@@ -62,13 +79,13 @@ class Counter extends Component {
             <div class="page-title-box">
               <div class="row align-items-center">
                 <div class="col-md-8">
-                  <h4 class="page-title mb-0">Dashboard</h4>
+                  <h4 class="page-title mb-0">Social</h4>
                   <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item">
-                      <Link to={"/dashboard"}>dashboard</Link>
+                      <Link to={"/socials"}>Socials</Link>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Counter
+                    Create
                     </li>
                   </ol>
                 </div>
@@ -81,7 +98,7 @@ class Counter extends Component {
           <div className="col-xl-12">
             <div className="card">
               <div className="card-body">
-                <h2 className="text-uppercase text-center">Create Counter</h2>
+                <h2 className="text-uppercase text-center">Create Social Information</h2>
 
                 <Form onSubmit={this.submitHandler}>
                   <Form.Group controlId="title">
@@ -108,75 +125,111 @@ class Counter extends Component {
                     )}
                   </Form.Group>
 
-                  <Form.Group controlId="counterNumber">
-                    <Form.Label>Counter Number</Form.Label>
+                  <Form.Group controlId="type">
+                    <Form.Label>Social Type</Form.Label>
                     <Form.Control
                       type="text"
-                      name="counter_number"
-                      autoComplete="new-counter_number"
-                      placeholder="Enter Your Coutner Number"
-                      value={counter_number}
+                      name="type"
+                      autoComplete="new-type"
+                      placeholder="Enter Your Social Type"
+                      value={type}
                       onChange={this.changeHandler}
                     />
 
-                    {error.counter_number && (
+                    {error.message && (
                       <span
                         className={
-                          error.counter_number
+                          error.message
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.counter_number}
+                        {error.message}
                       </span>
                     )}
-                  </Form.Group>
 
-                  <Form.Group controlId="counterIcon">
-                    <Form.Label>Counter Icon</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="counter_icon"
-                      autoComplete="new-counter_icon"
-                      placeholder="Enter Your Counter Icon"
-                      value={counter_icon}
-                      onChange={this.changeHandler}
-                    />
-                    {error.counter_icon && (
+                    {error.type && (
                       <span
                         className={
-                          error.counter_icon
+                          error.type
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.counter_icon}
+                        {error.type}
                       </span>
                     )}
                   </Form.Group>
 
-                  <Form.Group controlId="duration">
-                    <Form.Label>Counter Duration</Form.Label>
+                  <Form.Group controlId="socialIcon">
+                    <Form.Label>Social Icon</Form.Label>
                     <Form.Control
                       type="text"
-                      name="duration"
-                      autoComplete="new-duration"
-                      placeholder="Enter duration"
-                      value={duration}
+                      name="social_icon"
+                      autoComplete="new-social_icon"
+                      placeholder="Enter Your Social Icon"
+                      value={social_icon}
                       onChange={this.changeHandler}
                     />
-                    {error.duration && (
+                    {error.social_icon && (
                       <span
                         className={
-                          error.duration
+                          error.social_icon
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.duration}
+                        {error.social_icon}
                       </span>
                     )}
                   </Form.Group>
+
+                  <Form.Group controlId="socialTag">
+                    <Form.Label>Social Tag Line</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="social_tag"
+                      autoComplete="new-social_tag"
+                      placeholder="Enter Social Tag"
+                      value={social_tag}
+                      onChange={this.changeHandler}
+                    />
+                    {error.social_tag && (
+                      <span
+                        className={
+                          error.social_tag
+                            ? "invalid-feedback d-block"
+                            : "invalid-feedback"
+                        }
+                      >
+                        {error.social_tag}
+                      </span>
+                    )}
+                  </Form.Group>
+
+                  <Form.Group controlId="Link">
+                    <Form.Label>Social Link</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="social_link"
+                      autoComplete="new-social_link"
+                      placeholder="Enter Social Link"
+                      value={social_link}
+                      onChange={this.changeHandler}
+                    />
+                    {error.social_link && (
+                      <span
+                        className={
+                          error.social_link
+                            ? "invalid-feedback d-block"
+                            : "invalid-feedback"
+                        }
+                      >
+                        {error.social_link}
+                      </span>
+                    )}
+                  </Form.Group>
+
 
                   <Form.Group controlId="status.ControlSelect1">
                     <Form.Label>Status</Form.Label>
@@ -184,7 +237,7 @@ class Counter extends Component {
                       as="select"
                       name="status"
                       onChange={this.handleChange.bind(this)}
-                      value={this.state.status}
+                      value={status}
                     >
                       <option value="publish">Publish</option>
                       <option value="revoke">Revoke</option>
@@ -193,14 +246,14 @@ class Counter extends Component {
 
                   <Form.Group className="row">
                     <div className="col-sm-12 text-right">
-                      <Link className="btn btn-primary mr-2" to="/counters">
+                      <Link className="btn btn-primary mr-2" to="/socials">
                         View List
                       </Link>
                       <button
                         className="btn submit-btn btn-primary"
                         type="submit"
                       >
-                        Add Counter
+                        Create Social
                       </button>
                     </div>
                   </Form.Group>
@@ -215,9 +268,9 @@ class Counter extends Component {
 }
 
 const mapStateToProps = state => ({
-  counters: state.counter
+  socials: state.social
 });
 
-export default connect(mapStateToProps, { creatCounter, addFlashMessage })(
-  Counter
+export default connect(mapStateToProps, { creatSocial , addFlashMessage })(
+    Social
 );

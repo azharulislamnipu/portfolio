@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import about from '../../../../src/img/about.jpg';
-
 import Profile from './profile';
 import Followme from './followme';
 const AboutDetails = (props) => {
@@ -12,6 +11,9 @@ const AboutDetails = (props) => {
     about_image_url,
     about_info,
   } = props.about;
+
+
+
   return (
                    <Row>
                        <Col lg={6} md={5} sm={12}>
@@ -34,8 +36,8 @@ const AboutDetails = (props) => {
                     <p className="mb-30">{about_info}</p>
 
                     <Profile bio={props.about.bio}/>
-                    <Followme/>
-                    
+                   
+                    <Followme  followme={props.socials}/>
 
                     
             </div>
