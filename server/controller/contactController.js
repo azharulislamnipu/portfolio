@@ -5,7 +5,7 @@ const { serverError, resourceError } = require("../utils/error");
 module.exports = {
   create(req, res, next) {
     let { fullname, email, organigation, subject, consult_date, budget, description, phone } = req.body;
-    let status = null;
+    let status = 'unapprove';
     let validate = contactValidator({ fullname, email, subject, consult_date, budget, description, phone });
 
 
@@ -120,22 +120,20 @@ module.exports = {
 //     }
 //   },
 
-//   removeCounter(req, res) {
-//     let { counterId } = req.params;
-
-//     Counter.findOneAndDelete({ _id: counterId })
-//       .then(result => {
-//         let { _id } = req.user;
-//         Counter.find({ user_id: _id })
-//           .then(counter => {
-//             res.status(200).json({
-//               message: "Deleted Successfully",
-//               ...result._doc,
-//               counters: counter
-//             });
-//           })
-//           .catch(error => serverError(res, error));
-//       })
-//       .catch(error => serverError(res, error));
-//   }
+removeContact(req, res) {
+    let { contactId } = req.params;
+    Contact.findOneAndDelete({ _id: contactId })
+      .then(result => {
+        Contact.find()
+          .then(contact => {
+            res.status(200).json({
+              message: "Deleted Successfully",
+              ...result._doc,
+              contacts: contact
+            });
+          })
+          .catch(error => serverError(res, error));
+      })
+      .catch(error => serverError(res, error));
+  }
 };

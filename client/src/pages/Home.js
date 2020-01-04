@@ -10,7 +10,6 @@ import Portfolios from '../components/home/portfolio';
 import Contact from '../components/home/contact';
 import SocialMedia from '../components/home/social-media';
 import Footer from '../layouts/Footer';
-
 export default class Home extends Component {
     render() {
         return (

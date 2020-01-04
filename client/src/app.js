@@ -20,6 +20,9 @@ import Socials from './pages/dashboard/social/socials'
 import About from './pages/dashboard/about';
 import Abouts from './pages/dashboard/about/abouts';
 
+
+import Contact from './pages/dashboard/contact';
+
 import FileUpload from './pages/dashboard/fileupload';
 import Account from './pages/account';
 import {
@@ -50,6 +53,8 @@ class App extends Component {
                     <PrivateRoute path="/counter" component={Counter} auth={this.props.auth}/>
                     <PrivateRoute path="/counters" component={Counters} auth={this.props.auth}/>
                   
+
+                    <PrivateRoute path="/contact" component={Contact} auth={this.props.auth}/>
 
                     <PrivateRoute path="/about" component={About} auth={this.props.auth}/>
                     <PrivateRoute path="/abouts" component={Abouts} auth={this.props.auth}/>

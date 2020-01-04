@@ -35,6 +35,10 @@ export default class LeftSideBar extends Component {
                             <Link to='/social' className="waves-effect"><i className="fa fa-snapchat-ghost fa-2x"></i> <span> Social </span></Link> 
                             </li>
 
+                            <li className="menu-title">
+                            <Link to='/contact' className="waves-effect"><i className="fa fa-message fa-2x"></i> <span> Contact </span></Link> 
+                            </li>
+
 
                             <li class="menu-title">
                             <a href="javascript:void(0);" className="waves-effect"><i className="fa fa-archive fa-2x"></i> <span> Banner </span> </a>
