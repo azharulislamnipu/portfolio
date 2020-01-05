@@ -24,6 +24,9 @@ const validate = contact =>{
     if(!contact.description){
         error.description = 'Please Provide project description';
     }
+    if(!contact.replay_message){
+        error.replay_message = 'Please Provide project replay message';
+    }
 
     if(!contact.phone){
         error.phone = 'Please Provide Counter Number';

@@ -36,3 +36,10 @@ export const CREATE_CONTACT = 'CREATE_CONTACT';
 export const UPDATE_CONTACT = 'UPDATE_CONTACT';
 export const ERROR_CONTACT = 'ERROR_CONTACT';
 export const REMOVE_CONTACT = 'REMOVE_CONTACT';
+
+
+export const LOAD_INFO = 'LOAD_INFO';
+export const CREATE_INFO = 'CREATE_INFO';
+export const UPDATE_INFO = 'UPDATE_INFO';
+export const ERROR_INFO = 'ERROR_INFO';
+export const REMOVE_INFO = 'REMOVE_INFO';

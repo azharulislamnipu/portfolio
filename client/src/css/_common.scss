@@ -1515,10 +1515,12 @@ ul {
         color: #171337;
     }
 }
-select.form-control{
+
+select.form-control {
     padding: 0 15px;
     height: 60px;
 }
+
 
 /*--
     - Background Color
@@ -1541,4 +1543,8 @@ select.form-control{
     color: #fff;
     background: #33d8bb;
     border: 1px solid #33d8bb;
+}
+
+.w-90 {
+    width: 90%;
 }

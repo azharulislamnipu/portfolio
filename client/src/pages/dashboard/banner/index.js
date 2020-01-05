@@ -98,7 +98,7 @@ import { Link } from 'react-router-dom'
         let {  title, description, designation, cv, image, error  } = this.state;
 
       let { banners } = this.props.banner;
-      console.log(this.props);
+  
 
    
         return (

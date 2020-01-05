@@ -33,6 +33,10 @@ const ContactSchema = new Schema({
         type: String,
         trim:true
     },
+    replay_message: {
+        type: String,
+        trim:true
+    },
     phone: {
         type: String,
         trim:true

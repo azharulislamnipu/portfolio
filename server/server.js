@@ -10,6 +10,7 @@ const counterRoute = require('./routers/counterRoute');
 const aboutRoute = require('./routers/aboutRoute');
 const socialRoute = require('./routers/socialRoute');
 const contactRoute = require('./routers/contactRoute');
+const infoRoute = require('./routers/infoRoute');
 const passport = require('passport');
 const path = require('path');
 const app = express();
@@ -46,6 +47,7 @@ app.use('/api/counters', counterRoute);
 app.use('/api/abouts', aboutRoute);
 app.use('/api/socials', socialRoute);
 app.use('/api/contacts', contactRoute);
+app.use('/api/infos', infoRoute);
 
 app.get('/', (req, res)=>{
     res.send('Welcome to Server side');

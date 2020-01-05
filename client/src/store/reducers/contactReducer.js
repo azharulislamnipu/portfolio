@@ -36,6 +36,22 @@ const contactReducer = (state = init, action) => {
                 }
 
         }
+        case Types.UPDATE_CONTACT: {
+            let contacts = [...state]
+            contacts = contacts.map(contact => {
+                if (contact._id === action.payload.contact._id) {
+                    return action.payload.contacts
+                }
+                return contact
+            })
+
+            return{
+                error:{},
+                contacts:action.payload.contacts
+            }
+
+        }
+
         case Types.ERROR_CONTACT: {
             return {
                 ...state,

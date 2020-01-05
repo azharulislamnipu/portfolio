@@ -36,7 +36,10 @@ export default class LeftSideBar extends Component {
                             </li>
 
                             <li className="menu-title">
-                            <Link to='/contact' className="waves-effect"><i className="fa fa-message fa-2x"></i> <span> Contact </span></Link> 
+                            <Link to='/contact' className="waves-effect"><i className="fa fa-comments fa-2x"></i> <span> Contact </span></Link> 
+                            </li>
+                            <li className="menu-title">
+                            <Link to='/info' className="waves-effect"><i className="fa fa-th-large fa-2x"></i> <span> Info </span></Link> 
                             </li>
 
 

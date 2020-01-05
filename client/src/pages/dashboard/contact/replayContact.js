@@ -2,7 +2,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import { updateCounter } from "../../../store/actions/counterActions";
+import { updateContact } from "../../../store/actions/contactActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
 class ReplayContact extends Component {
 
@@ -10,10 +10,16 @@ class ReplayContact extends Component {
     constructor(props) {
         super(props);
         this.state = {
+          fullname: "",
+          email:"",
+          organigation:"",
+          subject:"",
+          budget:"",
+          description:"",
+          replay_message:"",
+          consult_date:"",
+          phone:"",
           status: "",
-          email: "",
-          description: "",
-          subject: "",
           error: {}
         };
         this.changeHandler = this.changeHandler.bind(this);
@@ -35,9 +41,15 @@ class ReplayContact extends Component {
 
   componentDidMount() {
     this.setState({
+      fullname: this.props.contact.fullname,
+      email: this.props.contact.email,
+      organigation: this.props.contact.organigation,
       subject:  this.props.contacts.error.subject ?  this.state.subject : this.props.contact.subject,
-      email:  this.props.contacts.error.email ?  this.state.email :  this.props.contact.email,
-      status: this.props.contact.status
+      consult_date: this.props.contact.consult_date,
+      budget: this.props.contact.budget,
+      description: this.props.contact.description,
+      phone: this.props.contact.phone,
+      status: this.props.contact.status,
     });
   }
   changeHandler = event => {
@@ -53,11 +65,7 @@ class ReplayContact extends Component {
 
   submitHandler = event => {
     event.preventDefault();
-
-    let { subject, email, description, status, error } = this.state;
-
-    console.log(this.state);
-    // this.props.updateCounter(this.props.counter._id, this.state, this.props.addFlashMessage, this.props);
+    this.props.updateContact(this.props.contact._id, this.state, this.props.addFlashMessage, this.props);
 
   };
 
@@ -65,8 +73,8 @@ class ReplayContact extends Component {
   render() {
    
 
-    let { subject, email, description, status, error } = this.state;
-    console.log(this.props.contact.subject);
+    let { fullname, email, organigation, subject, consult_date, budget, description, replay_message, phone , status, error} = this.state;
+
     return (
       <Modal
         {...this.props}
@@ -99,11 +107,11 @@ class ReplayContact extends Component {
                   )}
                 </Form.Group>
 
-            <Form.Group controlId="description">
-                  <Form.Control as="textarea" rows="4" name='description' placeholder="Message" value={description}
+            <Form.Group controlId="replay_message">
+                  <Form.Control as="textarea" rows="4" name='replay_message' placeholder="Message" value={replay_message}
                     onChange={this.changeHandler} />
-                  {error.description && (<span className={error.description ? 'invalid-feedback d-block' : 'invalid-feedback'} >
-                    {error.description}
+                  {error.replay_message && (<span className={error.replay_message ? 'invalid-feedback d-block' : 'invalid-feedback'} >
+                    {error.replay_message}
                   </span>
                   )}
             </Form.Group>
@@ -119,7 +127,7 @@ class ReplayContact extends Component {
           </Modal.Body>
           <Modal.Footer>
             <button className="btn btn-dark ml-2" type="submit">
-              Update
+              Send
             </button>
             <button className="btn btn-danger" onClick={this.props.onHide}>
               Close
@@ -135,4 +143,4 @@ const mapStateToProps = state => ({
   contacts: state.contact
 });
 
-export default connect(mapStateToProps, {  addFlashMessage })(ReplayContact);
+export default connect(mapStateToProps, { updateContact, addFlashMessage })(ReplayContact);

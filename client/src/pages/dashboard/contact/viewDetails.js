@@ -13,6 +13,7 @@ class ViewDetails extends Component {
       subject:"",
       budget:"",
       description:"",
+      replay_message:"",
       consult_date:"",
       phone:"",
       status: "",
@@ -28,6 +29,7 @@ class ViewDetails extends Component {
       consult_date: this.props.contact.consult_date,
       budget: this.props.contact.budget,
       description: this.props.contact.description,
+      replay_message:this.props.contact.replay_message,
       phone: this.props.contact.phone,
       status: this.props.contact.status,
     });
@@ -35,7 +37,7 @@ class ViewDetails extends Component {
 
   render() {
   
-      let { fullname, email, organigation, subject, consult_date, budget, description, phone , status} = this.state;
+      let { fullname, email, organigation, subject, consult_date, budget, description, replay_message, phone , status} = this.state;
      
     return (
       <Modal
@@ -88,6 +90,10 @@ class ViewDetails extends Component {
 
                                 <Col lg={12} md={12} sm={12}>
                                 <p>Description: <span>{description}</span></p>
+                                </Col>
+
+                                <Col lg={12} md={12} sm={12}>
+                                <p>Replay message: <span>{replay_message}</span></p>
                                 </Col>
                       </Row> 
 

@@ -5,6 +5,7 @@ import counterReducer from './counterReducer';
 import aboutReducer from './aboutReducer';
 import socialReducer from './socialReducer';
 import contactReducer from './contactReducer';
+import infoReducer from './infoReducer';
 import flashMessages from './flashMessages';
 const rootReducer = combineReducers({
  auth:authReducer, 
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   counter:counterReducer,
   about:aboutReducer ,
   social:socialReducer,
-  contact:contactReducer
+  contact:contactReducer,
+  info:infoReducer
 })
 
 export default rootReducer;

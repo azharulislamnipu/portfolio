@@ -1,19 +1,19 @@
 import Axios from "axios";
 import * as Types from "./types";
-export const loadContacts = () => dispatch => {
-  Axios.get("/api/contacts/")
+export const loadInfos = () => dispatch => {
+  Axios.get("/api/infos/")
     .then(response => {
       dispatch({
-        type: Types.LOAD_CONTACT,
+        type: Types.LOAD_INFO,
         payload: {
           erorr: {},
-          contacts: response.data
+          infos: response.data
         }
       });
     })
     .catch(error => {
       dispatch({
-        type: Types.ERROR_CONTACT,
+        type: Types.ERROR_INFO,
         payload: {
           error: error.response.data
         }
@@ -21,16 +21,17 @@ export const loadContacts = () => dispatch => {
     });
 };
 
-export const creatContact = (contact, addFlashMessage) => dispatch => {
-  Axios.post("/api/contacts/", contact)
+export const creatInfo = (info, addFlashMessage,history) => dispatch => {
+  Axios.post("/api/infos/", info)
     .then(res => {
       dispatch({
-        type: Types.CREATE_CONTACT,
+        type: Types.CREATE_INFO,
         payload: {
           error: {},
-          contact: res.data
+          info: res.data
         }
       });
+      history.push("/infos");
       addFlashMessage({
         type: "success",
         text: res.data.message
@@ -38,7 +39,7 @@ export const creatContact = (contact, addFlashMessage) => dispatch => {
     })
     .catch(error => {
       dispatch({
-        type: Types.ERROR_CONTACT,
+        type: Types.ERROR_INFO,
         payload: {
           error: error.response.data
         }
@@ -46,11 +47,11 @@ export const creatContact = (contact, addFlashMessage) => dispatch => {
     });
 };
 
-export const updateContact = (id, contact, addFlashMessage, props) => dispatch => {
-  Axios.put(`/api/contacts/${id}`, contact)
+export const updateInfo = (id, info, addFlashMessage, props) => dispatch => {
+  Axios.put(`/api/infos/${id}`, info)
     .then(res => {
       dispatch({
-        type: Types.UPDATE_CONTACT,
+        type: Types.UPDATE_INFO,
         payload: {
             error: {},
             ...res.data
@@ -66,7 +67,7 @@ export const updateContact = (id, contact, addFlashMessage, props) => dispatch =
     })
     .catch(error => {
       dispatch({
-        type: Types.ERROR_CONTACT,
+        type: Types.ERROR_INFO,
         payload: {
           error: error.response.data
         }
@@ -75,11 +76,11 @@ export const updateContact = (id, contact, addFlashMessage, props) => dispatch =
     });
 };
 
-export const removeContact = id => dispatch => {
-  Axios.delete(`/api/contacts/${id}`)
+export const removeInfo = id => dispatch => {
+  Axios.delete(`/api/infos/${id}`)
     .then(res => {
       dispatch({
-        type: Types.REMOVE_CONTACT,
+        type: Types.REMOVE_INFO,
         payload: {
           id: res.data._id,
           ...res.data
@@ -88,7 +89,7 @@ export const removeContact = id => dispatch => {
     })
     .catch(error => {
       dispatch({
-        type: Types.ERROR_CONTACT,
+        type: Types.ERROR_INFO,
         payload: {
           error: error.response.data
         }

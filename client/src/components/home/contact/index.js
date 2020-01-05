@@ -9,7 +9,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { connect } from "react-redux";
 import { creatContact } from "../../../store/actions/contactActions";
+import { loadInfos } from "../../../store/actions/infoActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
+import InfoItem from './info';
 class Contact extends Component {
   constructor(props) {
     super();
@@ -30,6 +32,11 @@ class Contact extends Component {
     this.changeHandler = this.changeHandler.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
   }
+  componentDidMount(){
+    this.props.loadInfos()
+  }
+  
+  
   handleDate = date => {
     this.setState({
       consult_date: date
@@ -64,8 +71,23 @@ class Contact extends Component {
       this.props.addFlashMessage
     );
   };
+
+  showInfoItem = () => (
+  
+    this.props.infos.infos.map((info,key) =>{
+        if(info.status === 'publish'){
+          return (
+            <InfoItem info={info}/>
+          )
+        }
+    })
+  )
+
+  
   render() {
     let { fullname, email, organigation, subject, consult_date, budget, description, phone, error } = this.state;
+
+
 
     return (
       <section className="contact-area">
@@ -176,44 +198,8 @@ class Contact extends Component {
 
         <Container>
           <Row>
-            <Col lg={4} md={4} sm={6}>
-              <div className="conatact-info-box">
-                <div className="conatact-icon"><i className="fa fa-envelope"></i></div>
-                <div className="box-content">
-                  <h4 className="conatact-title">Email:</h4>
-                  <div className="conatact-content">
-                    <a href="mailto:hello@growth.com">hello@growth.com</a>
-                    <a href="subash.ui.ux@gmail.com">hello@growth.com</a>
-                  </div>
-                </div>
-              </div>
-            </Col>
-            <Col lg={4} md={4} sm={12}>
-              <div className="conatact-info-box">
-                <div className="conatact-icon"><i className="fa fa-phone"></i></div>
-                <div className="box-content">
-                  <h4 className="conatact-title">Phone:</h4>
-                  <div className="conatact-content">
-                    <a href="tel:+8801726901406">+8801726901406</a>
-                    <a href="tel:+8801986926212">+8801986926212</a>
-                  </div>
-                </div>
-              </div>
-            </Col>
-
-            <Col lg={4} md={4} sm={12}>
-              <div className="conatact-info-box">
-                <div className="conatact-icon"><i className="fa fa-map-marker"></i></div>
-                <div className="box-content">
-                  <h4 className="conatact-title">ADDRESS:</h4>
-                  <div className="conatact-content">
-                    <p>1600 Amphitheatre Parkway
-Mountain View, Canada</p>
-                  </div>
-                </div>
-              </div>
-            </Col>
-
+            {this.showInfoItem()}
+           
           </Row>
         </Container>
 
@@ -223,10 +209,11 @@ Mountain View, Canada</p>
 }
 
 const mapStateToProps = state => ({
-  contacts: state.contact
+  contacts: state.contact,
+  infos:state.info
 });
 
-export default connect(mapStateToProps, { creatContact, addFlashMessage })(
+export default connect(mapStateToProps, { creatContact, loadInfos, addFlashMessage })(
   Contact
 );
 

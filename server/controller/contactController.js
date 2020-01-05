@@ -6,7 +6,8 @@ module.exports = {
   create(req, res, next) {
     let { fullname, email, organigation, subject, consult_date, budget, description, phone } = req.body;
     let status = 'unapprove';
-    let validate = contactValidator({ fullname, email, subject, consult_date, budget, description, phone });
+    let replay_message = 'Not Yet';
+    let validate = contactValidator({ fullname, email, subject, consult_date, budget, description, replay_message, phone });
 
 
     if (!validate.isValid) {
@@ -47,7 +48,8 @@ module.exports = {
                     organigation,
                     consult_date,
                     budget,
-                    description, 
+                    description,
+                    replay_message, 
                     phone,
                     status
                   });
@@ -82,43 +84,69 @@ module.exports = {
       .catch(error => serverError(res, error));
   },
 
-//   update(req, res) {
-//     let { counterId } = req.params;
+  update(req, res) {
+    let { contactId } = req.params;
+    let { fullname, email, organigation, subject, consult_date, budget, description, replay_message, phone, status } = req.body;
+   
+    let validate = contactValidator({ fullname, email, organigation, subject, consult_date, budget, description, replay_message, phone, status });
 
-//     let { title, counter_number, counter_icon, duration, status } = req.body;
+    if (!validate.isValid) {
+        return res.status(400).json(validate.error);
+      } else { 
 
-//     let user_id = req.user._id;
-//     let validate = counterValidator({ title, counter_number, counter_icon, duration });
+        let admin_mail =  process.env.ADMIN_MAIL;
+        let admin_pass =  process.env.ADMIN_PASS;
+        let host =  process.env.MAILHOST;
+        let port =  process.env.MAILPORT;
 
-//     if (!validate.isValid) {
-//         return res.status(400).json(validate.error);
-//       } else { 
-//     Counter.findOneAndUpdate(
-//       { _id: counterId },
-//       { title,
-//         counter_number,
-//         counter_icon,
-//         duration,
-//         status,
-//         user_id},
-//       { new: true }
-//     )
-//       .then(result => {
-//         let { _id } = req.user;
-//         Counter.find({ user_id: _id })
-//           .then(counter => {
-//             res.status(200).json({
-//               message: "Update Successfully",
-//               ...result._doc,
-//               counters: counter
-//             });
-//           })
-//           .catch(error => serverError(res, error));
-//       })
-//       .catch(error => serverError(res, error));
+        let transporter = nodemailer.createTransport({
+            host: host,
+            port: port,
+            secure: false,
+            requireTLS: true,
+            auth: {
+              user: admin_mail,
+              pass: admin_pass
+            }
+          });
+          
+          let mailOptions = {
+            from: admin_mail,
+            to: email,
+            subject: subject+' Your Proposal is '+status,
+            text: replay_message
+          };
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                return resourceError(res, 'mail Not send');
+            } else {
 
-//     }
-//   },
+
+              Contact.findOneAndUpdate(
+                { _id: contactId },
+                { fullname, email, organigation, subject, consult_date, budget, description, replay_message, phone, status},
+                { new: true }
+              )
+                .then(result => {
+                  Contact.find()
+                    .then(contact => {
+                      res.status(200).json({
+                        message: "Replay Successfully",
+                        ...result._doc,
+                        contacts: contact
+                      });
+                    })
+                    .catch(error => serverError(res, error));
+                })
+                .catch(error => serverError(res, error));
+              
+
+            }
+          });
+   
+
+    }
+  },
 
 removeContact(req, res) {
     let { contactId } = req.params;
