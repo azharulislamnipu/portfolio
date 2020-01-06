@@ -25,6 +25,9 @@ import Contact from './pages/dashboard/contact';
 import Info from './pages/dashboard/info';
 import Infos from './pages/dashboard/info/infos';
 
+
+import Portfolio from './pages/dashboard/portfolio';
+
 import FileUpload from './pages/dashboard/fileupload';
 import Account from './pages/account';
 import {
@@ -59,6 +62,9 @@ class App extends Component {
                     <PrivateRoute path="/contact" component={Contact} auth={this.props.auth}/>
                     <PrivateRoute path="/info" component={Info} auth={this.props.auth}/>
                     <PrivateRoute path="/infos" component={Infos} auth={this.props.auth}/>
+
+                    <PrivateRoute path="/portfolio" component={Portfolio} auth={this.props.auth}/>
+
 
                     <PrivateRoute path="/about" component={About} auth={this.props.auth}/>
                     <PrivateRoute path="/abouts" component={Abouts} auth={this.props.auth}/>

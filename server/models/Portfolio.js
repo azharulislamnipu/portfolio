@@ -28,7 +28,7 @@ const PortfolioSchema = new Schema({
         type: String,
         trim:true
     },
-    Created_by: {
+    created_by: {
         type: String,
         trim:true
     },

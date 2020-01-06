@@ -2,47 +2,78 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { createAbout } from "../../../store/actions/aboutActions";
+import { createPortfolio } from "../../../store/actions/portfolioActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
-class Abouts extends Component {
+import DatePicker from "react-datepicker";
+class Portfolio extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: "",
-      sub_title: "",
-      about_image: "",
-      about_info: "",
+      description: "",
 
       selectedFile: "",
       filename: "",
 
-      name: "",
-      email: "",
-      phone: "",
-      address: "",
-      age: "",
-      nationality: "",
+      gellaryFile:'',
+      gellaryfilename:[''],
+      
+      feature_image: "",
+      feature_image_name: "",
+      gellary_image: [""],
+      gellary_image_name: [""],
+      client_name: "",
+      created_by: "",
+      completed_date: new Date(),
+      skills: [""],
       status: "publish",
       error: {}
     };
 
     this.changeHandler = this.changeHandler.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleDate = this.handleDate.bind(this);
     this.filehander = this.filehander.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      JSON.stringify(nextProps.about.error) !== JSON.stringify(prevState.error)
-    ) {
-      return {
-        error: nextProps.about.error
-      };
-    }
-    return null;
+  addSkills(e) {
+
+    this.setState({ skills: [...this.state.skills, ""] })
   }
 
+  changeSkillsvalue = (event, index) => {
+    this.state.skills[index] = event.target.value;
+    this.setState({ skills: this.state.skills });
+  }
+  removeSkills = (sidx) => {
+    if (sidx > 0) {
+      this.setState({
+        skills: this.state.skills.filter((s, idx) => idx !== sidx)
+      });
+    }
+
+  };
+
+
+
+
+
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (
+  //     JSON.stringify(nextProps.about.error) !== JSON.stringify(prevState.error)
+  //   ) {
+  //     return {
+  //       error: nextProps.about.error
+  //     };
+  //   }
+  //   return null;
+  // }
+  handleDate = date => {
+    this.setState({
+      completed_date: date
+    });
+  };
   handleChange(e) {
     this.setState({
       status: e.target.value
@@ -59,38 +90,49 @@ class Abouts extends Component {
     this.setState({ filename: e.target.files[0].name });
   };
 
+ gellaryhander = e => {
+    this.setState({ gellaryFile: e.target.files });
+
+    for (var i = 0; i < e.target.files.length; i++) {
+      this.setState({ gellaryfilename : e.target.files[i].name });
+  }
+ 
+  };
+
   submitHandler = event => {
     event.preventDefault();
     let {
       title,
-      sub_title,
-      about_image,
-      about_info,
-      name,
-      email,
-      phone,
-      address,
-      age,
-      nationality,
+      description,
+      feature_image,
+      gellary_image,
+      client_name,
+      created_by,
+      completed_date,
+      skills,
       status,
       error
     } = this.state;
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("sub_title", sub_title);
-    formData.append("about_info", about_info);
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("address", address);
-    formData.append("age", age);
-    formData.append("nationality", nationality);
-    formData.append("status", status);
-    formData.append("about_image_name", this.state.filename);
-    formData.append("about_image", this.state.selectedFile[0]);
+    console.log(this.state.gellaryfilename);
 
-    this.props.createAbout(
+    const formData = new FormData();
+
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("feature_image_name", this.state.filename);
+    formData.append("feature_image", this.state.selectedFile[0]);
+
+    formData.append("gellary_image", this.state.gellaryFile);
+    formData.append("gellary_image_name[]", this.state.gellaryfilename);
+
+    formData.append("client_name", client_name);
+    formData.append("created_by", created_by);
+    formData.append("completed_date", completed_date);
+    formData.append("skills", skills);
+    formData.append("status", status);
+
+    this.props.createPortfolio(
       formData,
       this.props.addFlashMessage,
       this.props.history
@@ -100,15 +142,13 @@ class Abouts extends Component {
   render() {
     let {
       title,
-      sub_title,
-      about_image,
-      about_info,
-      name,
-      email,
-      phone,
-      address,
-      age,
-      nationality,
+      description,
+      feature_image,
+      gellary_image,
+      client_name,
+      created_by,
+      completed_date,
+      skills,
       status,
       error
     } = this.state;
@@ -123,10 +163,10 @@ class Abouts extends Component {
                   <h4 class="page-title mb-0">Dashboard</h4>
                   <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item">
-                      <Link to={"/abouts"}>Abouts</Link>
+                      <Link to={"/portfolios"}>Portfolios</Link>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      about
+                       Create
                     </li>
                   </ol>
                 </div>
@@ -138,7 +178,7 @@ class Abouts extends Component {
           <div className="col-xl-12">
             <div className="card">
               <div className="card-body">
-                <h2 className="text-uppercase text-center">Create About</h2>
+                <h2 className="text-uppercase text-center">Create Portfolio</h2>
 
                 <Form
                   onSubmit={this.submitHandler}
@@ -155,7 +195,7 @@ class Abouts extends Component {
                       value={title}
                       onChange={this.changeHandler}
                     />
-                    {error.title && (
+                    {/* {error.title && (
                       <span
                         className={
                           error.title
@@ -165,207 +205,165 @@ class Abouts extends Component {
                       >
                         {error.title}
                       </span>
-                    )}
+                    )} */}
                   </Form.Group>
 
-                  <Form.Group controlId="subtitle">
-                    <Form.Label>Sub Title</Form.Label>
+                  <Form.Group controlId="description">
+                    <Form.Label>Description</Form.Label>
+
+                    
                     <Form.Control
-                      type="text"
-                      name="sub_title"
-                      autoComplete="new-sub_title"
-                      placeholder="Enter Your Sub Title"
-                      value={sub_title}
+                      as="textarea"
+                      rows="4"
+                      name="description"
+                      autoComplete="new-description"
+                      placeholder="Enter Your description"
+                      value={description}
                       onChange={this.changeHandler}
                     />
-                    {error.sub_title && (
+
+                    {/* {error.description && (
                       <span
                         className={
-                          error.sub_title
+                          error.description
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.sub_title}
+                        {error.description}
                       </span>
-                    )}
+                    )} */}
                   </Form.Group>
 
-                  <Form.Group controlId="image">
-                    <Form.Label>Image Upload</Form.Label>
+                  <Form.Group controlId="feature_image">
+                    <Form.Label>Feature Image Upload</Form.Label>
 
                     <Form.Control
                       type="file"
-                      name="about_image"
-                      multiple
+                      name="feature_image"
                       onChange={this.filehander}
                     />
-                    {error.about_image && (
+                    {/* {error.feature_image && (
                       <span
                         className={
-                          error.about_image
+                          error.feature_image
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.about_image}
+                        {error.feature_image}
                       </span>
-                    )}
+                    )} */}
                   </Form.Group>
 
-                  <Form.Group controlId="about_info">
-                    <Form.Label>About Info</Form.Label>
+
+                  <Form.Group controlId="gellary_image">
+                    <Form.Label>Gellary Image Upload</Form.Label>
 
                     <Form.Control
-                      as="textarea"
-                      rows="4"
-                      name="about_info"
-                      autoComplete="new-about_info"
-                      placeholder="Enter Your About Details"
-                      value={about_info}
-                      onChange={this.changeHandler}
+                      type="file"
+                      name="gellary_image"
+                      multiple
+                      onChange={this.gellaryhander}
                     />
-                  </Form.Group>
-
-                  <Form.Group controlId="name">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="name"
-                      autoComplete="new-name"
-                      placeholder="Enter Your name"
-                      value={name}
-                      onChange={this.changeHandler}
-                    />
-                    {error.name && (
+                    {/* {error.feature_image && (
                       <span
                         className={
-                          error.name
+                          error.feature_image
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.name}
+                        {error.feature_image}
                       </span>
-                    )}
+                    )} */}
                   </Form.Group>
 
-                  <Form.Group controlId="email">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      type="email"
-                      name="email"
-                      autoComplete="new-email"
-                      placeholder="Enter Your Email"
-                      value={email}
-                      onChange={this.changeHandler}
-                    />
-                    {error.email && (
-                      <span
-                        className={
-                          error.email
-                            ? "invalid-feedback d-block"
-                            : "invalid-feedback"
-                        }
-                      >
-                        {error.email}
-                      </span>
-                    )}
-                  </Form.Group>
-
-                  <Form.Group controlId="Phone">
-                    <Form.Label>Phone</Form.Label>
+                  <Form.Group controlId="client_name">
+                    <Form.Label>Client Name</Form.Label>
                     <Form.Control
                       type="text"
-                      name="phone"
-                      autoComplete="new-phone"
-                      placeholder="Enter Your phone number"
-                      value={phone}
+                      name="client_name"
+                      autoComplete="new-client_name"
+                      placeholder="Enter Your Client Name"
+                      value={client_name}
                       onChange={this.changeHandler}
                     />
-                    {error.phone && (
+                    {/* {error.client_name && (
                       <span
                         className={
-                          error.phone
+                          error.client_name
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.phone}
+                        {error.client_name}
                       </span>
-                    )}
+                    )} */}
                   </Form.Group>
 
-                  <Form.Group controlId="address">
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      rows="4"
-                      name="address"
-                      autoComplete="new-address"
-                      placeholder="Enter Your address"
-                      value={address}
-                      onChange={this.changeHandler}
-                    />
-                    {error.address && (
-                      <span
-                        className={
-                          error.address
-                            ? "invalid-feedback d-block"
-                            : "invalid-feedback"
-                        }
-                      >
-                        {error.address}
-                      </span>
-                    )}
-                  </Form.Group>
+                 
 
-                  <Form.Group controlId="age">
-                    <Form.Label>Age</Form.Label>
-                    <Form.Control
-                      type="number"
-                      name="age"
-                      autoComplete="new-age"
-                      placeholder="Enter Your age"
-                      value={age}
-                      onChange={this.changeHandler}
-                    />
-                    {error.age && (
-                      <span
-                        className={
-                          error.age
-                            ? "invalid-feedback d-block"
-                            : "invalid-feedback"
-                        }
-                      >
-                        {error.age}
-                      </span>
-                    )}
-                  </Form.Group>
-
-                  <Form.Group controlId="nationality">
-                    <Form.Label>Nationality</Form.Label>
+                  <Form.Group controlId="created_by">
+                    <Form.Label>Created By</Form.Label>
                     <Form.Control
                       type="text"
-                      name="nationality"
-                      autoComplete="new-nationality"
-                      placeholder="Enter Your nationality"
-                      value={nationality}
+                      name="created_by"
+                      autoComplete="new-created_by"
+                      placeholder="Enter Your Created By"
+                      value={created_by}
                       onChange={this.changeHandler}
                     />
-                    {error.nationality && (
+                    {/* {error.created_by && (
                       <span
                         className={
-                          error.nationality
+                          error.created_by
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.nationality}
+                        {error.created_by}
                       </span>
-                    )}
+                    )} */}
                   </Form.Group>
 
+                  <Form.Group controlId="completed_date">
+                    <Form.Label>Completed Date</Form.Label>
+                    <DatePicker className="form-control" name='completed_date'
+                    selected={this.state.completed_date}
+                    onChange={this.handleDate} placeholder="dd/mm/yy" value={completed_date}
+                    showYearDropdown
+                    showMonthDropdown
+                    scrollableYearDropdown
+                  />
+                  </Form.Group>
+
+                  <Form.Group controlId="skills">
+                    <Form.Label>Skills</Form.Label>
+                    {this.state.skills.map((value, index) => {
+                      return (
+
+                        <div>
+
+                          <Form.Control type="text" key={index} className='w-90 d-inline-block' placeholder='Enter Your skills' value={value} onChange={(e) => this.changeSkillsvalue(e, index)} />
+                           {/* {error.skills && (
+                      <span
+                        className={
+                          error.skills
+                            ? "invalid-feedback d-block"
+                            : "invalid-feedback"
+                        }
+                      >
+                        {error.skills}
+                      </span>
+                    )} */}
+                          <button type='button' className='btn btn-danger float-right ml-2' onClick={() => this.removeSkills(index)}>X</button>
+                        
+                        </div>
+                      )
+                    })}
+                    <button className="btn btn-primary float-right mt-2" onClick={(e) => { e.preventDefault(); this.addSkills(e) }}>Add new Skill</button>
+                  </Form.Group>
                   <Form.Group controlId="status.controler">
                     <Form.Label>Status</Form.Label>
                     <Form.Control
@@ -388,7 +386,7 @@ class Abouts extends Component {
                         className="btn submit-btn btn-primary"
                         type="submit"
                       >
-                        Create About
+                        Create Portfolio
                       </button>
                     </div>
                   </Form.Group>
@@ -402,9 +400,9 @@ class Abouts extends Component {
   }
 }
 const mapStateToProps = state => ({
-  about: state.about
+  portfolios: state.portfolio
 });
 
-export default connect(mapStateToProps, { createAbout, addFlashMessage })(
-  Abouts
+export default connect(mapStateToProps, { createPortfolio, addFlashMessage })(
+  Portfolio
 );

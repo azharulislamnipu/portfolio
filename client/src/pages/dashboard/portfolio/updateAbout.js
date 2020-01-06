@@ -1,47 +1,65 @@
-import React, { Component } from "react";
+import Modal from "react-bootstrap/Modal";
+import ModalDialog from "react-bootstrap/ModalDialog";
+import ModalHeader from "react-bootstrap/ModalHeader";
+import ModalTitle from "react-bootstrap/ModalTitle";
+import ModalBody from "react-bootstrap/ModalBody";
+import ModalFooter from "react-bootstrap/ModalFooter";
+import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { createAbout } from "../../../store/actions/aboutActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
-class Abouts extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "",
-      sub_title: "",
-      about_image: "",
-      about_info: "",
+import { updateAbout } from '../../../store/actions/aboutActions';
+class UpdateAbout extends Component {
 
-      selectedFile: "",
-      filename: "",
+    constructor(props) {
+        super(props);
+        this.state = {
+          title: "",
+          sub_title: "",
+          about_image: "",
+          about_image_url: "",
+          about_current_url: "",
+          about_info: "",
+    
+          selectedFile: "",
+          filename: "",
+    
+          name: "",
+          email: "",
+          phone: "",
+          address: "",
+          age: "",
+          nationality: "",
+          status: "publish",
+          error: {}
+        };
+        this.changeHandler = this.changeHandler.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.filehander = this.filehander.bind(this);
+      }
+ 
 
-      name: "",
-      email: "",
-      phone: "",
-      address: "",
-      age: "",
-      nationality: "",
-      status: "publish",
-      error: {}
-    };
+  componentDidMount() {
+    this.setState({
+      title: this.props.abouts.error.title?  this.state.title : this.props.about.title,
+      sub_title: this.props.abouts.error.sub_title?  this.state.sub_title : this.props.about.sub_title,
+      about_image:  this.props.abouts.error.about_image?  this.state.about_image : this.props.about.about_image, 
+      about_image_url:  this.props.about.about_image_url, 
+      about_current_url:  this.props.about.about_image_url, 
+      about_info: this.props.about.about_info,
 
-    this.changeHandler = this.changeHandler.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.filehander = this.filehander.bind(this);
-    this.submitHandler = this.submitHandler.bind(this);
+      name: this.props.abouts.error.name?  this.state.name : this.props.bio.name,
+      email:  this.props.abouts.error.email?  this.state.email : this.props.bio.email,
+      phone:  this.props.abouts.error.phone?  this.state.phone : this.props.bio.phone,
+      address:  this.props.abouts.error.address?  this.state.address :this.props.bio.address,
+      age:  this.props.abouts.error.age?  this.state.age : this.props.bio.age,
+      nationality:  this.props.abouts.error.nationality?  this.state.nationality : this.props.bio.nationality,
+      status: this.props.about.status
+    });
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      JSON.stringify(nextProps.about.error) !== JSON.stringify(prevState.error)
-    ) {
-      return {
-        error: nextProps.about.error
-      };
-    }
-    return null;
-  }
+
 
   handleChange(e) {
     this.setState({
@@ -59,12 +77,15 @@ class Abouts extends Component {
     this.setState({ filename: e.target.files[0].name });
   };
 
+
+
   submitHandler = event => {
     event.preventDefault();
     let {
       title,
       sub_title,
       about_image,
+      about_image_url,
       about_info,
       name,
       email,
@@ -88,74 +109,72 @@ class Abouts extends Component {
     formData.append("nationality", nationality);
     formData.append("status", status);
     formData.append("about_image_name", this.state.filename);
+    formData.append("about_current_url", about_image_url);
     formData.append("about_image", this.state.selectedFile[0]);
 
-    this.props.createAbout(
-      formData,
-      this.props.addFlashMessage,
-      this.props.history
-    );
+    this.props.updateAbout(this.props.about._id, formData, this.props.addFlashMessage, this.props);
+
+
   };
 
+
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      JSON.stringify(nextProps.abouts.error) !==
+      JSON.stringify(prevState.error)
+    ) {
+      return {
+        error: nextProps.abouts.error
+      };
+    }
+    return null;
+  }
+
   render() {
+   
     let {
-      title,
-      sub_title,
-      about_image,
-      about_info,
-      name,
-      email,
-      phone,
-      address,
-      age,
-      nationality,
-      status,
-      error
-    } = this.state;
+        title,
+        sub_title,
+        about_image,
+        about_image_url,
+        about_info,
+        name,
+        email,
+        phone,
+        address,
+        age,
+        nationality,
+        status,
+        error
+      } = this.state;
+
 
     return (
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="page-title-box">
-              <div class="row align-items-center">
-                <div class="col-md-8">
-                  <h4 class="page-title mb-0">Dashboard</h4>
-                  <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item">
-                      <Link to={"/abouts"}>Abouts</Link>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                      about
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xl-12">
-            <div className="card">
-              <div className="card-body">
-                <h2 className="text-uppercase text-center">Create About</h2>
-
-                <Form
-                  onSubmit={this.submitHandler}
-                  method="post"
-                  enctype="multipart/form-data"
-                >
-                  <Form.Group controlId="title">
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="title"
-                      autoComplete="new-title"
-                      placeholder="Enter Your title"
-                      value={title}
-                      onChange={this.changeHandler}
-                    />
-                    {error.title && (
+      <Modal
+        {...this.props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            <h3 className="text-dark"> Update About</h3>
+          </Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={this.submitHandler}  method="post"
+                  enctype="multipart/form-data">
+          <Modal.Body>
+          <Form.Group controlId="title">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                type="text"
+                name="title"
+                placeholder="Enter Your title"
+                value={title}
+                onChange={this.changeHandler}
+              />
+              {error.title && (
                       <span
                         className={
                           error.title
@@ -166,9 +185,11 @@ class Abouts extends Component {
                         {error.title}
                       </span>
                     )}
-                  </Form.Group>
 
-                  <Form.Group controlId="subtitle">
+            </Form.Group>
+
+            
+            <Form.Group controlId="subtitle">
                     <Form.Label>Sub Title</Form.Label>
                     <Form.Control
                       type="text"
@@ -192,25 +213,39 @@ class Abouts extends Component {
                   </Form.Group>
 
                   <Form.Group controlId="image">
-                    <Form.Label>Image Upload</Form.Label>
 
-                    <Form.Control
-                      type="file"
-                      name="about_image"
-                      multiple
-                      onChange={this.filehander}
-                    />
-                    {error.about_image && (
-                      <span
-                        className={
-                          error.about_image
-                            ? "invalid-feedback d-block"
-                            : "invalid-feedback"
-                        }
-                      >
-                        {error.about_image}
-                      </span>
-                    )}
+                      <div className="d-inline-block">
+                      <img src={about_image_url} class="thumb-lg rounded-circle mr-2" alt="about-image"/>
+                      </div>
+                      <div className="d-inline-block">
+                      <Form.Label>Image Upload</Form.Label>
+                
+                <Form.Control
+                  type="file"
+                  name="about_image"
+                  multiple
+                  onChange={this.filehander}
+                />
+                
+                  <Form.Control id='hidden_img'
+                  type="hidden"
+                  name="about_current_url"
+                  value={about_image_url}
+                />
+                {error.about_image && (
+                  <span
+                    className={
+                      error.about_image
+                        ? "invalid-feedback d-block"
+                        : "invalid-feedback"
+                    }
+                  >
+                    {error.about_image}
+                  </span>
+                )}
+
+                      </div>
+                    
                   </Form.Group>
 
                   <Form.Group controlId="about_info">
@@ -218,7 +253,7 @@ class Abouts extends Component {
 
                     <Form.Control
                       as="textarea"
-                      rows="4"
+                      rows="3"
                       name="about_info"
                       autoComplete="new-about_info"
                       placeholder="Enter Your About Details"
@@ -300,7 +335,7 @@ class Abouts extends Component {
                     <Form.Label>Address</Form.Label>
                     <Form.Control
                       as="textarea"
-                      rows="4"
+                      rows="3"
                       name="address"
                       autoComplete="new-address"
                       placeholder="Enter Your address"
@@ -379,32 +414,25 @@ class Abouts extends Component {
                     </Form.Control>
                   </Form.Group>
 
-                  <Form.Group className="row">
-                    <div className="col-sm-12 text-left">
-                      <Link className="btn btn-primary mr-2" to="/abouts">
-                        View List
-                      </Link>
-                      <button
-                        className="btn submit-btn btn-primary"
-                        type="submit"
-                      >
-                        Create About
-                      </button>
-                    </div>
-                  </Form.Group>
-                </Form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+
+          </Modal.Body>
+          <Modal.Footer>
+            <button className="btn btn-dark ml-2" type="submit">
+              Update
+            </button>
+            <button className="btn btn-danger" onClick={this.props.onHide}>
+              Close
+            </button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
     );
   }
 }
+
 const mapStateToProps = state => ({
-  about: state.about
+  abouts: state.about
 });
 
-export default connect(mapStateToProps, { createAbout, addFlashMessage })(
-  Abouts
-);
+export default connect(mapStateToProps, { updateAbout , addFlashMessage })(UpdateAbout);

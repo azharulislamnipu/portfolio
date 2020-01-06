@@ -26,11 +26,20 @@ class Info extends Component {
     this.setState({ info_name: [...this.state.info_name, ""] })
   }
 
-
   chanevalue = (event, index) => {
     this.state.info_name[index] = event.target.value;
     this.setState({ info_name: this.state.info_name });
   }
+  remove = (sidx) => {
+    if (sidx > 0) {
+      this.setState({
+        info_name: this.state.info_name.filter((s, idx) => idx !== sidx)
+      });
+    }
+
+  };
+
+
   handleChange(e) {
     this.setState({
       status: e.target.value
@@ -48,14 +57,6 @@ class Info extends Component {
     return null;
   }
 
-  remove = (sidx) => {
-    if (sidx > 0) {
-      this.setState({
-        info_name: this.state.info_name.filter((s, idx) => idx !== sidx)
-      });
-    }
-
-  };
 
   changeHandler = event => {
     this.setState({
