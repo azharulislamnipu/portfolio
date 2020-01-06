@@ -11,17 +11,18 @@ export class SocialMedia extends Component {
     componentDidMount(){
         this.props.loadSocials();
     }
-    showSocialmediaItem = () => (
-      
-        this.props.socials.socials.map((social,key) =>{
-            if(social.status === 'publish'){
-              return (  
-                   <SocialMediaItem Key={key} social={social} />
-              )
-            }
-        })
-      )
     render() {
+
+      let { socials } = this.props.socials;
+
+      const socialItem = socials.length > 0 ? socials.map((social,key)=>{
+        if(social.status === 'publish'){
+          return (
+          <SocialMediaItem Key={key} social={social} />
+          )
+        }
+      }) : <span>No Social Data Available</span> ;
+      
         return (
            <section className="social-media">
                <Container className='mb-5'>
@@ -30,7 +31,7 @@ export class SocialMedia extends Component {
               <Container>
                <Row>
 
-                  {this.showSocialmediaItem()}
+                  {socialItem}
 
                 
                 </Row>

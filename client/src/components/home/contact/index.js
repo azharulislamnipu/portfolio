@@ -72,21 +72,18 @@ class Contact extends Component {
     );
   };
 
-  showInfoItem = () => (
-  
-    this.props.infos.infos.map((info,key) =>{
-        if(info.status === 'publish'){
-          return (
-            <InfoItem info={info}/>
-          )
-        }
-    })
-  )
 
-  
   render() {
     let { fullname, email, organigation, subject, consult_date, budget, description, phone, error } = this.state;
+    let { infos } = this.props.infos;
 
+    const infosItem = infos.length> 0 ? infos.map((info,key)=>{
+      if(info.status === 'publish'){
+        return (
+          <InfoItem info={info}/>
+        )
+      }
+    }) : <span>No info Data Available</span> ;
 
 
     return (
@@ -198,7 +195,7 @@ class Contact extends Component {
 
         <Container>
           <Row>
-            {this.showInfoItem()}
+            {infosItem}
            
           </Row>
         </Container>
