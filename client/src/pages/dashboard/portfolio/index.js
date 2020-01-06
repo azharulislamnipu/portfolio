@@ -21,7 +21,7 @@ class Portfolio extends Component {
       feature_image: "",
       feature_image_name: "",
       gellary_image: [""],
-      gellary_image_name: [""],
+      gellary_image_name:'',
       client_name: "",
       created_by: "",
       completed_date: new Date(),
@@ -86,16 +86,14 @@ class Portfolio extends Component {
   };
 
   filehander = e => {
-    this.setState({ selectedFile: e.target.files });
-    this.setState({ filename: e.target.files[0].name });
+    this.setState({selectedFile: e.target.files});
+    this.setState({filename: e.target.files[0].name});
   };
 
  gellaryhander = e => {
     this.setState({ gellaryFile: e.target.files });
 
-    for (var i = 0; i < e.target.files.length; i++) {
-      this.setState({ gellaryfilename : e.target.files[i].name });
-  }
+ 
  
   };
 
@@ -114,7 +112,7 @@ class Portfolio extends Component {
       error
     } = this.state;
 
-    console.log(this.state.gellaryfilename);
+    console.log(this.state.gellary_image_name);
 
     const formData = new FormData();
 
@@ -124,13 +122,28 @@ class Portfolio extends Component {
     formData.append("feature_image", this.state.selectedFile[0]);
 
     formData.append("gellary_image", this.state.gellaryFile);
-    formData.append("gellary_image_name[]", this.state.gellaryfilename);
+   
+
+
+    for (var i = 0; i <  this.state.gellaryFile.length; i++) {
+
+      formData.append("gellary_image_name",  this.state.gellaryFile[i].name.toLowerCase()
+      .split(" ")
+      .join("-"));
+  }
+
 
     formData.append("client_name", client_name);
     formData.append("created_by", created_by);
     formData.append("completed_date", completed_date);
-    formData.append("skills", skills);
+
+    for (var i = 0; i <  this.state.skills.length; i++) {
+      formData.append("skills", this.state.skills[i]);
+    }
+
     formData.append("status", status);
+
+    // console.log(formData);
 
     this.props.createPortfolio(
       formData,

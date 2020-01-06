@@ -7,51 +7,56 @@ module.exports = {
 
     console.log(bodydata);
 
-    // let {
-    //   title,
-    //   description,
-    //   feature_image_name,
-    //   gellary_image_name,
-    //   client_name,
-    //   created_by,
-    //   completed_date,
-    //   skills,
-    //   status
-    // } = bodydata;
-    // let feature_image = bodydata.feature_image_name
-    //   .toLowerCase()
-    //   .split(" ")
-    //   .join("-");
-    // let gellary = bodydata.gellary_image_name
+    let {
+      title,
+      description,
+      feature_image_name,
+      gellary_image_name,
+      client_name,
+      created_by,
+      completed_date,
+      skills,
+      status
+    } = bodydata;
+    let feature_image = bodydata.feature_image_name
+      .toLowerCase()
+      .split(" ")
+      .join("-");
+
+       
+    let gellary  = bodydata.gellary_image_name; 
+ 
+
+    // gellary = bodydata.gellary_image_name
     //   .toLowerCase()
     //   .split(" ")
     //   .join("-");
 
-    // let image_url = req.protocol + "://" + req.get("host") + "/uploads/";
+    let image_url = req.protocol + "://" + req.get("host") + "/uploads/";
 
-    // let user_id = req.user._id;
-    // let portfolio = new Portfolio({
-    //   title,
-    //   description,
-    //   feature_image,
-    //   image_url,
-    //   gellary,
-    //   client_name,
-    //   created_by,
-    //   completed_date,
-    //   skills,
-    //   status,
-    //   user_id
-    // });
-    // portfolio
-    //   .save()
-    //   .then(portfo => {
-    //     res.status(201).json({
-    //       message: "Portfolio Created Successfully",
-    //       ...portfo._doc
-    //     });
-    //   })
-    //   .catch(error => serverError(res, error));
+    let user_id = req.user._id;
+    let portfolio = new Portfolio({
+      title,
+      description,
+      feature_image,
+      image_url,
+      gellary,
+      client_name,
+      created_by,
+      completed_date,
+      skills,
+      status,
+      user_id
+    });
+    portfolio
+      .save()
+      .then(portfo => {
+        res.status(201).json({
+          message: "Portfolio Created Successfully",
+          ...portfo._doc
+        });
+      })
+      .catch(error => serverError(res, error));
   },
 
   getAll(req, res, next) {
