@@ -81,68 +81,71 @@ module.exports = {
   },
 
   update(req, res, next) {
-    let { aboutId } = req.params;
+    let { portfolioId } = req.params;
 
     const bodydata = JSON.parse(JSON.stringify(req.body));
-
     let {
       title,
-      sub_title,
-      about_info,
-      name,
-      email,
-      phone,
-      address,
-      age,
-      nationality,
-      status,
-      about_image_name,
-      about_current_url
+      description,
+      type,
+      feature_image_name,
+      feature_image,
+      current_feature_image,
+      gellary_image_name,
+      gellary_image,
+      client_name,
+      created_by,
+      completed_date,
+      skills,
+      status
     } = bodydata;
-    let about_image, about_image_url;
-
-    if (about_image_name == "") {
-      let res = about_current_url.replace(
-        req.protocol + "://" + req.get("host") + "/uploads/",
-        ""
-      );
-      about_image = res;
-      about_image_url = about_current_url;
-    } else {
-      about_image = bodydata.about_image_name
-        .toLowerCase()
-        .split(" ")
-        .join("-");
-
-      about_image_url =
-        req.protocol + "://" + req.get("host") + "/uploads/" + about_image;
+    let gellary;
+    if(feature_image_name === ''){
+      feature_image = bodydata.current_feature_image;
+    }else{
+      feature_image = bodydata.feature_image_name;
     }
 
+    if(gellary_image_name === undefined ){
+       gellary = bodydata.current_feature_image;
+    }else{
+       gellary = bodydata.gellary_image_name;
+    }
+
+
+
+    let image_url = req.protocol + "://" + req.get("host") + "/uploads/";
+
+
     let user_id = req.user._id;
-    let validate = aboutValidator({
+    let validate = portfolioValidator({
       title,
-      sub_title,
-      about_image,
-      name,
-      email,
-      phone,
-      address,
-      age,
-      nationality
+      description,
+      type,
+      feature_image,
+      client_name,
+      created_by,
+      completed_date,
+      skills
     });
 
     if (!validate.isValid) {
       return res.status(400).json(validate.error);
     } else {
+
       Portfolio.findOneAndUpdate(
-        { _id: aboutId },
+        { _id: portfolioId },
         {
           title,
-          sub_title,
-          about_image,
-          about_image_url,
-          about_info,
-          bio: { name, email, phone, address, age, nationality },
+          description,
+          type,
+          feature_image,
+          image_url,
+          gellary,
+          client_name,
+          created_by,
+          completed_date,
+          skills,
           status,
           user_id
         },

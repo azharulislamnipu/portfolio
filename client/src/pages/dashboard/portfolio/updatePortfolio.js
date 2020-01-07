@@ -10,6 +10,7 @@ import Form from "react-bootstrap/Form";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
+import { updatePortfolio } from "../../../store/actions/portfolioActions";
 
 class UpdatePortfolio extends Component {
 
@@ -25,10 +26,13 @@ class UpdatePortfolio extends Component {
     
           feature_image:'',
 
+          current_feature_image:'',
+
           gellaryFile:'',
         
           gellary_image: [""],
           gellary_image_name:'',
+          current_gellary_image_name:[""],
           client_name: "",
           created_by: "",
           completed_date: '',
@@ -54,6 +58,8 @@ class UpdatePortfolio extends Component {
       type: this.props.portfolios.error.type?  this.state.type : this.props.portfolio.type,
 
       feature_image: this.props.portfolios.error.feature_image?  this.state.feature_image : this.props.portfolio.feature_image,
+      current_feature_image: this.props.portfolio.feature_image,
+      current_gellary_image_name: this.props.portfolio.gellary,
       
       client_name: this.props.portfolios.error.client_name?  this.state.type : this.props.portfolio.client_name,
       created_by: this.props.portfolios.error.created_by?  this.state.created_by : this.props.portfolio.created_by,
@@ -118,27 +124,60 @@ class UpdatePortfolio extends Component {
     event.preventDefault();
     let {
       title,
-      
+      description,
+      type,
+      feature_image,
+      gellary_image,
+      current_gellary_image_name,
+      client_name,
+      created_by,
+      completed_date,
+      skills,
       status,
       error
     } = this.state;
 
+
+    completed_date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(completed_date);
     const formData = new FormData();
+
     formData.append("title", title);
-    formData.append("sub_title", sub_title);
-    formData.append("about_info", about_info);
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("address", address);
-    formData.append("age", age);
-    formData.append("nationality", nationality);
+    formData.append("description", description);
+    formData.append("type", type);
+
+
+
+    formData.append("feature_image_name", this.state.filename);
+    formData.append("current_feature_image", this.state.current_feature_image);
+    formData.append("feature_image", this.state.selectedFile[0]);
+
+
+  for (var i = 0; i <  this.state.gellaryFile.length; i++) {
+    formData.append("gellary_image", this.state.gellaryFile[i]);
+    formData.append("gellary_image_name",  this.state.gellaryFile[i].name.toLowerCase()
+    .split(" ")
+    .join("-"));
+}
+for (var i = 0; i <  this.state.current_gellary_image_name.length; i++) {
+
+  formData.append("current_gellary_image_name", this.state.current_gellary_image_name[i].toLowerCase()
+  .split(" ")
+  .join("-"));
+}
+
+    formData.append("client_name", client_name);
+    formData.append("created_by", created_by);
+    formData.append("completed_date", completed_date);
+
+    for (var i = 0; i <  this.state.skills.length; i++) {
+      formData.append("skills", this.state.skills[i]);
+    }
+
     formData.append("status", status);
-    formData.append("about_image_name", this.state.filename);
-    formData.append("about_current_url", about_image_url);
-    formData.append("about_image", this.state.selectedFile[0]);
 
     
+    this.props.updatePortfolio(this.props.portfolio._id, formData, this.props.addFlashMessage, this.props);
+
 
 
   };
@@ -164,7 +203,9 @@ class UpdatePortfolio extends Component {
         description,
         type,
         feature_image,
+        current_feature_image,
         gellary_image,
+        current_gellary_image_name,
         client_name,
         created_by,
         completed_date,
@@ -172,6 +213,8 @@ class UpdatePortfolio extends Component {
         status,
         error
       } = this.state;
+
+      console.log(current_gellary_image_name);
     return (
       <Modal
         {...this.props}
@@ -276,6 +319,15 @@ class UpdatePortfolio extends Component {
                       name="feature_image"
                       onChange={this.filehander}
                     />
+
+                   <Form.Control id='hidden_feature_img'
+                      type="hidden"
+                      name="current_feature_image"
+                      onChange={this.filehander}
+                      value={current_feature_image}
+                    />
+
+
                     {error.feature_image && (
                       <span
                         className={
@@ -301,6 +353,16 @@ class UpdatePortfolio extends Component {
                       multiple
                       onChange={this.gellaryhander}
                     />
+  {this.props.portfolio.gellary.map((value, index) => {
+                      return (
+
+                          <Form.Control id={'gellary'+index} type="hidden" key={index} name='current_gellary_image_name' className='d-inline-block' value={value}/>
+                          
+                    )})
+                      }
+
+
+                  
                
                   </Form.Group>
 
@@ -370,7 +432,7 @@ class UpdatePortfolio extends Component {
 
                         <div>
 
-                          <Form.Control type="text" key={index} className='w-90 d-inline-block' placeholder='Enter Your skills' value={value} onChange={(e) => this.changeSkillsvalue(e, index)} />
+                          <Form.Control id={'skills'+index} type="text" key={index} className='w-90 d-inline-block' placeholder='Enter Your skills' value={value} onChange={(e) => this.changeSkillsvalue(e, index)} />
                            {error.skills && (
                       <span
                         className={
@@ -422,4 +484,4 @@ const mapStateToProps = state => ({
   portfolios: state.portfolio
 });
 
-export default connect(mapStateToProps, { addFlashMessage })(UpdatePortfolio);
+export default connect(mapStateToProps, { updatePortfolio, addFlashMessage })(UpdatePortfolio);
