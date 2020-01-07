@@ -4,14 +4,13 @@ const Schema = mongoose.Schema;
 const PortfolioSchema = new Schema({
     title: {
         type: String,
-        required: true,
         trim:true
     },
     description: {
         type: String,
         trim:true
     },
-    feature_image:{
+    type: {
         type: String,
         trim:true
     },

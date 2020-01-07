@@ -4,59 +4,62 @@ const portfolioValidator = require("../validators/portfolioValidator");
 module.exports = {
   create(req, res, next) {
     const bodydata = JSON.parse(JSON.stringify(req.body));
-
-    console.log(bodydata);
-
     let {
       title,
       description,
-      feature_image_name,
+      type,
       gellary_image_name,
+      gellary_image,
       client_name,
       created_by,
       completed_date,
       skills,
       status
     } = bodydata;
-    let feature_image = bodydata.feature_image_name
-      .toLowerCase()
-      .split(" ")
-      .join("-");
 
-       
-    let gellary  = bodydata.gellary_image_name; 
- 
-
-    // gellary = bodydata.gellary_image_name
-    //   .toLowerCase()
-    //   .split(" ")
-    //   .join("-");
+    let gellary = bodydata.gellary_image_name;
 
     let image_url = req.protocol + "://" + req.get("host") + "/uploads/";
 
-    let user_id = req.user._id;
-    let portfolio = new Portfolio({
+    let validate = portfolioValidator({
       title,
       description,
-      feature_image,
-      image_url,
-      gellary,
+      type,
+      gellary_image,
       client_name,
       created_by,
       completed_date,
-      skills,
-      status,
-      user_id
+      skills
     });
-    portfolio
-      .save()
-      .then(portfo => {
-        res.status(201).json({
-          message: "Portfolio Created Successfully",
-          ...portfo._doc
-        });
-      })
-      .catch(error => serverError(res, error));
+
+
+    if (!validate.isValid) {
+      return res.status(400).json(validate.error);
+    } else {
+      let user_id = req.user._id;
+      let portfolio = new Portfolio({
+        title,
+        description,
+        type,
+        image_url,
+        gellary,
+        client_name,
+        created_by,
+        completed_date,
+        skills,
+        status,
+        user_id
+      });
+      portfolio
+        .save()
+        .then(portfo => {
+          res.status(201).json({
+            message: "Portfolio Created Successfully",
+            ...portfo._doc
+          });
+        })
+        .catch(error => serverError(res, error));
+    }
   },
 
   getAll(req, res, next) {

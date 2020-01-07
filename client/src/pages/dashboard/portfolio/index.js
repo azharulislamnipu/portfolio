@@ -11,15 +11,9 @@ class Portfolio extends Component {
     this.state = {
       title: "",
       description: "",
-
-      selectedFile: "",
-      filename: "",
-
+      type:'',
       gellaryFile:'',
-      gellaryfilename:[''],
-      
-      feature_image: "",
-      feature_image_name: "",
+    
       gellary_image: [""],
       gellary_image_name:'',
       client_name: "",
@@ -32,8 +26,8 @@ class Portfolio extends Component {
 
     this.changeHandler = this.changeHandler.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleTypeChange = this.handleTypeChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
-    this.filehander = this.filehander.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
   }
 
@@ -56,19 +50,16 @@ class Portfolio extends Component {
   };
 
 
-
-
-
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (
-  //     JSON.stringify(nextProps.about.error) !== JSON.stringify(prevState.error)
-  //   ) {
-  //     return {
-  //       error: nextProps.about.error
-  //     };
-  //   }
-  //   return null;
-  // }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      JSON.stringify(nextProps.portfolios.error) !== JSON.stringify(prevState.error)
+    ) {
+      return {
+        error: nextProps.portfolios.error
+      };
+    }
+    return null;
+  }
   handleDate = date => {
     this.setState({
       completed_date: date
@@ -79,22 +70,22 @@ class Portfolio extends Component {
       status: e.target.value
     });
   }
+
+  handleTypeChange(e) {
+    this.setState({
+      type: e.target.value
+    });
+  }
+
   changeHandler = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
   };
 
-  filehander = e => {
-    this.setState({selectedFile: e.target.files});
-    this.setState({filename: e.target.files[0].name});
-  };
 
  gellaryhander = e => {
     this.setState({ gellaryFile: e.target.files });
-
- 
- 
   };
 
   submitHandler = event => {
@@ -102,7 +93,7 @@ class Portfolio extends Component {
     let {
       title,
       description,
-      feature_image,
+      type,
       gellary_image,
       client_name,
       created_by,
@@ -112,14 +103,14 @@ class Portfolio extends Component {
       error
     } = this.state;
 
-    console.log(this.state.gellary_image_name);
+
 
     const formData = new FormData();
 
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("feature_image_name", this.state.filename);
-    formData.append("feature_image", this.state.selectedFile[0]);
+    formData.append("type", type);
+
 
     formData.append("gellary_image", this.state.gellaryFile);
    
@@ -143,7 +134,7 @@ class Portfolio extends Component {
 
     formData.append("status", status);
 
-    // console.log(formData);
+
 
     this.props.createPortfolio(
       formData,
@@ -156,6 +147,7 @@ class Portfolio extends Component {
     let {
       title,
       description,
+      type,
       feature_image,
       gellary_image,
       client_name,
@@ -208,7 +200,7 @@ class Portfolio extends Component {
                       value={title}
                       onChange={this.changeHandler}
                     />
-                    {/* {error.title && (
+                    {error.title && (
                       <span
                         className={
                           error.title
@@ -218,7 +210,7 @@ class Portfolio extends Component {
                       >
                         {error.title}
                       </span>
-                    )} */}
+                    )}
                   </Form.Group>
 
                   <Form.Group controlId="description">
@@ -235,7 +227,7 @@ class Portfolio extends Component {
                       onChange={this.changeHandler}
                     />
 
-                    {/* {error.description && (
+                    {error.description && (
                       <span
                         className={
                           error.description
@@ -245,28 +237,37 @@ class Portfolio extends Component {
                       >
                         {error.description}
                       </span>
-                    )} */}
+                    )}
                   </Form.Group>
 
-                  <Form.Group controlId="feature_image">
-                    <Form.Label>Feature Image Upload</Form.Label>
-
+                  <Form.Group controlId="type.controler">
+                    <Form.Label>Type</Form.Label>
                     <Form.Control
-                      type="file"
-                      name="feature_image"
-                      onChange={this.filehander}
-                    />
-                    {/* {error.feature_image && (
+                      as="select"
+                      name="type"
+                      onChange={this.handleTypeChange}
+                      value={type}
+                    >
+                      <option >Choose Your Project Type</option>
+                      <option value="psd to html">PSD TO HTML</option>
+                      <option value="psd to react">PSD TO REACT</option>
+                      <option value="psd to fullstack">PSD TO FULLSTACK</option>
+                      <option value="node js">NODE JS</option>
+                      <option value="psd to angular">PSD TO ANGULAR</option>
+                      <option value="psd to wordpress">PSD TO WORDPRESS</option>
+                    </Form.Control>
+
+                    {error.type && (
                       <span
                         className={
-                          error.feature_image
+                          error.type
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.feature_image}
+                        {error.type}
                       </span>
-                    )} */}
+                    )}
                   </Form.Group>
 
 
@@ -279,17 +280,17 @@ class Portfolio extends Component {
                       multiple
                       onChange={this.gellaryhander}
                     />
-                    {/* {error.feature_image && (
+                    {error.gellary_image && (
                       <span
                         className={
-                          error.feature_image
+                          error.gellary_image
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.feature_image}
+                        {error.gellary_image}
                       </span>
-                    )} */}
+                    )}
                   </Form.Group>
 
                   <Form.Group controlId="client_name">
@@ -302,7 +303,7 @@ class Portfolio extends Component {
                       value={client_name}
                       onChange={this.changeHandler}
                     />
-                    {/* {error.client_name && (
+                    {error.client_name && (
                       <span
                         className={
                           error.client_name
@@ -312,7 +313,7 @@ class Portfolio extends Component {
                       >
                         {error.client_name}
                       </span>
-                    )} */}
+                    )}
                   </Form.Group>
 
                  
@@ -327,7 +328,7 @@ class Portfolio extends Component {
                       value={created_by}
                       onChange={this.changeHandler}
                     />
-                    {/* {error.created_by && (
+                    {error.created_by && (
                       <span
                         className={
                           error.created_by
@@ -337,12 +338,12 @@ class Portfolio extends Component {
                       >
                         {error.created_by}
                       </span>
-                    )} */}
+                    )}
                   </Form.Group>
 
                   <Form.Group controlId="completed_date">
-                    <Form.Label>Completed Date</Form.Label>
-                    <DatePicker className="form-control" name='completed_date'
+                    <Form.Label>Completed Date : </Form.Label>
+                    <DatePicker className="form-control ml-2" name='completed_date'
                     selected={this.state.completed_date}
                     onChange={this.handleDate} placeholder="dd/mm/yy" value={completed_date}
                     showYearDropdown
@@ -359,7 +360,7 @@ class Portfolio extends Component {
                         <div>
 
                           <Form.Control type="text" key={index} className='w-90 d-inline-block' placeholder='Enter Your skills' value={value} onChange={(e) => this.changeSkillsvalue(e, index)} />
-                           {/* {error.skills && (
+                           {error.skills && (
                       <span
                         className={
                           error.skills
@@ -369,7 +370,7 @@ class Portfolio extends Component {
                       >
                         {error.skills}
                       </span>
-                    )} */}
+                    )}
                           <button type='button' className='btn btn-danger float-right ml-2' onClick={() => this.removeSkills(index)}>X</button>
                         
                         </div>
