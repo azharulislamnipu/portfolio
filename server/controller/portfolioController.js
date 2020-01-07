@@ -25,7 +25,6 @@ module.exports = {
       title,
       description,
       type,
-      gellary_image,
       client_name,
       created_by,
       completed_date,

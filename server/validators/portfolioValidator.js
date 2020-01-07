@@ -13,11 +13,6 @@ const validate = portfolio =>{
         error.type = 'Please select  portfolio type';
     }
 
-    if(!portfolio.gellary_image){
-        error.gellary_image = 'Please upload  portfolio gellary_image';
-    }
-
- 
     if(!portfolio.client_name){
         error.client_name = 'Please Provide client name';
     }

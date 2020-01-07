@@ -1,61 +1,35 @@
 import Modal from "react-bootstrap/Modal";
-import Media from 'react-bootstrap/Media'
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Media from "react-bootstrap/Media";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Carousel from "react-bootstrap/Carousel";
 import React, { Component } from "react";
 class ViewDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: "",
-      sub_title: "",
-      about_image: "",
-      about_image_url: "",
-      about_info: "",
-      name: "",
-      email: "",
-      phone: "",
-      address: "",
-      age: "",
-      nationality: "",
+
       status: "publish",
+      gellary: [''],
       error: {}
     };
   }
 
   componentDidMount() {
     this.setState({
-      title: this.props.about.title,
-      sub_title: this.props.about.sub_title,
-      about_image: this.props.about.about_image,
-      about_image_url: this.props.about.about_image_url,
-      about_info: this.props.about.about_info,
-
-      name: this.props.bio.name,
-      email: this.props.bio.email,
-      phone: this.props.bio.phone,
-      address: this.props.bio.address,
-      age: this.props.bio.age,
-      nationality: this.props.bio.nationality,
-      status: this.props.about.status
+      title: this.props.portfolio.title,
+      status: this.props.portfolio.status
     });
   }
 
+
+
   render() {
-    let {
-      title,
-      sub_title,
-      about_image,
-      about_image_url,
-      about_info,
-      name,
-      email,
-      phone,
-      address,
-      age,
-      nationality,
-      status
-    } = this.state;
+    let { title, status } = this.state;
+    console.log( this.props.portfolio.gellary);
+
+  
 
     return (
       <Modal
@@ -66,64 +40,38 @@ class ViewDetails extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            <h3 className="text-dark"> About Details {status =='publish' ? <span class="badge badge-success">{status}</span> : <span class="badge badge-danger">{status}</span> } </h3>
+            <h3 className="text-dark">
+              {" "}
+              {title}{" "}
+              {status == "publish" ? (
+                <span class="badge badge-success">{status}</span>
+              ) : (
+                <span class="badge badge-danger">{status}</span>
+              )}{" "}
+            </h3>
           </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
+          <Carousel>
 
-          <Media>
-          <img
-            width={150}
-            height={150}
-            className="mr-3"
-            src={about_image_url}
-            alt={about_image}
-          />
-          <Media.Body>
-            <h5>{title}</h5>
-            <em>{sub_title}</em>
-            <p>
-             {about_info}
-            </p>
-          </Media.Body>
-          </Media>
-          <Media>
-          <Media.Body>
-          <h2>Bio</h2>
-          <div className='bg-dark p-3 bio-text'>
+           
+                          {
 
+                            this.props.portfolio.gellary.length > 0 ?
+                            this.props.portfolio.gellary.map(gellaryItem => (
+
+                  <Carousel.Item>
+              <img
+                className="d-block w-100"
+                src={`${gellaryItem.length >0 ? this.props.portfolio.image_url+''+gellaryItem : 'no data' }`}
+                alt="First slide"
+              /> </Carousel.Item>
+                      )) : <span>No gellaryItem</span>
+                      }
+           
             
-          <Row>
-                            <Col lg={6} md={6} sm={12}>
-                                <p>Name: <span> {name}</span></p>
-                                </Col>
-                                <Col lg={6} md={6} sm={12}>
-                                <p>Email: <a href={`mailto:${email}`}>{email}</a> </p>
-                                </Col>
-                          
-                                <Col lg={6} md={6} sm={12}>
-                                <p>Age: <span>{age}</span></p>
-                                </Col>
-
-                                <Col lg={6} md={6} sm={12}>
-                                <p>Phone: <a href={`tel:${phone}`}>{phone}</a></p>
-                                </Col>
-
-                                <Col lg={6} md={6} sm={12}>
-                                <p>Address: <span>{address}</span></p>
-                                </Col>
-                          
-                                <Col lg={6} md={6} sm={12}>
-                                <p>Nationality: <span>{nationality}</span></p>
-                                </Col>
-                                 
-                      </Row> 
-
-
-            </div>
-          </Media.Body>
-        </Media>
+          </Carousel>
         </Modal.Body>
         <Modal.Footer>
           <button className="btn btn-danger" onClick={this.props.onHide}>
@@ -134,7 +82,5 @@ class ViewDetails extends Component {
     );
   }
 }
-
-
 
 export default ViewDetails;

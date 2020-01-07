@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
- import {loadAbouts , removeAbout} from '../../../store/actions/aboutActions';
+ import {loadPortfolios , removePortfolio} from '../../../store/actions/portfolioActions';
 import { Link } from "react-router-dom";
 import UpdateAbout from "./updateAbout";
 import ViewDetails from "./viewDetails";
 
- class Abouts extends Component {
+ class Portfolios extends Component {
 
     state = {
         updateModalOpen: false,
@@ -16,10 +16,10 @@ import ViewDetails from "./viewDetails";
 
       static getDerivedStateFromProps(nextProps, prevState) {
     if (
-      JSON.stringify(nextProps.abouts.error) !== JSON.stringify(prevState.error)
+      JSON.stringify(nextProps.portfolios.error) !== JSON.stringify(prevState.error)
     ) {
       return {
-        error: nextProps.abouts.error
+        error: nextProps.portfolios.error
       };
     }
     return null;
@@ -47,12 +47,12 @@ import ViewDetails from "./viewDetails";
         })
     }
     componentDidMount(){
-        this.props.loadAbouts();
+        this.props.loadPortfolios();
     }
 
 
     render() {
-        let { abouts } = this.props.abouts;
+        let { portfolios } = this.props.portfolios;
 
         return (
             <div class="container-fluid"> 
@@ -64,7 +64,7 @@ import ViewDetails from "./viewDetails";
                                 <div class="col-md-8">
                                     <h4 class="page-title mb-0">Dashboard</h4>
                                     <ol class="breadcrumb m-0">
-                                         <li class="breadcrumb-item"><Link to={'/about'}>About</Link> </li>
+                                         <li class="breadcrumb-item"><Link to={'/porfolio'}>Porfolio</Link> </li>
                                         <li class="breadcrumb-item active" aria-current="page">List</li>
                                     </ol>
                                 </div>
@@ -82,16 +82,16 @@ import ViewDetails from "./viewDetails";
 
                  <div class="card">
                         <div class="card-body">
-                            <h4 class="mt-0 header-title">Latest Abouts</h4>
+                            <h4 class="mt-0 header-title">Latest Portfolio</h4>
                             <div class="table-responsive mt-4">
                                 <table class="table table-hover mb-0">
                                     <thead>
                                         <tr>
                                             <th scope="col">(#) Id</th>
-                                            <th scope="col">Image</th>
                                             <th scope="col">Title</th>
-                                            <th scope="col">Sub Title</th>
-                                            <th scope="col">About Info</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Project Type</th>
+                                            <th scope="col">Created By</th>
                                             <th scope="col">status</th>
                                    
                                             <th scope="col" className='text-center'>Actions</th>
@@ -100,36 +100,37 @@ import ViewDetails from "./viewDetails";
                                         </tr>
                                     </thead>
 
-                                    { (Array.isArray(abouts) && abouts.length) > 0 ? 
+                                    { (Array.isArray(portfolios) && portfolios.length) > 0 ? 
                                     <tbody>
                                     {
-                                        abouts.map((about, index) => {
+                                        portfolios.map((portfolio, index) => {
                                         
                                             let count = index + 1;
                                        
                                                 return(
-                                                <tr key={about._id}>
+                                                <tr key={portfolio._id}>
                                             <th scope="row">#{count}</th>
-                                            <td><img src={about.about_image_url} class="thumb-lg rounded-circle mr-2" alt="about-image"/></td>
-                                            <td>{about.title}</td>
-                                            <td>{about.sub_title}</td>
-                                            <td className='w-25'>{about.about_info}</td>
+            
+                                            <td>{portfolio.title}</td>
+                                            <td className='w-50'>{portfolio.description}</td>
+                                            <td>{portfolio.type}</td>
+                                            <td>{portfolio.created_by}</td>
                                         
-                                            <td>{about.status =='publish' ? <span class="badge badge-success">{about.status}</span> : <span class="badge badge-danger">{about.status}</span> }</td>
+                                            <td>{portfolio.status =='publish' ? <span class="badge badge-success">{portfolio.status}</span> : <span class="badge badge-danger">{portfolio.status}</span> }</td>
                                             <td>
                                           
 
-                                            {this.state.id === about._id?   <UpdateAbout show={this.state.updateModalOpen}
-        onHide={this.closeUpdateModal}  bio={about.bio} about={about} error={this.state.error} /> : null }
+                                            {/* {this.state.id === about._id?   <UpdateAbout show={this.state.updateModalOpen}
+        onHide={this.closeUpdateModal}  bio={about.bio} about={about} error={this.state.error} /> : null } */}
 
-        {this.state.id === about._id?   <ViewDetails show={this.state.viewModalOpen}
-        onHide={this.closeUpdateModal}  bio={about.bio} about={about} /> : null }
+        {this.state.id === portfolio._id?   <ViewDetails show={this.state.viewModalOpen}
+        onHide={this.closeUpdateModal}   portfolio={portfolio} /> : null }
 
         
                                     
-                                                    <button className='btn btn-primary btn-sm m-1' onClick={() => this.openUpdateModal(about._id)} >Edit</button>
-                                                    <button className='btn btn-danger btn-sm m-1' onClick={ ()=> { this.props.removeAbout(about._id)}} >Delete</button>
-                                                    <button className='btn btn-secondary btn-sm m-1'  onClick={() => this.openViewModal(about._id)}  >View</button>
+                                                    <button className='btn btn-primary btn-sm m-1' onClick={() => this.openUpdateModal(portfolio._id)} >Edit</button>
+                                                    <button className='btn btn-danger btn-sm m-1' onClick={ ()=> { this.props.removePortfolio(portfolio._id)}} >Delete</button>
+                                                    <button className='btn btn-secondary btn-sm m-1'  onClick={() => this.openViewModal(portfolio._id)}  >View</button>
                                                 
                                             </td>
                                         </tr>
@@ -159,7 +160,7 @@ import ViewDetails from "./viewDetails";
 }
 
 const mapStateToProps = state => ({
-    abouts: state.about,
+    portfolios: state.portfolio,
 })
 
-export default connect(mapStateToProps, { loadAbouts, removeAbout })(Abouts)
+export default connect(mapStateToProps, { loadPortfolios, removePortfolio })(Portfolios)

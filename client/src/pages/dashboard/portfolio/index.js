@@ -112,12 +112,12 @@ class Portfolio extends Component {
     formData.append("type", type);
 
 
-    formData.append("gellary_image", this.state.gellaryFile);
+
    
 
 
     for (var i = 0; i <  this.state.gellaryFile.length; i++) {
-
+      formData.append("gellary_image", this.state.gellaryFile[i]);
       formData.append("gellary_image_name",  this.state.gellaryFile[i].name.toLowerCase()
       .split(" ")
       .join("-"));
@@ -393,7 +393,7 @@ class Portfolio extends Component {
 
                   <Form.Group className="row">
                     <div className="col-sm-12 text-left">
-                      <Link className="btn btn-primary mr-2" to="/abouts">
+                      <Link className="btn btn-primary mr-2" to="/portfolios">
                         View List
                       </Link>
                       <button
