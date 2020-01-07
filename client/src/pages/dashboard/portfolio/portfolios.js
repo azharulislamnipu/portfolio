@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux';
  import {loadPortfolios , removePortfolio} from '../../../store/actions/portfolioActions';
 import { Link } from "react-router-dom";
-import UpdateAbout from "./updateAbout";
+import UpdatePortfolio from "./updatePortfolio";
 import ViewDetails from "./viewDetails";
 
  class Portfolios extends Component {
@@ -53,7 +53,7 @@ import ViewDetails from "./viewDetails";
 
     render() {
         let { portfolios } = this.props.portfolios;
-
+ 
         return (
             <div class="container-fluid"> 
               
@@ -88,6 +88,7 @@ import ViewDetails from "./viewDetails";
                                     <thead>
                                         <tr>
                                             <th scope="col">(#) Id</th>
+                                            <th scope="col">Feature Image</th>
                                             <th scope="col">Title</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Project Type</th>
@@ -110,9 +111,9 @@ import ViewDetails from "./viewDetails";
                                                 return(
                                                 <tr key={portfolio._id}>
                                             <th scope="row">#{count}</th>
-            
+                                            <td><img src={portfolio.image_url+''+portfolio.feature_image} class="thumb-lg rounded-circle mr-2" alt={portfolio.feature_image}/></td>
                                             <td>{portfolio.title}</td>
-                                            <td className='w-50'>{portfolio.description}</td>
+                                            <td className='w-25'>{portfolio.description}</td>
                                             <td>{portfolio.type}</td>
                                             <td>{portfolio.created_by}</td>
                                         
@@ -120,8 +121,8 @@ import ViewDetails from "./viewDetails";
                                             <td>
                                           
 
-                                            {/* {this.state.id === about._id?   <UpdateAbout show={this.state.updateModalOpen}
-        onHide={this.closeUpdateModal}  bio={about.bio} about={about} error={this.state.error} /> : null } */}
+                                            {this.state.id === portfolio._id?   <UpdatePortfolio show={this.state.updateModalOpen}
+        onHide={this.closeUpdateModal}  portfolio={portfolio} error={this.state.error} /> : null }
 
         {this.state.id === portfolio._id?   <ViewDetails show={this.state.viewModalOpen}
         onHide={this.closeUpdateModal}   portfolio={portfolio} /> : null }

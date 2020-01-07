@@ -11,7 +11,7 @@ class ViewDetails extends Component {
       title: "",
 
       status: "publish",
-      gellary: [''],
+      gellary: [""],
       error: {}
     };
   }
@@ -23,12 +23,8 @@ class ViewDetails extends Component {
     });
   }
 
-
-
   render() {
     let { title, status } = this.state;
-    console.log( this.props.portfolio.gellary);
-
   
 
     return (
@@ -41,37 +37,39 @@ class ViewDetails extends Component {
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             <h3 className="text-dark">
-              {" "}
-              {title}{" "}
+              {title} : 
               {status == "publish" ? (
-                <span class="badge badge-success">{status}</span>
+                <span class="badge badge-success ml-2">{status}</span>
               ) : (
-                <span class="badge badge-danger">{status}</span>
+                <span class="badge badge-danger ml-2">{status}</span>
               )}{" "}
             </h3>
           </Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
+
           <Carousel>
-
-           
-                          {
-
-                            this.props.portfolio.gellary.length > 0 ?
-                            this.props.portfolio.gellary.map(gellaryItem => (
-
-                  <Carousel.Item>
-              <img
-                className="d-block w-100"
-                src={`${gellaryItem.length >0 ? this.props.portfolio.image_url+''+gellaryItem : 'no data' }`}
-                alt="First slide"
-              /> </Carousel.Item>
-                      )) : <span>No gellaryItem</span>
-                      }
-           
-            
+            {this.props.portfolio.gellary.length > 0 ? (
+              this.props.portfolio.gellary.map(gellaryItem => (
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100"
+                    src={`${
+                      gellaryItem.length > 0
+                        ? this.props.portfolio.image_url + "" + gellaryItem
+                        : "no data"
+                    }`}
+                    alt="First slide"
+                  />{" "}
+                </Carousel.Item>
+              ))
+            ) : (
+              <span>No gellaryItem</span>
+            )}
           </Carousel>
+
+
         </Modal.Body>
         <Modal.Footer>
           <button className="btn btn-danger" onClick={this.props.onHide}>

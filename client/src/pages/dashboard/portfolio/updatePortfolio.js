@@ -1,51 +1,66 @@
-import React, { Component } from "react";
-import Form from "react-bootstrap/Form";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { createPortfolio } from "../../../store/actions/portfolioActions";
-import { addFlashMessage } from "../../../store/actions/flashMessages";
+import Modal from "react-bootstrap/Modal";
+import ModalDialog from "react-bootstrap/ModalDialog";
+import ModalHeader from "react-bootstrap/ModalHeader";
+import ModalTitle from "react-bootstrap/ModalTitle";
+import ModalBody from "react-bootstrap/ModalBody";
+import ModalFooter from "react-bootstrap/ModalFooter";
+import Button from "react-bootstrap/Button";
 import DatePicker from "react-datepicker";
-class Portfolio extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: "",
-      description: "",
-      type:'',
+import Form from "react-bootstrap/Form";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { addFlashMessage } from "../../../store/actions/flashMessages";
 
-      selectedFile: "",
-      filename: "",
+class UpdatePortfolio extends Component {
 
-
-      gellaryFile:'',
+    constructor(props) {
+        super(props);
+        this.state = {
+          title: "",
+          description: "",
+          type:'',
     
-      gellary_image: [""],
-      gellary_image_name:'',
-      client_name: "",
-      created_by: "",
-      completed_date: new Date(),
-      skills: [""],
-      status: "publish",
-      error: {}
-    };
+          selectedFile: "",
+          filename: "",
+    
+          feature_image:'',
 
-    this.changeHandler = this.changeHandler.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleTypeChange = this.handleTypeChange.bind(this);
-    this.handleDate = this.handleDate.bind(this);
-    this.filehander = this.filehander.bind(this);
-    this.submitHandler = this.submitHandler.bind(this);
-  }
+          gellaryFile:'',
+        
+          gellary_image: [""],
+          gellary_image_name:'',
+          client_name: "",
+          created_by: "",
+          completed_date: '',
+          skills: [""],
+          status: "publish",
+          error: {}
+        };
+  
+        this.changeHandler = this.changeHandler.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleTypeChange = this.handleTypeChange.bind(this);
+        this.handleDate = this.handleDate.bind(this);
+        this.filehander = this.filehander.bind(this);
+        this.submitHandler = this.submitHandler.bind(this);
+      }
+ 
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      JSON.stringify(nextProps.portfolios.error) !== JSON.stringify(prevState.error)
-    ) {
-      return {
-        error: nextProps.portfolios.error
-      };
-    }
-    return null;
+  componentDidMount() {
+    const date = new Date(this.props.portfolio.completed_date)
+    this.setState({
+      title: this.props.portfolios.error.title?  this.state.title : this.props.portfolio.title,
+      description: this.props.portfolios.error.description?  this.state.description : this.props.portfolio.description,
+      type: this.props.portfolios.error.type?  this.state.type : this.props.portfolio.type,
+
+      feature_image: this.props.portfolios.error.feature_image?  this.state.feature_image : this.props.portfolio.feature_image,
+      
+      client_name: this.props.portfolios.error.client_name?  this.state.type : this.props.portfolio.client_name,
+      created_by: this.props.portfolios.error.created_by?  this.state.created_by : this.props.portfolio.created_by,
+      completed_date: date,
+      skills: this.props.portfolios.error.skills?  this.state.skills : this.props.portfolio.skills,
+      status: this.props.portfolio.status
+    });
   }
 
 
@@ -98,113 +113,83 @@ class Portfolio extends Component {
     this.setState({ gellaryFile: e.target.files });
   };
 
- 
 
   submitHandler = event => {
     event.preventDefault();
     let {
       title,
-      description,
-      type,
-      feature_image,
-      gellary_image,
-      client_name,
-      created_by,
-      completed_date,
-      skills,
+      
       status,
       error
     } = this.state;
 
-
-    completed_date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(completed_date);
     const formData = new FormData();
-
     formData.append("title", title);
-    formData.append("description", description);
-    formData.append("type", type);
-
-
-
-    formData.append("feature_image_name", this.state.filename);
-    formData.append("feature_image", this.state.selectedFile[0]);
-
-
-    for (var i = 0; i <  this.state.gellaryFile.length; i++) {
-      formData.append("gellary_image", this.state.gellaryFile[i]);
-      formData.append("gellary_image_name",  this.state.gellaryFile[i].name.toLowerCase()
-      .split(" ")
-      .join("-"));
-  }
-
-
-    formData.append("client_name", client_name);
-    formData.append("created_by", created_by);
-    formData.append("completed_date", completed_date);
-
-    for (var i = 0; i <  this.state.skills.length; i++) {
-      formData.append("skills", this.state.skills[i]);
-    }
-
+    formData.append("sub_title", sub_title);
+    formData.append("about_info", about_info);
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("address", address);
+    formData.append("age", age);
+    formData.append("nationality", nationality);
     formData.append("status", status);
+    formData.append("about_image_name", this.state.filename);
+    formData.append("about_current_url", about_image_url);
+    formData.append("about_image", this.state.selectedFile[0]);
+
+    
 
 
-
-    this.props.createPortfolio(
-      formData,
-      this.props.addFlashMessage,
-      this.props.history
-    );
   };
 
+
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      JSON.stringify(nextProps.portfolios.error) !==
+      JSON.stringify(prevState.error)
+    ) {
+      return {
+        error: nextProps.portfolios.error
+      };
+    }
+    return null;
+  }
+
   render() {
-    let {
-      title,
-      description,
-      type,
-      feature_image,
-      gellary_image,
-      client_name,
-      created_by,
-      completed_date,
-      skills,
-      status,
-      error
-    } = this.state;
 
+      let {
+        title,
+        description,
+        type,
+        feature_image,
+        gellary_image,
+        client_name,
+        created_by,
+        completed_date,
+        skills,
+        status,
+        error
+      } = this.state;
     return (
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="page-title-box">
-              <div class="row align-items-center">
-                <div class="col-md-8">
-                  <h4 class="page-title mb-0">Dashboard</h4>
-                  <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item">
-                      <Link to={"/portfolios"}>Portfolios</Link>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                       Create
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xl-12">
-            <div className="card">
-              <div className="card-body">
-                <h2 className="text-uppercase text-center">Create Portfolio</h2>
+      <Modal
+        {...this.props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            <h3 className="text-dark"> Update About</h3>
+          </Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={this.submitHandler}  method="post"
+                  enctype="multipart/form-data">
+          <Modal.Body>
 
-                <Form
-                  onSubmit={this.submitHandler}
-                  method="post"
-                  enctype="multipart/form-data"
-                >
-                  <Form.Group controlId="title">
+
+          <Form.Group controlId="title">
                     <Form.Label>Title</Form.Label>
                     <Form.Control
                       type="text"
@@ -417,32 +402,24 @@ class Portfolio extends Component {
                     </Form.Control>
                   </Form.Group>
 
-                  <Form.Group className="row">
-                    <div className="col-sm-12 text-left">
-                      <Link className="btn btn-primary mr-2" to="/portfolios">
-                        View List
-                      </Link>
-                      <button
-                        className="btn submit-btn btn-primary"
-                        type="submit"
-                      >
-                        Create Portfolio
-                      </button>
-                    </div>
-                  </Form.Group>
-                </Form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+          </Modal.Body>
+          <Modal.Footer>
+            <button className="btn btn-dark ml-2" type="submit">
+              Update
+            </button>
+            <button className="btn btn-danger" onClick={this.props.onHide}>
+              Close
+            </button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
     );
   }
 }
+
 const mapStateToProps = state => ({
   portfolios: state.portfolio
 });
 
-export default connect(mapStateToProps, { createPortfolio, addFlashMessage })(
-  Portfolio
-);
+export default connect(mapStateToProps, { addFlashMessage })(UpdatePortfolio);

@@ -8,6 +8,8 @@ module.exports = {
       title,
       description,
       type,
+      feature_image_name,
+      feature_image,
       gellary_image_name,
       gellary_image,
       client_name,
@@ -17,6 +19,7 @@ module.exports = {
       status
     } = bodydata;
 
+    feature_image = bodydata.feature_image_name;
     let gellary = bodydata.gellary_image_name;
 
     let image_url = req.protocol + "://" + req.get("host") + "/uploads/";
@@ -25,6 +28,7 @@ module.exports = {
       title,
       description,
       type,
+      feature_image,
       client_name,
       created_by,
       completed_date,
@@ -40,6 +44,7 @@ module.exports = {
         title,
         description,
         type,
+        feature_image,
         image_url,
         gellary,
         client_name,

@@ -14,6 +14,10 @@ const PortfolioSchema = new Schema({
         type: String,
         trim:true
     },
+    feature_image:{
+        type: String,
+        trim:true
+    },
     image_url:{
         type: String,
         trim:true
