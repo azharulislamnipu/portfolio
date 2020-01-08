@@ -64,7 +64,7 @@ import ViewDetails from "./viewDetails";
                                 <div class="col-md-8">
                                     <h4 class="page-title mb-0">Dashboard</h4>
                                     <ol class="breadcrumb m-0">
-                                         <li class="breadcrumb-item"><Link to={'/porfolio'}>Porfolio</Link> </li>
+                                         <li class="breadcrumb-item"><Link to={'/portfolio'}>Portfolio</Link> </li>
                                         <li class="breadcrumb-item active" aria-current="page">List</li>
                                     </ol>
                                 </div>

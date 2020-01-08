@@ -11,6 +11,7 @@ class ViewDetails extends Component {
       title: "",
 
       status: "publish",
+      preview_url:'',
       gellary: [""],
       error: {}
     };
@@ -19,12 +20,13 @@ class ViewDetails extends Component {
   componentDidMount() {
     this.setState({
       title: this.props.portfolio.title,
+      preview_url: this.props.portfolio.preview_url,
       status: this.props.portfolio.status
     });
   }
 
   render() {
-    let { title, status } = this.state;
+    let { title,preview_url, status } = this.state;
   
 
     return (
@@ -72,6 +74,7 @@ class ViewDetails extends Component {
 
         </Modal.Body>
         <Modal.Footer>
+          <a href={preview_url}  className="btn btn-dark mr-2" target='_blank'> Prevew Prject </a>
           <button className="btn btn-danger" onClick={this.props.onHide}>
             Close
           </button>

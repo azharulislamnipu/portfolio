@@ -3,35 +3,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import React, { Component } from 'react';
 import Slider from "react-slick";
-import work1 from '../../../img/work/1.jpg';
-import work2 from '../../../img/work/2.jpg';
 import Title from '../../../../src/ui/title';
-
-function SampleNextArrow(props) {
-  const { className, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ display: "block", background: "#0de7f5",top:'50%',right:'5px',left:'auto',zIndex:'1',opacity:0 }}
-      onClick={onClick}
-    >
-    <i className="fa fa-angle-right" style={{fontSize:'20px', color:'#ffffff'}}></i>
-        </div>
-  );
-}
-
-function SamplePrevArrow(props) {
-  const { className,  onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ display: "block", background: "#0de7f5", top:'50%',left:'5px',right:'auto',zIndex:'1',opacity:0 }}
-      onClick={onClick}
-    >
-        <i className="fa fa-angle-left" style={{fontSize:'20px', color:'#ffffff'}}></i>
-        </div>
-  );
-}
+import { connect } from "react-redux";
+import { loadPortfolios } from "../../../store/actions/portfolioActions";
+import GridderGrid from './gridderGrid';
+import GridderContent from './gridderContent';
 
 function GridNextArrow(props) {
   const { className, onClick } = props;
@@ -97,6 +73,7 @@ class Portfolios extends Component {
   }
 
   componentDidMount() {
+    this.props.loadPortfolios();
     this.setState({
       nav1: this.slider1,
       nav2: this.slider2
@@ -105,20 +82,7 @@ class Portfolios extends Component {
 
   render() {
 
-    const settings = {
-      dots: false,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: true,
-      swipeToSlide: true,
-      infinite: true,
-      speed: 400,
-      autoplaySpeed: 3000,
-      cssEase: "linear",
-      dragable:false,
-      nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />
-    };
+    
 
     const gridsettings = {
       speed: 400,
@@ -137,6 +101,30 @@ class Portfolios extends Component {
       nextArrow: <GridContentNextArrow/>,
       prevArrow: <GridContentPrevArrow/>
     };
+
+    let { portfolios } = this.props.portfolios;
+
+    const GridderGridItem = portfolios.length> 0 ? portfolios.map((portfolio,key)=>{
+      let count = key + 1;
+    
+      if(portfolio.status === 'publish'){
+        return (
+          <GridderGrid portfolio={portfolio} count={count}/>
+        )
+      }
+    }) : <span>No Gridder Grid Available</span> ;
+
+    
+    const GridderContentItem = portfolios.length> 0 ? portfolios.map((portfolio,key)=>{
+      let count = key + 1;
+
+      if(portfolio.status === 'publish'){
+        return (
+          <GridderContent portfolio={portfolio} count={count} />
+        )
+      }
+    }) : <span>No Gridder Content Available</span> ;
+
 
     return (
       <section className="portfolios-area">
@@ -157,61 +145,8 @@ class Portfolios extends Component {
                 verticalSwiping={true}
                 {...gridsettings}
               >
-
-                <div>
-                  <Row>
-                    <Col lg={12} md={12} sm={12} >
-                      <div id="gridder" className="gridder-grid fix hover-style2" data-griddercontent="#project-1">
-                        <div className="gridder-list percent-25">
-                          <div className="single-portfolio overlay dark-1">
-                            <img src={work1} />
-                            <div className="project-title">
-                              <h3 className="white-color">Notepad Mockup</h3>
-                              <h6 className="white-color">Mockup Free</h6>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-
-                <div>
-                  <Row>
-                    <Col lg={12} >
-                      <div id="gridder" className="gridder-grid fix hover-style2" data-griddercontent="#project-1">
-                        <div className="gridder-list percent-25">
-                          <div className="single-portfolio overlay dark-1">
-                            <img src={work2} />
-                            <div className="project-title">
-                              <h3 className="white-color">Notepad Mockup</h3>
-                              <h6 className="white-color">Mockup Free</h6>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-
-
-                <div>
-                  <Row>
-                    <Col lg={12} >
-                      <div id="gridder" className="gridder-grid fix hover-style2" data-griddercontent="#project-1">
-                        <div className="gridder-list percent-25">
-                          <div className="single-portfolio overlay dark-1">
-                            <img src={work1} />
-                            <div className="project-title">
-                              <h3 className="white-color">Notepad Mockup</h3>
-                              <h6 className="white-color">Mockup Free</h6>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
+              
+              {GridderGridItem}
 
 
               </Slider>
@@ -228,183 +163,9 @@ class Portfolios extends Component {
                 {...gridcontentsettings}
               >
 
-                <div>
-                <div className="gridder-content">
-                    <div className="container-fluid \">
-                        <div className="row">
-                        <Col lg={8} md={12} sm={12} >
-                          
-                                <div className="gridderGallery">
-                                    <div id="gallery02" className="carousel slide" data-interval="3000" data-ride="carousel">
-                                  
-                                          <Slider {...settings}>
-                                            <div className="item active">
-                                                <img src={work1}/>
-                                            </div>
-                                            <div className="item">
-                                                <img src={work2}/>
-                                            </div>
-                                            <div className="item">
-                                                <img src={work1}/>
-                                            </div>
-                                            </Slider>
-                        
-                                  
-                                    </div>
-                                </div>
-                           
-                        </Col>
-                        <Col lg={4} md={12} sm={12} >
-                                <div className="project-details pt-65 pl-35">
-                                    <h2>Paper Cup Hot</h2>
-                                    <p>At vero eos et accusamus et ius dignimo ducimus qui blanditiis prvoluptat deleniti atque
-                                        corru quos dolore mole excepturi sint occaecati cuitate non prodent, silique sunt in
-                                        culpa</p>
-                                    <div className="project-info mt-50">
-                                        <ul>
-                                            <li>
-                                                <h5>Client</h5>
-                                                <p>Themeforest</p>
-                                            </li>
-                                            <li>
-                                                <h5>Created</h5>
-                                                <p>Romiz Raza</p>
-                                            </li>
-                                            <li>
-                                                <h5>Completed</h5>
-                                                <p>24 April 2018</p>
-                                            </li>
-                                            <li>
-                                                <h5>Skill</h5>
-                                                <p>Photoshop, UI/UX</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <a className="btn sm-btn btn-primary" href="#">view project</a>
-                                </div>
-                                </Col>
-                        </div>
-                    </div>
-                </div>
-                </div>
 
+              {GridderContentItem}
 
-                <div>
-                <div className="gridder-content">
-                    <div className="container-fluid \">
-                        <div className="row">
-                        <Col lg={8} md={12} sm={12} >
-                                <div className="gridderGallery">
-                                    <div id="gallery02" className="carousel slide" data-interval="3000" data-ride="carousel">
-                                  
-                                          <Slider {...settings}>
-                                            <div className="item active">
-                                                <img src={work1}/>
-                                            </div>
-                                            <div className="item">
-                                                <img src={work2}/>
-                                            </div>
-                                            <div className="item">
-                                                <img src={work1}/>
-                                            </div>
-                                            </Slider>
-                        
-                                  
-                                    </div>
-                                </div>
-                                </Col>
-                        <Col lg={4} md={12} sm={12} >
-                                <div className="project-details pt-65 pl-35">
-                                    <h2>Paper Cup Hot</h2>
-                                    <p>At vero eos et accusamus et ius dignimo ducimus qui blanditiis prvoluptat deleniti atque
-                                        corru quos dolore mole excepturi sint occaecati cuitate non prodent, silique sunt in
-                                        culpa</p>
-                                    <div className="project-info mt-50">
-                                        <ul>
-                                            <li>
-                                                <h5>Client</h5>
-                                                <p>Themeforest</p>
-                                            </li>
-                                            <li>
-                                                <h5>Created</h5>
-                                                <p>Romiz Raza</p>
-                                            </li>
-                                            <li>
-                                                <h5>Completed</h5>
-                                                <p>24 April 2018</p>
-                                            </li>
-                                            <li>
-                                                <h5>Skill</h5>
-                                                <p>Photoshop, UI/UX</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <a className="btn sm-btn" href="#">view project</a>
-                                </div>
-                                </Col>
-                        </div>
-                    </div>
-                </div>
-                </div>
-
-
-                <div>
-                <div className="gridder-content">
-                    <div className="container-fluid \">
-                        <div className="row">
-                        <Col lg={8} md={12} sm={12} >
-                                <div className="gridderGallery">
-                                    <div id="gallery02" className="carousel slide" data-interval="3000" data-ride="carousel">
-                                  
-                                          <Slider {...settings}>
-                                            <div className="item active">
-                                                <img src={work2}/>
-                                            </div>
-                                            <div className="item">
-                                                <img src={work2}/>
-                                            </div>
-                                            <div className="item">
-                                                <img src={work2}/>
-                                            </div>
-                                            </Slider>
-                        
-                                  
-                                    </div>
-                                </div>
-                                </Col>
-                        <Col lg={4} md={12} sm={12} >
-                                <div className="project-details pt-65 pl-35">
-                                    <h2>Paper Cup Hot</h2>
-                                    <p>At vero eos et accusamus et ius dignimo ducimus qui blanditiis prvoluptat deleniti atque
-                                        corru quos dolore mole excepturi sint occaecati cuitate non prodent, silique sunt in
-                                        culpa</p>
-                                    <div className="project-info mt-50">
-                                        <ul>
-                                            <li>
-                                                <h5>Client</h5>
-                                                <p>Themeforest</p>
-                                            </li>
-                                            <li>
-                                                <h5>Created</h5>
-                                                <p>Romiz Raza</p>
-                                            </li>
-                                            <li>
-                                                <h5>Completed</h5>
-                                                <p>24 April 2018</p>
-                                            </li>
-                                            <li>
-                                                <h5>Skill</h5>
-                                                <p>Photoshop, UI/UX</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <a className="btn sm-btn" href="#">view project</a>
-                                </div>
-                                </Col>
-                        </div>
-                    </div>
-                </div>
-                </div>
 
               </Slider>
 
@@ -417,6 +178,8 @@ class Portfolios extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  portfolios: state.portfolio
+});
 
-
-export default Portfolios;
+export default connect(mapStateToProps, { loadPortfolios })(Portfolios);

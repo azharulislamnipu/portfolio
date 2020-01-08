@@ -16,6 +16,7 @@ module.exports = {
       created_by,
       completed_date,
       skills,
+      preview_url,
       status
     } = bodydata;
 
@@ -32,7 +33,8 @@ module.exports = {
       client_name,
       created_by,
       completed_date,
-      skills
+      skills,
+      preview_url
     });
 
 
@@ -51,6 +53,7 @@ module.exports = {
         created_by,
         completed_date,
         skills,
+        preview_url,
         status,
         user_id
       });
@@ -97,6 +100,7 @@ module.exports = {
       created_by,
       completed_date,
       skills,
+      preview_url,
       status
     } = bodydata;
     let gellary;
@@ -107,15 +111,12 @@ module.exports = {
     }
 
     if(gellary_image_name === undefined ){
-       gellary = bodydata.current_feature_image;
+       gellary = bodydata.current_gellary_image_name;
     }else{
        gellary = bodydata.gellary_image_name;
     }
 
-
-
     let image_url = req.protocol + "://" + req.get("host") + "/uploads/";
-
 
     let user_id = req.user._id;
     let validate = portfolioValidator({
@@ -126,7 +127,8 @@ module.exports = {
       client_name,
       created_by,
       completed_date,
-      skills
+      skills,
+      preview_url
     });
 
     if (!validate.isValid) {
@@ -146,6 +148,7 @@ module.exports = {
           created_by,
           completed_date,
           skills,
+          preview_url,
           status,
           user_id
         },

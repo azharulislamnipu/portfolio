@@ -44,6 +44,10 @@ const PortfolioSchema = new Schema({
         trim:true,
         default:[]
     },
+    preview_url:{
+        type: String,
+        trim:true
+    },
     status: {
         type: String,
         trim:true

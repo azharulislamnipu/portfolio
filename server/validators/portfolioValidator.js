@@ -30,6 +30,13 @@ const validate = portfolio =>{
     if(!portfolio.skills){
         error.skills = 'Please Provide skills';
     }
+   
+    if(!portfolio.preview_url){
+        error.preview_url = 'Please Provide Project Preview Url';
+    }else if(!validator.isURL(portfolio.preview_url, {protocols: ['http','https','ftp'], require_tld: true, require_protocol: true, require_host: true})){
+        error.preview_url = 'Please Provide valid Project Preview Url';
+    }
+
     return{
         error,
         isValid:Object.keys(error).length == 0

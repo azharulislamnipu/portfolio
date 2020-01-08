@@ -25,6 +25,7 @@ class Portfolio extends Component {
       created_by: "",
       completed_date: new Date(),
       skills: [""],
+      preview_url:'',
       status: "publish",
       error: {}
     };
@@ -112,10 +113,12 @@ class Portfolio extends Component {
       created_by,
       completed_date,
       skills,
+      preview_url,
       status,
       error
     } = this.state;
 
+    console.log(this.state);
 
     completed_date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(completed_date);
     const formData = new FormData();
@@ -146,6 +149,7 @@ class Portfolio extends Component {
       formData.append("skills", this.state.skills[i]);
     }
 
+    formData.append("preview_url", preview_url);
     formData.append("status", status);
 
 
@@ -168,6 +172,7 @@ class Portfolio extends Component {
       created_by,
       completed_date,
       skills,
+      preview_url,
       status,
       error
     } = this.state;
@@ -378,6 +383,7 @@ class Portfolio extends Component {
                   />
                   </Form.Group>
 
+                
                   <Form.Group controlId="skills">
                     <Form.Label>Skills</Form.Label>
                     {this.state.skills.map((value, index) => {
@@ -404,6 +410,31 @@ class Portfolio extends Component {
                     })}
                     <button className="btn btn-primary float-right mt-2" onClick={(e) => { e.preventDefault(); this.addSkills(e) }}>Add new Skill</button>
                   </Form.Group>
+
+                  
+                  <Form.Group controlId="preview_url">
+                    <Form.Label>Project Preview Url</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="preview_url"
+                      autoComplete="new-preview_url"
+                      placeholder="Enter Your Project Preview Url"
+                      value={preview_url}
+                      onChange={this.changeHandler}
+                    />
+                    {error.preview_url && (
+                      <span
+                        className={
+                          error.preview_url
+                            ? "invalid-feedback d-block"
+                            : "invalid-feedback"
+                        }
+                      >
+                        {error.preview_url}
+                      </span>
+                    )}
+                  </Form.Group>
+
                   <Form.Group controlId="status.controler">
                     <Form.Label>Status</Form.Label>
                     <Form.Control

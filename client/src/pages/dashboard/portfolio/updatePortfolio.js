@@ -37,6 +37,7 @@ class UpdatePortfolio extends Component {
           created_by: "",
           completed_date: '',
           skills: [""],
+          preview_url:'',
           status: "publish",
           error: {}
         };
@@ -49,7 +50,6 @@ class UpdatePortfolio extends Component {
         this.submitHandler = this.submitHandler.bind(this);
       }
  
-
   componentDidMount() {
     const date = new Date(this.props.portfolio.completed_date)
     this.setState({
@@ -65,6 +65,7 @@ class UpdatePortfolio extends Component {
       created_by: this.props.portfolios.error.created_by?  this.state.created_by : this.props.portfolio.created_by,
       completed_date: date,
       skills: this.props.portfolios.error.skills?  this.state.skills : this.props.portfolio.skills,
+      preview_url: this.props.portfolios.error.preview_url?  this.state.preview_url : this.props.portfolio.preview_url,
       status: this.props.portfolio.status
     });
   }
@@ -133,6 +134,7 @@ class UpdatePortfolio extends Component {
       created_by,
       completed_date,
       skills,
+      preview_url,
       status,
       error
     } = this.state;
@@ -151,7 +153,7 @@ class UpdatePortfolio extends Component {
     formData.append("current_feature_image", this.state.current_feature_image);
     formData.append("feature_image", this.state.selectedFile[0]);
 
-
+  
   for (var i = 0; i <  this.state.gellaryFile.length; i++) {
     formData.append("gellary_image", this.state.gellaryFile[i]);
     formData.append("gellary_image_name",  this.state.gellaryFile[i].name.toLowerCase()
@@ -173,12 +175,10 @@ for (var i = 0; i <  this.state.current_gellary_image_name.length; i++) {
       formData.append("skills", this.state.skills[i]);
     }
 
+    formData.append("preview_url", preview_url);
     formData.append("status", status);
 
-    
     this.props.updatePortfolio(this.props.portfolio._id, formData, this.props.addFlashMessage, this.props);
-
-
 
   };
 
@@ -210,11 +210,11 @@ for (var i = 0; i <  this.state.current_gellary_image_name.length; i++) {
         created_by,
         completed_date,
         skills,
+        preview_url,
         status,
         error
       } = this.state;
 
-      console.log(current_gellary_image_name);
     return (
       <Modal
         {...this.props}
@@ -353,7 +353,7 @@ for (var i = 0; i <  this.state.current_gellary_image_name.length; i++) {
                       multiple
                       onChange={this.gellaryhander}
                     />
-  {this.props.portfolio.gellary.map((value, index) => {
+                      {this.props.portfolio.gellary.map((value, index) => {
                       return (
 
                           <Form.Control id={'gellary'+index} type="hidden" key={index} name='current_gellary_image_name' className='d-inline-block' value={value}/>
@@ -451,6 +451,31 @@ for (var i = 0; i <  this.state.current_gellary_image_name.length; i++) {
                     })}
                     <button className="btn btn-primary float-right mt-2" onClick={(e) => { e.preventDefault(); this.addSkills(e) }}>Add new Skill</button>
                   </Form.Group>
+
+                  <Form.Group controlId="preview_url">
+                    <Form.Label>Project Preview Url</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="preview_url"
+                      autoComplete="new-preview_url"
+                      placeholder="Enter Your Project Preview Url"
+                      value={preview_url}
+                      onChange={this.changeHandler}
+                    />
+                    {error.preview_url && (
+                      <span
+                        className={
+                          error.preview_url
+                            ? "invalid-feedback d-block"
+                            : "invalid-feedback"
+                        }
+                      >
+                        {error.preview_url}
+                      </span>
+                    )}
+                  </Form.Group>
+
+                  
                   <Form.Group controlId="status.controler">
                     <Form.Label>Status</Form.Label>
                     <Form.Control
