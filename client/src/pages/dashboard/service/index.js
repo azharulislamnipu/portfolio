@@ -2,40 +2,44 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { creatCounter } from "../../../store/actions/counterActions";
+import { creatService } from "../../../store/actions/serviceActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
 
 
-class Counter extends Component {
+class Service extends Component {
   constructor(props) {
     super();
     this.state = {
-      status: "publish",
       title: "",
-      counter_number: "",
-      counter_icon: "",
-      duration: "",
+      icon: "",
+      description: "",
+      status: "publish",
       error: {}
     };
+
+    this.changeHandler = this.changeHandler.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.submitHandler = this.submitHandler.bind(this);
   }
 
-  handleChange(e) {
-    this.setState({
-      status: e.target.value
-    });
-  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
-      JSON.stringify(nextProps.counters.error) !==
+      JSON.stringify(nextProps.services.error) !==
       JSON.stringify(prevState.error)
     ) {
       return {
-        error: nextProps.counters.error
+        error: nextProps.services.error
       };
     }
     return null;
   }
-
+  handleChange = e => {
+    this.setState({
+      status: e.target.value
+    });
+  }
+  
   changeHandler = event => {
     this.setState({
       [event.target.name]: event.target.value
@@ -44,17 +48,17 @@ class Counter extends Component {
   submitHandler = event => {
     event.preventDefault();
 
-    let { title, counter_number, counter_icon, duration, status } = this.state;
+    let { title, icon, description, status } = this.state;
 
-    this.props.creatCounter(
-      { title, counter_number, counter_icon, duration, status },
+    this.props.creatService(
+      {title, icon, description, status },
       this.props.addFlashMessage,
       this.props.history
     );
   };
 
   render() {
-    let { title, counter_number, counter_icon, duration, error } = this.state;
+    let { title, icon, description, status, error } = this.state;
     return (
       <div class="container-fluid">
         <div class="row">
@@ -215,9 +219,9 @@ class Counter extends Component {
 }
 
 const mapStateToProps = state => ({
-  counters: state.counter
+  services: state.service
 });
 
-export default connect(mapStateToProps, { creatCounter, addFlashMessage })(
-  Counter
+export default connect(mapStateToProps, { creatService, addFlashMessage })(
+  Service
 );
