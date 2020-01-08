@@ -31,7 +31,7 @@ export const creatService = (service, addFlashMessage,history) => dispatch => {
           service: res.data
         }
       });
-      history.push("/infos");
+      history.push("/services");
       addFlashMessage({
         type: "success",
         text: res.data.message

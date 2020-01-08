@@ -234,8 +234,6 @@ class Portfolio extends Component {
 
                   <Form.Group controlId="description">
                     <Form.Label>Description</Form.Label>
-
-                    
                     <Form.Control
                       as="textarea"
                       rows="4"

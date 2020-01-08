@@ -1,27 +1,25 @@
-import React, { Component } from "react";
+import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { creatService } from "../../../store/actions/serviceActions";
+import { updateService } from "../../../store/actions//serviceActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
+class UpdateService extends Component {
 
 
-class Service extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      title: "",
-      icon: "",
-      description: "",
-      status: "publish",
-      error: {}
-    };
-
-    this.changeHandler = this.changeHandler.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.submitHandler = this.submitHandler.bind(this);
-  }
-
+    constructor(props) {
+        super(props);
+        this.state = {
+          title: "",
+          icon: "",
+          description: "",
+          status: "publish",
+          error: {}
+        };
+        this.changeHandler = this.changeHandler.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.submitHandler = this.submitHandler.bind(this);
+      }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
@@ -34,61 +32,53 @@ class Service extends Component {
     }
     return null;
   }
-  handleChange = e => {
+
+  componentDidMount() {
     this.setState({
-      status: e.target.value
+  
+      title: this.props.services.error.title?  this.state.title : this.props.service.title,
+      icon: this.props.services.error.icon?  this.state.icob : this.props.service.icon,
+      description: this.props.services.error.description?  this.state.description : this.props.service.description,
+      status: this.props.service.status
     });
   }
-  
   changeHandler = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
   };
+  handleChange(e) {
+    this.setState({
+      status: e.target.value
+    });
+  }
+
   submitHandler = event => {
     event.preventDefault();
+    this.props.updateService(this.props.service._id, this.state, this.props.addFlashMessage, this.props);
 
-    let { title, icon, description, status } = this.state;
-
-    this.props.creatService(
-      {title, icon, description, status },
-      this.props.addFlashMessage,
-      this.props.history
-    );
   };
 
+
   render() {
+   
     let { title, icon, description, status, error } = this.state;
+
     return (
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="page-title-box">
-              <div class="row align-items-center">
-                <div class="col-md-8">
-                  <h4 class="page-title mb-0">Dashboard</h4>
-                  <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item">
-                      <Link to={"/services"}>Services</Link>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                         Create
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-xl-12">
-            <div className="card">
-              <div className="card-body">
-                <h2 className="text-uppercase text-center">Create Service</h2>
-
-                <Form onSubmit={this.submitHandler}>
-                  <Form.Group controlId="title">
+      <Modal
+        {...this.props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            <h3 className="text-dark"> Update Counter</h3>
+          </Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={this.submitHandler}>
+          <Modal.Body>
+          <Form.Group controlId="title">
                     <Form.Label>Title</Form.Label>
                     <Form.Control
                       type="text"
@@ -162,39 +152,24 @@ class Service extends Component {
                     )}
                   </Form.Group>
 
-
-                  <Form.Group controlId="status.ControlSelect1">
-                    <Form.Label>Status</Form.Label>
-                    <Form.Control
-                      as="select"
-                      name="status"
-                      onChange={this.handleChange.bind(this)}
-                      value={this.state.status}
-                    >
-                      <option value="publish">Publish</option>
-                      <option value="revoke">Revoke</option>
-                    </Form.Control>
-                  </Form.Group>
-
-                  <Form.Group className="row">
-                    <div className="col-sm-12 text-right">
-                      <Link className="btn btn-primary mr-2" to="/services">
-                        View List
-                      </Link>
-                      <button
-                        className="btn submit-btn btn-primary"
-                        type="submit"
-                      >
-                        Create Service
-                      </button>
-                    </div>
-                  </Form.Group>
-                </Form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            <Form.Group controlId="status.ControlSelect1">
+              <Form.Label>Status</Form.Label>
+              <Form.Control as="select" name="status" value={status}  onChange={this.handleChange.bind(this)}>
+                <option value="publish">Publish</option>
+                <option value="revoke">Revoke</option>
+              </Form.Control>
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <button className="btn btn-dark ml-2" type="submit">
+              Update
+            </button>
+            <button className="btn btn-danger" onClick={this.props.onHide}>
+              Close
+            </button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
     );
   }
 }
@@ -203,6 +178,4 @@ const mapStateToProps = state => ({
   services: state.service
 });
 
-export default connect(mapStateToProps, { creatService, addFlashMessage })(
-  Service
-);
+export default connect(mapStateToProps, { updateService, addFlashMessage })(UpdateService);
