@@ -129,7 +129,7 @@ class Portfolios extends Component {
     return (
       <section className="portfolios-area">
                <Container className='mb-5'>
-            {<Title title='Works' headline='My Portfolio' align='text-right' position='justify-content-end' style={{ headingcolor: '#1f2235', titlecolor: 'rgb(110, 69, 225)' }} />}
+            {<Title title='Works' headline='My Portfolio' align='text-right' position='justify-content-end' style={{ headingcolor: '#1f2235', titlecolor: '#f4d03f' }} />}
             </Container>
         <div className="container-fluid p-0 grrider" id='portfolio'>
           <Row className="no-gutters align-items-center align-content-center">

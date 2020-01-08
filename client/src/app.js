@@ -13,8 +13,12 @@ import Banner from './pages/dashboard/banner';
 import Counter from './pages/dashboard/counter';
 import Counters from './pages/dashboard/counter/counters';
 
+import Service from './pages/dashboard/service';
+import Services from './pages/dashboard/service/services';
+
+
 import Social from './pages/dashboard/social';
-import Socials from './pages/dashboard/social/socials'
+import Socials from './pages/dashboard/social/socials';
 
 
 import About from './pages/dashboard/about';
@@ -58,7 +62,9 @@ class App extends Component {
 
                     <PrivateRoute path="/counter" component={Counter} auth={this.props.auth}/>
                     <PrivateRoute path="/counters" component={Counters} auth={this.props.auth}/>
-                  
+
+                    <PrivateRoute path="/service" component={Service} auth={this.props.auth}/>
+                    <PrivateRoute path="/services" component={Services} auth={this.props.auth}/>
 
                     <PrivateRoute path="/contact" component={Contact} auth={this.props.auth}/>
                     <PrivateRoute path="/info" component={Info} auth={this.props.auth}/>

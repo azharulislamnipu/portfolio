@@ -224,7 +224,7 @@ for (var i = 0; i <  this.state.current_gellary_image_name.length; i++) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            <h3 className="text-dark"> Update About</h3>
+            <h3 className="text-dark"> Update Portfolio</h3>
           </Modal.Title>
         </Modal.Header>
         <Form onSubmit={this.submitHandler}  method="post"

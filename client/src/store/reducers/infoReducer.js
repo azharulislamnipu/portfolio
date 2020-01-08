@@ -39,7 +39,7 @@ const infoReducer = (state = init, action) => {
         case Types.UPDATE_INFO: {
             let infos = [...state]
             infos = infos.map(info => {
-                if (counter._id === action.payload.info._id) {
+                if (info._id === action.payload.info._id) {
                     return action.payload.infos
                 }
                 return info
