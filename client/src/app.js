@@ -29,6 +29,8 @@ import Contact from './pages/dashboard/contact';
 import Info from './pages/dashboard/info';
 import Infos from './pages/dashboard/info/infos';
 
+import Skill from './pages/dashboard/skills';
+import Skills from './pages/dashboard/skills/infos';
 
 import Portfolio from './pages/dashboard/portfolio';
 import Portfolios from './pages/dashboard/portfolio/portfolios';
@@ -69,6 +71,9 @@ class App extends Component {
                     <PrivateRoute path="/contact" component={Contact} auth={this.props.auth}/>
                     <PrivateRoute path="/info" component={Info} auth={this.props.auth}/>
                     <PrivateRoute path="/infos" component={Infos} auth={this.props.auth}/>
+
+                    <PrivateRoute path="/skill" component={Skill} auth={this.props.auth}/>
+                    <PrivateRoute path="/skills" component={Skills} auth={this.props.auth}/>
 
                     <PrivateRoute path="/portfolio" component={Portfolio} auth={this.props.auth}/>
                     <PrivateRoute path="/portfolios" component={Portfolios} auth={this.props.auth}/>

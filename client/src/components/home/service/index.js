@@ -5,9 +5,25 @@ import Col from 'react-bootstrap/Col';
 import Title from '../../../../src/ui/title';
 import IconGenerate from '../../../ui';
 import Particles from 'react-particles-js';
+import {connect} from 'react-redux';
+import {  loadService } from '../../../store/actions/serviceActions';
+import  ServiceItem from './Service';
 class Services extends Component {
 
+   componentDidMount(){
+      this.props.loadService()
+    }
+    
    render() {
+      let { services } = this.props.services;
+
+      const serviceItem = services.length> 0 ? services.map((service,key)=>{
+        if(service.status === 'publish'){
+          return (
+            <ServiceItem service={service}/>
+          )
+        }
+      }) : <span>No Service Data Available</span> ;
       return (
          <section className="service-area" id='service-area'>
             <Particles className='particles-js' 
@@ -123,49 +139,12 @@ class Services extends Component {
                <Title title='I provide' headline='Best Service For You' align='text-left' position='justify-content-start' style={{ headingcolor: '#ffffff', titlecolor: 'rgb(250, 128, 114)' }} />
 
                <Row className='align-items-center'>
-                  <Col lg={4} md={6} sm={12}>
-                     <div className="service-box">
-                        <div className="service-icon">
-                           <IconGenerate className='fa-recycle' />
-                        </div>
-                        <div className="service-box-content">
-                           <h4 className="service-title">Business Strategy</h4>
-                           <div className="service-content">
-                              <p>Strategy develop customer in organisational knowledge and market perspectives that inform and provoke.</p>
 
-                           </div>
-                        </div>
-                     </div>
-                  </Col>
-                  <Col lg={4} md={6} sm={12}>
-                     <div className="service-box">
-                        <div className="service-icon">
-                           <IconGenerate className='fa-github' />
-                        </div>
-                        <div className="service-box-content">
-                           <h4 className="service-title">Business Strategy</h4>
-                           <div className="service-content">
-                              <p>Strategy develop customer in organisational knowledge and market perspectives that inform and provoke.</p>
+                  {serviceItem}
 
-                           </div>
-                        </div>
-                     </div>
-                  </Col>
-                  <Col lg={4} md={6} sm={12}>
-                     <div className="service-box">
-                        <div className="service-icon">
-                           <IconGenerate className='fa-chain-broken' />
-                        </div>
-                        <div className="service-box-content">
-                           <h4 className="service-title">Business Strategy</h4>
-                           <div className="service-content">
-                              <p>Strategy develop customer in organisational knowledge and market perspectives that inform and provoke.</p>
-
-                           </div>
-                        </div>
-                     </div>
-                  </Col>
-
+                  
+                
+{/* 
                   <Col lg={4} md={6} sm={12}>
                      <div className="service-box">
                         <div className="service-icon">
@@ -179,35 +158,8 @@ class Services extends Component {
                            </div>
                         </div>
                      </div>
-                  </Col>
-                  <Col lg={4} md={6} sm={12}>
-                     <div className="service-box">
-                        <div className="service-icon">
-                           <IconGenerate className='fa-qrcode' />
-                        </div>
-                        <div className="service-box-content">
-                           <h4 className="service-title">Business Strategy</h4>
-                           <div className="service-content">
-                              <p>Strategy develop customer in organisational knowledge and market perspectives that inform and provoke.</p>
-
-                           </div>
-                        </div>
-                     </div>
-                  </Col>
-                  <Col lg={4} md={6} sm={12}>
-                     <div className="service-box">
-                        <div className="service-icon">
-                           <IconGenerate className='fa-eye' />
-                        </div>
-                        <div className="service-box-content">
-                           <h4 className="service-title">Business Strategy</h4>
-                           <div className="service-content">
-                              <p>Strategy develop customer in organisational knowledge and market perspectives that inform and provoke.</p>
-
-                           </div>
-                        </div>
-                     </div>
-                  </Col>
+                  </Col> */}
+               
 
                </Row>
             </Container>
@@ -216,6 +168,9 @@ class Services extends Component {
    }
 }
 
+const mapStateToProps = state => ({
+   services: state.service
+ })
+ 
+ export default connect(mapStateToProps, { loadService })(Services);
 
-
-export default Services;

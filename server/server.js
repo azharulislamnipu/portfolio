@@ -13,6 +13,7 @@ const contactRoute = require('./routers/contactRoute');
 const infoRoute = require('./routers/infoRoute');
 const portfolioRoute = require('./routers/portfolioRoute');
 const serviceRoute = require('./routers/serviceRoute');
+const skillsRoute = require('./routers/skillsRoute');
 const passport = require('passport');
 const path = require('path');
 const app = express();
@@ -52,6 +53,7 @@ app.use('/api/contacts', contactRoute);
 app.use('/api/infos', infoRoute);
 app.use('/api/portfolios', portfolioRoute);
 app.use('/api/services', serviceRoute);
+app.use('/api/skills', skillsRoute);
 
 app.get('/', (req, res)=>{
     res.send('Welcome to Server side');

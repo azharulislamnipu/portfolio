@@ -73,7 +73,7 @@ class UpdateService extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            <h3 className="text-dark"> Update Counter</h3>
+            <h3 className="text-dark"> Update Service</h3>
           </Modal.Title>
         </Modal.Header>
         <Form onSubmit={this.submitHandler}>
@@ -104,7 +104,7 @@ class UpdateService extends Component {
 
                  
                   <Form.Group controlId="icon">
-                    <Form.Label>Counter Icon</Form.Label>
+                    <Form.Label>Service Icon</Form.Label>
                     <Form.Control
                       type="text"
                       name="icon"
