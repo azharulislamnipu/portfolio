@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { creatInfo } from "../../../store/actions/infoActions";
+import { createSkills } from "../../../store/actions/skillsActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
+import ProfessionalSkills from './professionalSkills';
 
 
 class Skills extends Component {
@@ -12,7 +13,7 @@ class Skills extends Component {
 
     this.state = {
       extra_skills: [''],
-      professional_skills: [''],
+      professional_skills: [{ index: Math.random(), projectName: "", task: "" }],
       professional_title:'',
       professional_progress_name: '',
       professional_progress: '',
@@ -23,6 +24,37 @@ class Skills extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
   }
+
+  handleProfessionalChange = (e) => {
+    if (["projectName", "task"].includes(e.target.name)) {
+        let professional_skills = [...this.state.professional_skills]
+        professional_skills[e.target.dataset.id][e.target.name] = e.target.value;
+    } else {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+}
+addNewProfessionalRow = (e) => {
+    this.setState((prevState) => ({
+      professional_skills: [...prevState.professional_skills, { index: Math.random(), projectName: "", task: "" }],
+    }));
+}
+
+deteteProfessionalRow = (index) => {
+    this.setState({
+      professional_skills: this.state.professional_skills.filter((s, sindex) => index !== sindex),
+    });
+}
+
+
+clickOnDeleteProfessional(record) {
+    this.setState({
+      professional_skills: this.state.professional_skills.filter(r => r !== record)
+    });
+}
+
+
+
+
 
   addExtraskills = e => {
 
@@ -50,11 +82,11 @@ class Skills extends Component {
   }
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
-      JSON.stringify(nextProps.infos.error) !==
+      JSON.stringify(nextProps.skills.error) !==
       JSON.stringify(prevState.error)
     ) {
       return {
-        error: nextProps.infos.error
+        error: nextProps.skills.error
       };
     }
     return null;
@@ -69,17 +101,14 @@ class Skills extends Component {
   submitHandler = event => {
     event.preventDefault();
 
-    let { title, info_icon, info_name, status } = this.state;
+    let { extra_skills, professional_skills, professional_title, professional_progress_name, professional_progress, status } = this.state;
 
-    this.props.creatInfo(
-      { title, info_icon, info_name, status },
-      this.props.addFlashMessage,
-      this.props.history
-    );
+      // this.props.createSkills({ extra_skills, status}, addFlashMessage, this.props.history);
+      console.log(this.state);
   };
 
   render() {
-    let { title, info_icon, info_name, status, error } = this.state;
+    let { extra_skills, professional_skills, professional_title, professional_progress_name, professional_progress, status } = this.state;
     return (
       <div class="container-fluid">
         <div class="row">
@@ -109,51 +138,8 @@ class Skills extends Component {
                 <h2 className="text-uppercase text-center">Skills Create</h2>
 
                 <Form onSubmit={this.submitHandler}>
-                  <Form.Group controlId="title">
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="title"
-                      autoComplete="new-title"
-                      placeholder="Enter Your title"
-                      value={title}
-                      onChange={this.changeHandler}
-                    />
-
-                    {error.title && (
-                      <span
-                        className={
-                          error.title
-                            ? "invalid-feedback d-block"
-                            : "invalid-feedback"
-                        }
-                      >
-                        {error.title}
-                      </span>
-                    )}
-                  </Form.Group>
-                  <Form.Group controlId="info_icon">
-                    <Form.Label>Info Icon</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="info_icon"
-                      autoComplete="new-info_icon"
-                      placeholder="Enter Your Counter Icon"
-                      value={info_icon}
-                      onChange={this.changeHandler}
-                    />
-                    {error.info_icon && (
-                      <span
-                        className={
-                          error.info_icon
-                            ? "invalid-feedback d-block"
-                            : "invalid-feedback"
-                        }
-                      >
-                        {error.info_icon}
-                      </span>
-                    )}
-                  </Form.Group>
+                 
+                 
 
                   <Form.Group controlId="info_name">
                     <Form.Label>Extra Skills</Form.Label>
@@ -162,13 +148,18 @@ class Skills extends Component {
 
                         <div>
 
-                          <Form.Control type="text" key={index} className='w-90 d-inline-block' placeholder='Enter Your Info Name' value={value} onChange={(e) => this.chaneExtraskillsValue(e, index)} />
+                          <Form.Control type="text" key={index} className='w-90 d-inline-block' placeholder='Enter Your Skill Name' value={value} onChange={(e) => this.chaneExtraskillsValue(e, index)} />
                           <button type='button' className='btn btn-danger float-right ml-2' onClick={() => this.removeExtraskills(index)}>X</button>
                         </div>
                       )
                     })}
                     <button className="btn btn-primary float-right mt-2" onClick={(e) => { e.preventDefault(); this.addExtraskills(e) }}>Add new Info</button>
                   </Form.Group>
+
+
+                  <ProfessionalSkills add={this.addNewProfessionalRow} delete={this.clickOnDeleteProfessional.bind(this)} taskList={professional_skills}  handlechange={this.handleProfessionalChange} />
+
+
 
                   <Form.Group controlId="status.ControlSelect1">
                     <Form.Label>Status</Form.Label>
@@ -207,9 +198,9 @@ class Skills extends Component {
 }
 
 const mapStateToProps = state => ({
-  infos: state.info
+  skills: state.skill
 });
 
-export default connect(mapStateToProps, { creatInfo, addFlashMessage })(
+export default connect(mapStateToProps, { createSkills, addFlashMessage })(
   Skills
 );

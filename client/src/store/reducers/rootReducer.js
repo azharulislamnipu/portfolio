@@ -6,6 +6,7 @@ import aboutReducer from './aboutReducer';
 import socialReducer from './socialReducer';
 import contactReducer from './contactReducer';
 import portfolioReducer from './portfolioReducer';
+import skillsReducer from './skillsReducer';
 import serviceReducer from './serviceReducer';
 import infoReducer from './infoReducer';
 import flashMessages from './flashMessages';
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   contact:contactReducer,
   info:infoReducer,
   portfolio:portfolioReducer,
-  service:serviceReducer
+  service:serviceReducer,
+  skill:skillsReducer
 })
 
 export default rootReducer;

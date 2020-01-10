@@ -8,7 +8,6 @@ module.exports = {
   
       let skills = new Skills({
         extra_skills,
-        professional_skills:[ { professional_title, professional_progress_name, professional_progress }],
         status,
         user_id
       });
