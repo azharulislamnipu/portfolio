@@ -6,20 +6,7 @@ const Skillschema = new Schema({
         trim:true,
         default:[]
     },
-    professional_skills:[{
-        professional_title: {
-            type: String,
-            trim:true
-        },
-        professional_progress_name: {
-            type: String,
-            trim:true
-        },
-        professional_progress: {
-            type: Number,
-            trim:true
-        }
-    }],
+    professional_skills:[],
     programming_skills:[{
         programming_title: {
             type: String,

@@ -13,10 +13,10 @@ class Skills extends Component {
 
     this.state = {
       extra_skills: [''],
-      professional_skills: [{ index: Math.random(), projectName: "", task: "" }],
-      professional_title:'',
-      professional_progress_name: '',
-      professional_progress: '',
+      professional_skills: [{ index: Math.random(), progress_title: "", progress_name: "" , progress:""}],
+      progress_title:'',
+      progress_name: '',
+      progress: '',
       status: "publish",
       error: {}
     };
@@ -26,7 +26,7 @@ class Skills extends Component {
   }
 
   handleProfessionalChange = (e) => {
-    if (["projectName", "task"].includes(e.target.name)) {
+    if (["progress_title", "progress_name", "progress"].includes(e.target.name)) {
         let professional_skills = [...this.state.professional_skills]
         professional_skills[e.target.dataset.id][e.target.name] = e.target.value;
     } else {
@@ -35,7 +35,7 @@ class Skills extends Component {
 }
 addNewProfessionalRow = (e) => {
     this.setState((prevState) => ({
-      professional_skills: [...prevState.professional_skills, { index: Math.random(), projectName: "", task: "" }],
+      professional_skills: [...prevState.professional_skills, { index: Math.random(), progress_title: "", progress_name:"", progress: "" }],
     }));
 }
 
@@ -103,7 +103,7 @@ clickOnDeleteProfessional(record) {
 
     let { extra_skills, professional_skills, professional_title, professional_progress_name, professional_progress, status } = this.state;
 
-      // this.props.createSkills({ extra_skills, status}, addFlashMessage, this.props.history);
+    this.props.createSkills({ extra_skills, status, professional_skills}, addFlashMessage, this.props.history);
       console.log(this.state);
   };
 
@@ -157,7 +157,7 @@ clickOnDeleteProfessional(record) {
                   </Form.Group>
 
 
-                  <ProfessionalSkills add={this.addNewProfessionalRow} delete={this.clickOnDeleteProfessional.bind(this)} taskList={professional_skills}  handlechange={this.handleProfessionalChange} />
+                  <ProfessionalSkills add={this.addNewProfessionalRow} delete={this.clickOnDeleteProfessional.bind(this)} professional_skills={professional_skills}  handlechange={this.handleProfessionalChange} />
 
 
 
