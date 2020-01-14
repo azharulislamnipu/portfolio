@@ -14,9 +14,6 @@ class Skills extends Component {
     this.state = {
       extra_skills: [''],
       professional_skills: [{ index: Math.random(), progress_title: "", progress_name: "" , progress:""}],
-      progress_title:'',
-      progress_name: '',
-      progress: '',
       status: "publish",
       error: {}
     };
@@ -108,7 +105,7 @@ clickOnDeleteProfessional(record) {
   };
 
   render() {
-    let { extra_skills, professional_skills, professional_title, professional_progress_name, professional_progress, status } = this.state;
+    let { extra_skills, professional_skills, professional_title, professional_progress_name, professional_progress, status, error } = this.state;
     return (
       <div class="container-fluid">
         <div class="row">
@@ -141,7 +138,7 @@ clickOnDeleteProfessional(record) {
                  
                  
 
-                  <Form.Group controlId="info_name">
+                  <Form.Group controlId="extra_skills">
                     <Form.Label>Extra Skills</Form.Label>
                     {this.state.extra_skills.map((value, index) => {
                       return (
@@ -149,17 +146,31 @@ clickOnDeleteProfessional(record) {
                         <div>
 
                           <Form.Control type="text" key={index} className='w-90 d-inline-block' placeholder='Enter Your Skill Name' value={value} onChange={(e) => this.chaneExtraskillsValue(e, index)} />
+                          {error.extra_skill && (
+                      <span
+                        className={
+                          error.extra_skill
+                            ? "invalid-feedback d-block"
+                            : "invalid-feedback"
+                        }
+                      >
+                        {error.extra_skill}
+                      </span>
+                    )}
+                          
                           <button type='button' className='btn btn-danger float-right ml-2' onClick={() => this.removeExtraskills(index)}>X</button>
+                        
                         </div>
                       )
                     })}
                     <button className="btn btn-primary float-right mt-2" onClick={(e) => { e.preventDefault(); this.addExtraskills(e) }}>Add new Info</button>
                   </Form.Group>
 
+              <Form.Group controlId="info_name">
+                    <Form.Label>Professional Skills</Form.Label>
+                  <ProfessionalSkills add={this.addNewProfessionalRow} delete={this.clickOnDeleteProfessional.bind(this)} professional_skills={professional_skills}  handlechange={this.handleProfessionalChange} error={error} />
 
-                  <ProfessionalSkills add={this.addNewProfessionalRow} delete={this.clickOnDeleteProfessional.bind(this)} professional_skills={professional_skills}  handlechange={this.handleProfessionalChange} />
-
-
+             </Form.Group>
 
                   <Form.Group controlId="status.ControlSelect1">
                     <Form.Label>Status</Form.Label>

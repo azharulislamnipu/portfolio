@@ -1,11 +1,33 @@
 const Skills = require("../models/Skills");
 const { serverError, resourceError } = require("../utils/error");
-const counterValidator = require("../validators/counterValidator");
+const skillsValidator = require("../validators/skillsValidator");
 module.exports = {
   create(req, res, next) {
     let { extra_skills, professional_skills,  professional_title, professional_progress_name, professional_progress, status } = req.body;
     let user_id = req.user._id;
+
+
+
+    let validate;
+
+      
+
+
+    for (var i = 0; i < professional_skills.length; i++) {
+      let extra_skill = extra_skills[i];
+      let {index, progress_title, progress_name, progress } = professional_skills[i];
+      validate = skillsValidator({
+        extra_skill, progress_title, progress_name, progress
+      });
+  }
+
+
   
+    if (!validate.isValid) {
+      return res.status(400).json(validate.error);
+    } else {
+
+
       let skills = new Skills({
         extra_skills,
         professional_skills,
@@ -21,6 +43,9 @@ module.exports = {
           });
         })
         .catch(error => serverError(res, error));
+    }
+  
+     
     
   },
 
