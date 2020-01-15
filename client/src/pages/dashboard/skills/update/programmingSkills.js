@@ -4,13 +4,14 @@ const ProgrammingSkills = (props) => {
 
   return (
     props.programming_skills.map((val, idx) => {
-      let title = `title-${idx}`, name = `name-${idx}`, progress = `progress-${idx}`;
+      let title = `programming_lang_title_${idx}`, name = `programming_lang_name_${idx}`, progress = `programming_lang_progress_${idx}`;
       // console.log(error);
       return (
         <table className='w-100'>
           <tr key={val.index}>
           <td>
-            <input type="text"  name="programming_lang_title" data-id={idx} id={title} className="form-control" placeholder='Enter Your Progress Title' onChange={props.handlechange} />
+            <input type="text"  name="programming_lang_title" data-id={idx} id={title} className="form-control" 
+            placeholder={val.programming_lang_title? val.programming_lang_title :'Enter Your Progress Title' } onChange={props.handlechange} />
          
             {error.programming_lang_title && (
                       <span
@@ -26,7 +27,8 @@ const ProgrammingSkills = (props) => {
          
           </td>
           <td>
-            <input type="text"  name="programming_lang_name" id={name} data-id={idx} className="form-control" placeholder='Enter Your Progress Name' onChange={props.handlechange} />
+            <input type="text"  name="programming_lang_name" id={name} data-id={idx} className="form-control"
+            placeholder={val.programming_lang_name? val.programming_lang_name :'Enter Your Progress Name' }  onChange={props.handlechange} />
             {error.programming_lang_name && (
                       <span
                         className={
@@ -42,7 +44,8 @@ const ProgrammingSkills = (props) => {
           </td>
 
           <td>
-            <input type="text"  name="programming_lang_progress" id={progress} data-id={idx} className="form-control" placeholder='Enter Your Progress' onChange={props.handlechange} />
+            <input type="text"  name="programming_lang_progress" id={progress} data-id={idx} className="form-control" 
+            placeholder={val.programming_lang_progress? val.programming_lang_progress :'Enter Your Progress' } onChange={props.handlechange} />
             {error.programming_lang_progress && (
                       <span
                         className={

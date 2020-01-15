@@ -4,7 +4,7 @@ const ProfessionalSkills = (props) => {
 
   return (
     props.professional_skills.map((val, idx) => {
-      let title = `title-${idx}`, name = `name-${idx}`, progress = `progress-${idx}`;
+      let title = `progress_title-${idx}`, name = `progress_name-${idx}`, progress = `progress-${idx}`;
       // console.log(error);
       return (
         <table className='w-100'>

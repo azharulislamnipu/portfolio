@@ -4,7 +4,7 @@ const ProgrammingSkills = (props) => {
 
   return (
     props.programming_skills.map((val, idx) => {
-      let title = `title-${idx}`, name = `name-${idx}`, progress = `progress-${idx}`;
+      let title = `programming_lang_title-${idx}`, name = `programming_lang_name-${idx}`, progress = `programming_lang_progress-${idx}`;
       // console.log(error);
       return (
         <table className='w-100'>

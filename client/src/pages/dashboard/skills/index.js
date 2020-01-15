@@ -15,6 +15,7 @@ class Skills extends Component {
 
     this.state = {
       extra_skills: [''],
+      learning_skills: [{index: Math.random(), learning_progress_title: "", learning_progress_name: "" , learning_progress:""}],
       professional_skills: [{ index: Math.random(), progress_title: "", progress_name: "" , progress:""}],
       programming_skills: [{ index: Math.random(), programming_lang_title: "", programming_lang_name: "" , programming_lang_progress:""}],
       language_skills: [{ index: Math.random(), lang_title: "", lang_name: "" , lang_progress:""}],
@@ -28,6 +29,40 @@ class Skills extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.submitHandler = this.submitHandler.bind(this);
   }
+  addClick(){
+    this.setState(prevState => ({ 
+    	learning_skills: [...prevState.learning_skills, { index: Math.random(), learning_progress_title: "", learning_progress_name: "", learning_progress:"" }]
+    }))
+  }
+
+  handleChangelang(i, e) {
+    const { name, value } = e.target;
+    let learning_skills = [...this.state.learning_skills];
+    learning_skills[i] = {...learning_skills[i], [name]: value};
+    this.setState({ learning_skills });
+ }
+ 
+ removeClick(i){
+    let learning_skills = [...this.state.learning_skills];
+    if( i > 0){
+      learning_skills.splice(i, 1);
+      this.setState({ learning_skills });
+    }
+    
+
+ }
+
+  createUI(){
+    return this.state.learning_skills.map((el, i) => (
+      <div key={i}>
+       <input placeholder="Learning Progress Title" name="learning_progress_title" value={el.learning_progress_title ||''} onChange={this.handleChangelang.bind(this, i)} />
+       <input placeholder="Learning Progress Name" name="learning_progress_name" value={el.learning_progress_name ||''} onChange={this.handleChangelang.bind(this, i)} />
+       <input placeholder="Learning progress " name="learning_progress" value={el.learning_progress ||''} onChange={this.handleChangelang.bind(this, i)} />
+       <input type='button' value='remove' onClick={this.removeClick.bind(this, i)}/>
+      </div>          
+    ))
+ }
+
 
 handleProfessionalChange = (e) => {
     if (["progress_title", "progress_name", "progress"].includes(e.target.name)) {
@@ -140,9 +175,9 @@ removeExtraskills = (sidx) => {
   submitHandler = event => {
     event.preventDefault();
 
-    let { extra_skills, professional_skills, programming_skills,language_skills, status } = this.state;
+    let { extra_skills, professional_skills, programming_skills,language_skills, learning_skills, status } = this.state;
 
-     this.props.createSkills({ extra_skills, professional_skills, programming_skills, language_skills, status}, addFlashMessage, this.props.history);
+    this.props.createSkills({ extra_skills, professional_skills, programming_skills, language_skills, learning_skills, status}, addFlashMessage, this.props.history);
       console.log(this.state);
   };
 
@@ -177,6 +212,9 @@ removeExtraskills = (sidx) => {
                 <h2 className="text-uppercase text-center">Skills Create</h2>
 
                 <Form onSubmit={this.submitHandler}>
+
+                {this.createUI()}        
+                 <input type='button' value='add more' onClick={this.addClick.bind(this)}/>
 
                 <Form.Group controlId="extra_skills">
                     <Form.Label>Extra Skills</Form.Label>
@@ -237,7 +275,7 @@ removeExtraskills = (sidx) => {
                         className="btn submit-btn btn-primary"
                         type="submit"
                       >
-                        Create Info
+                        Create Skills
                       </button>
                     </div>
                   </Form.Group>

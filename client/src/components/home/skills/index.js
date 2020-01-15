@@ -1,12 +1,44 @@
 import React, { Component, Children } from 'react';
+import {connect} from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Title from '../../../../src/ui/title';
-import ProgressBar from 'react-bootstrap/ProgressBar'
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import { loadSkills } from '../../../store/actions/skillsActions';
+import ProfessionaSkillItem from './professionalSkillsItem';
 class Skills extends Component {
 
+  componentDidMount(){
+    this.props.loadSkills();
+}
+
   render() {
+    let { skills } = this.props.skills;
+
+    const extraSkillsItem = skills.length > 0 ? skills.map((skill,key)=>{
+      if(skill.status === 'publish'){
+        return (
+     
+        <li Key={key}>{skill.extra_skills}</li>
+        )
+      }
+    }) : <span>No Extra Skills Available</span> ;
+
+
+
+    const professionaSkillItem = skills.length > 0 ? skills.map((skill,key)=>{
+      if(skill.status === 'publish'){
+        return (
+
+
+     <ProfessionaSkillItem professional_skills ={skill.professional_skills}/>
+
+
+        )
+      }
+    }) : <span>No Extra Skills Available</span> ;
+
 
     return (
       <section className="skills-area">
@@ -16,16 +48,12 @@ class Skills extends Component {
             <Col lg={4} md={6} sm={12}>
               <h4 className="heding">Extra skills</h4>
               <ul className="extra_skills">
-                <li>LOGO DESIGN</li>
-                <li>PHOTOGRAPHY</li>
-                <li>Application Development</li>
-                <li>Software Development</li>
-                <li>Illustrator</li>
-                <li>USER EXPERIENCE</li>
-                <li>AUDIO VIDEO EDITING</li>
+              {extraSkillsItem}
               </ul>
             </Col>
             <Col lg={8} md={6} sm={12} className="skrill">
+
+              {professionaSkillItem}
 
               <div className="single-skille">
                 <h4>PHOTOSHOP</h4>
@@ -123,4 +151,9 @@ class Skills extends Component {
     )
   }
 }
-export default Skills;
+
+const mapStateToProps = state => ({
+  skills: state.skill
+})
+
+export default connect(mapStateToProps, { loadSkills })(Skills)

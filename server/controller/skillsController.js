@@ -6,7 +6,7 @@ const languageValidator = require("../validators/languageValidator");
 module.exports = {
 
   create(req, res, next) {
-    let { extra_skills, professional_skills,  programming_skills, language_skills, status } = req.body;
+    let { extra_skills, professional_skills,  programming_skills, language_skills, learning_skills, status } = req.body;
     let user_id = req.user._id;
 
     let validate, progValidate, langValidate;
@@ -44,6 +44,7 @@ for (var i = 0; i < language_skills.length; i++) {
         professional_skills,
         programming_skills,
         language_skills,
+        learning_skills,
         status,
         user_id
       });
@@ -76,34 +77,59 @@ for (var i = 0; i < language_skills.length; i++) {
   },
 
   update(req, res) {
-    let { counterId } = req.params;
+    let { skillsId } = req.params;
 
-    let { title, counter_number, counter_icon, duration, status } = req.body;
-
+    let { extra_skills, professional_skills,  programming_skills, language_skills, status } = req.body;
     let user_id = req.user._id;
-    let validate = counterValidator({ title, counter_number, counter_icon, duration });
+
+    let validate, progValidate, langValidate;
+
+    for (var i = 0; i < professional_skills.length; i++) {
+      let {index, progress_title, progress_name, progress } = professional_skills[i];
+      validate = skillsValidator({
+        progress_title, progress_name, progress
+      });
+  }
+
+  for (var i = 0; i < programming_skills.length; i++) {
+    let {index, programming_lang_title, programming_lang_name, programming_lang_progress } = programming_skills[i];
+    progValidate = programingValidator({
+      programming_lang_title, programming_lang_name, programming_lang_progress
+    });
+}
+
+for (var i = 0; i < language_skills.length; i++) {
+  let {index, lang_title, lang_name, lang_progress } = language_skills[i];
+  langValidate = languageValidator({
+    lang_title, lang_name, lang_progress
+  });
+}
 
     if (!validate.isValid) {
-        return res.status(400).json(validate.error);
-      } else { 
-    Counter.findOneAndUpdate(
-      { _id: counterId },
-      { title,
-        counter_number,
-        counter_icon,
-        duration,
+      return res.status(400).json(validate.error);
+    }else if(!progValidate.isValid){
+      res.status(400).json(progValidate.error);
+    }else if(!langValidate.isValid){
+      res.status(400).json(langValidate.error);
+    }else {
+      Skills.findOneAndUpdate(
+      { _id: skillsId },
+      { extra_skills,
+        professional_skills,
+        programming_skills,
+        language_skills,
         status,
         user_id},
       { new: true }
     )
       .then(result => {
         let { _id } = req.user;
-        Counter.find({ user_id: _id })
-          .then(counter => {
+        Skills.find({ user_id: _id })
+          .then(skills => {
             res.status(200).json({
               message: "Update Successfully",
               ...result._doc,
-              counters: counter
+              skills: skills
             });
           })
           .catch(error => serverError(res, error));

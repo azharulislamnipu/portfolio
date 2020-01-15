@@ -29,7 +29,7 @@ export const createSkills = (skill, addFlashMessage, history) => dispatch => {
         })
   }
   
-  export const updateSkills = (id, skill,addFlashMessage, props) => dispatch => {
+  export const updateSkills = (id, skill, addFlashMessage, props) => dispatch => {
     Axios.put(`/api/skills/${id}`, skill)
       .then(res => {
         dispatch({

@@ -10,7 +10,8 @@ const LanguageSkills = (props) => {
         <table className='w-100'>
           <tr key={val.index}>
           <td>
-            <input type="text"  name="lang_title" data-id={idx} id={title} className="form-control" placeholder='Enter Your Progress Title' onChange={props.handlechange} />
+            <input type="text"  name="lang_title" data-id={idx} id={title} className="form-control"
+            placeholder={val.lang_title? val.lang_title :'Enter Your Progress Title' } onChange={props.handlechange} />
          
             {error.lang_title && (
                       <span
@@ -26,7 +27,8 @@ const LanguageSkills = (props) => {
          
           </td>
           <td>
-            <input type="text"  name="lang_name" id={name} data-id={idx} className="form-control" placeholder='Enter Your Progress Name' onChange={props.handlechange} />
+            <input type="text"  name="lang_name" id={name} data-id={idx} className="form-control" 
+             placeholder={val.lang_name? val.lang_name :'Enter Your Progress Name' }  onChange={props.handlechange} />
             {error.lang_name && (
                       <span
                         className={
@@ -42,7 +44,8 @@ const LanguageSkills = (props) => {
           </td>
 
           <td>
-            <input type="text"  name="lang_progress" id={progress} data-id={idx} className="form-control" placeholder='Enter Your Progress' onChange={props.handlechange} />
+            <input type="text"  name="lang_progress" id={progress} data-id={idx} className="form-control" 
+            placeholder={val.lang_progress? val.lang_progress :'Enter Your Progress' } onChange={props.handlechange} />
             {error.lang_progress && (
                       <span
                         className={

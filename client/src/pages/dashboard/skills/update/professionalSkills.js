@@ -26,7 +26,7 @@ const ProfessionalSkills = (props) => {
          
           </td>
           <td>
-            <input type="text"  name="progress_name" id={name} data-id={idx} className="form-control" placeholder='Enter Your Progress Name' onChange={props.handlechange} />
+            <input type="text"  name="progress_name" id={name} data-id={idx} className="form-control" placeholder={val.progress_name? val.progress_name :'Enter Your Progress Name' } onChange={props.handlechange} />
             {error.progress_name && (
                       <span
                         className={
@@ -42,7 +42,7 @@ const ProfessionalSkills = (props) => {
           </td>
 
           <td>
-            <input type="text"  name="progress" id={progress} data-id={idx} className="form-control" placeholder='Enter Your Progress' onChange={props.handlechange} />
+            <input type="text"  name="progress" id={progress} data-id={idx} className="form-control" placeholder={val.progress? val.progress :'Enter Your Progress' } onChange={props.handlechange} />
             {error.progress && (
                       <span
                         className={

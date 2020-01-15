@@ -36,10 +36,9 @@ class UpdateSkills extends Component {
         if (["progress_title", "progress_name", "progress"].includes(e.target.value)) {
             let professional_skills = [...this.state.professional_skills]
             professional_skills[e.target.dataset.id][e.target.value] = e.target.value;
-              console.log(professional_skills);
         } else {
             this.setState({ [e.target.name]: e.target.value })
-            console.log(e.target.name);
+           
         }
     }
     addNewProfessionalRow = (e) => {
@@ -138,13 +137,11 @@ class UpdateSkills extends Component {
     this.setState({
       extra_skills: this.props.skills.error.extra_skill?  this.state.extra_skills : this.props.skill.extra_skills,
       professional_skills: this.props.skill.professional_skills,
-      // info_icon: this.props.infos.error.info_icon?  this.state.info_icon : this.props.info.info_icon,
-      // info_name:  this.props.info.info_name,
+      programming_skills: this.props.skill.programming_skills,
+      language_skills: this.props.skill.language_skills,
       status: this.props.skill.status
     });
   }
-
- 
 
   changeHandler = event => {
     this.setState({
@@ -159,14 +156,14 @@ class UpdateSkills extends Component {
 
   submitHandler = event => {
     event.preventDefault();
-    let { extra_skills, professional_skills, programming_skills, language_skills, status } = this.state;
-    console.log(this.state)
+
+    console.log(this.state);
+    // this.props.updateSkills(this.props.skill._id, this.state, this.props.addFlashMessage, this.props);
   };
 
 
   render() {
-    // console.log(this.props)
-   
+     
     let { extra_skills, professional_skills, programming_skills, language_skills, status , error} = this.state;
 
     return (
@@ -178,7 +175,7 @@ class UpdateSkills extends Component {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            <h3 className="text-dark"> Update Skill</h3>
+            <h3 className="text-dark"> Update Skills</h3>
           </Modal.Title>
         </Modal.Header>
         <Form onSubmit={this.submitHandler}>
@@ -192,7 +189,7 @@ class UpdateSkills extends Component {
 
                         <div>
 
-                          <Form.Control type="text" key={index} className='w-90 d-inline-block' placeholder='Enter Your Skill Name' value={value} onChange={(e) => this.chaneExtraskillsValue(e, index)} />
+                          <Form.Control type="text" id={`extra_skills_${index}`} key={index} className='w-90 d-inline-block' placeholder='Enter Your Skill Name' value={value} onChange={(e) => this.chaneExtraskillsValue(e, index)} />
                        
                         
                           <button type='button' className='btn btn-danger float-right ml-2' onClick={() => this.removeExtraskills(index)}><i className="fa fa-close" aria-hidden="true"></i></button>
