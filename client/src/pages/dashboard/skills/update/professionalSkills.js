@@ -10,7 +10,7 @@ const ProfessionalSkills = (props) => {
         <table className='w-100'>
           <tr key={val.index}>
           <td>
-            <input type="text"  name="progress_title" data-id={idx} id={title} className="form-control" placeholder='Enter Your Progress Title' onChange={props.handlechange}/>
+            <input type="text"  name="progress_title" data-id={idx} id={title} className="form-control" placeholder={val.progress_title? val.progress_title :'Enter Your Progress Title' } onChange={props.handlechange}/>
          
             {error.progress_title && (
                       <span
