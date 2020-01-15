@@ -1,7 +1,6 @@
 const validator = require('validator');
 const validate = skills =>{
     let error ={}
-   
 
     if(!skills.progress_title){
         error.progress_title = 'Please Provide Progress Title';

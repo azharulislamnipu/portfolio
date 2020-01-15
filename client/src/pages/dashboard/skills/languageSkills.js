@@ -1,57 +1,57 @@
 import React from "react"
-const ProfessionalSkills = (props) => {
+const LanguageSkills = (props) => {
   let error = props.error;
 
   return (
-    props.professional_skills.map((val, idx) => {
-      let title = `title-${idx}`, name = `name-${idx}`, progress = `progress-${idx}`;
+    props.language_skills.map((val, idx) => {
+      let title = `lang_title_${idx}`, name = `lang_name_${idx}`, progress = `lang_progress_${idx}`;
       // console.log(error);
       return (
         <table className='w-100'>
           <tr key={val.index}>
           <td>
-            <input type="text"  name="progress_title" data-id={idx} id={title} className="form-control" placeholder='Enter Your Progress Title' onChange={props.handlechange} />
+            <input type="text"  name="lang_title" data-id={idx} id={title} className="form-control" placeholder='Enter Your Progress Title' onChange={props.handlechange} />
          
-            {error.progress_title && (
+            {error.lang_title && (
                       <span
                         className={
-                          error.progress_title
+                          error.lang_title
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.progress_title}
+                        {error.lang_title}
                       </span>
                     )}
          
           </td>
           <td>
-            <input type="text"  name="progress_name" id={name} data-id={idx} className="form-control" placeholder='Enter Your Progress Name' onChange={props.handlechange} />
-            {error.progress_name && (
+            <input type="text"  name="lang_name" id={name} data-id={idx} className="form-control" placeholder='Enter Your Progress Name' onChange={props.handlechange} />
+            {error.lang_name && (
                       <span
                         className={
-                          error.progress_name
+                          error.lang_name
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.progress_name}
+                        {error.lang_name}
                       </span>
                     )}
          
           </td>
 
           <td>
-            <input type="text"  name="progress" id={progress} data-id={idx} className="form-control" placeholder='Enter Your Progress' onChange={props.handlechange} />
-            {error.progress && (
+            <input type="text"  name="lang_progress" id={progress} data-id={idx} className="form-control" placeholder='Enter Your Progress' onChange={props.handlechange} />
+            {error.lang_progress && (
                       <span
                         className={
-                          error.progress
+                          error.lang_progress
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.progress}
+                        {error.lang_progress}
                       </span>
                     )}
          
@@ -69,4 +69,4 @@ const ProfessionalSkills = (props) => {
     })
   )
 }
-export default ProfessionalSkills;
+export default LanguageSkills;

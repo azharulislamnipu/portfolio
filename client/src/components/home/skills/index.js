@@ -77,7 +77,7 @@ class Skills extends Component {
           <Row className='skrill_row2'>
             <Col lg={6} md={6} sm={12}>
 
-              <h4 className="heding">Programming Skills</h4>
+              <h4 className="heding">Programming Language Skills</h4>
 
               <div className="single-skille">
                 <h4>PHOTOSHOP</h4>

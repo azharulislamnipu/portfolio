@@ -1,24 +1,16 @@
 const Skills = require("../models/Skills");
 const { serverError, resourceError } = require("../utils/error");
 const skillsValidator = require("../validators/skillsValidator");
-const extraSkillsValidator = require("../validators/extraSkillsValidator");
+const programingValidator = require("../validators/programingValidator");
+const languageValidator = require("../validators/languageValidator");
 module.exports = {
+
   create(req, res, next) {
-    let { extra_skills, professional_skills,  professional_title, professional_progress_name, professional_progress, status } = req.body;
+    let { extra_skills, professional_skills,  programming_skills, language_skills, status } = req.body;
     let user_id = req.user._id;
 
-    let validate, extraSkillvalidate;
+    let validate, progValidate, langValidate;
 
-    for (var i = 0; i < extra_skills.length; i++) {
-      let {index, extra_skill} = extra_skills[i];
-
-      console.log( extra_skills[i] );
-  
-      extraSkillvalidate = extraSkillsValidator({
-        extra_skill
-      });
-  }
-  
     for (var i = 0; i < professional_skills.length; i++) {
       let {index, progress_title, progress_name, progress } = professional_skills[i];
       validate = skillsValidator({
@@ -26,16 +18,32 @@ module.exports = {
       });
   }
 
+  for (var i = 0; i < programming_skills.length; i++) {
+    let {index, programming_lang_title, programming_lang_name, programming_lang_progress } = programming_skills[i];
+    progValidate = programingValidator({
+      programming_lang_title, programming_lang_name, programming_lang_progress
+    });
+}
 
-  
-    if ( !extraSkillvalidate.isValid) {
+for (var i = 0; i < language_skills.length; i++) {
+  let {index, lang_title, lang_name, lang_progress } = language_skills[i];
+  langValidate = languageValidator({
+    lang_title, lang_name, lang_progress
+  });
+}
+
+    if (!validate.isValid) {
       return res.status(400).json(validate.error);
-    } else {
-
-
+    }else if(!progValidate.isValid){
+      res.status(400).json(progValidate.error);
+    }else if(!langValidate.isValid){
+      res.status(400).json(langValidate.error);
+    }else {
       let skills = new Skills({
         extra_skills,
         professional_skills,
+        programming_skills,
+        language_skills,
         status,
         user_id
       });
@@ -48,22 +56,20 @@ module.exports = {
           });
         })
         .catch(error => serverError(res, error));
-    }
-  
-     
+      }
     
   },
 
   getAll(req, res, next) {
     // let { _id } = req.user;
-    Counter.find()
-      .then(counter => {
-        if (counter.length === 0) {
+    Skills.find()
+      .then(skills => {
+        if (skills.length === 0) {
           res.status(200).json({
             message: "No counter Found"
           });
         } else {
-          res.status(200).json(counter);
+          res.status(200).json(skills);
         }
       })
       .catch(error => serverError(res, error));
@@ -110,15 +116,15 @@ module.exports = {
   remove(req, res) {
     let { skillsId } = req.params;
 
-    Counter.findOneAndDelete({ _id: skillsId })
+    Skills.findOneAndDelete({ _id: skillsId })
       .then(result => {
         let { _id } = req.user;
-        Counter.find({ user_id: _id })
-          .then(counter => {
+        Skills.find({ user_id: _id })
+          .then(skills => {
             res.status(200).json({
               message: "Deleted Successfully",
               ...result._doc,
-              counters: counter
+              skills: skills
             });
           })
           .catch(error => serverError(res, error));

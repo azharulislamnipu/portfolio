@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { createSkills } from "../../../store/actions/skillsActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
 import ProfessionalSkills from './professionalSkills';
-import ExtraSkills from './extraSkills';
+import ProgrammingSkills from './programmingSkills';
+import LanguageSkills from './languageSkills';
 
 
 class Skills extends Component {
@@ -13,8 +14,13 @@ class Skills extends Component {
     super();
 
     this.state = {
-      extra_skills: [{ index: Math.random(), extra_skill: ""}],
+      extra_skills: [''],
       professional_skills: [{ index: Math.random(), progress_title: "", progress_name: "" , progress:""}],
+      programming_skills: [{ index: Math.random(), programming_lang_title: "", programming_lang_name: "" , programming_lang_progress:""}],
+      language_skills: [{ index: Math.random(), lang_title: "", lang_name: "" , lang_progress:""}],
+      progress_title:'',
+      progress_name: '',
+      progress: '',
       status: "publish",
       error: {}
     };
@@ -37,13 +43,6 @@ addNewProfessionalRow = (e) => {
     }));
 }
 
-deteteProfessionalRow = (index) => {
-    this.setState({
-      professional_skills: this.state.professional_skills.filter((s, sindex) => index !== sindex),
-    });
-}
-
-
 clickOnDeleteProfessional= (record) =>{
     this.setState({
       professional_skills: this.state.professional_skills.filter(r => r !== record)
@@ -52,27 +51,70 @@ clickOnDeleteProfessional= (record) =>{
 
 
 
+handleProgramingChange = (e) => {
+    if (["programming_lang_title", "programming_lang_name", "programming_lang_progress"].includes(e.target.name)) {
+        let programming_skills = [...this.state.programming_skills]
+        programming_skills[e.target.dataset.id][e.target.name] = e.target.value;
+    } else {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+}
+addNewProgramingRow = (e) => {
+    this.setState((prevState) => ({
+      programming_skills: [...prevState.programming_skills, { index: Math.random(), programming_lang_title: "", programming_lang_name:"", programming_lang_progress: "" }],
+    }));
+}
 
-handleExtraSkillChange = (e) => {
-  if (["extra_skill"].includes(e.target.name)) {
-      let extra_skills = [...this.state.extra_skills]
-      extra_skills[e.target.dataset.id][e.target.name] = e.target.value;
+clickOnDeletePrograming = (record) =>{
+    this.setState({
+      programming_skills: this.state.programming_skills.filter(r => r !== record)
+    });
+}
+
+
+
+handleLanguageChange = (e) => {
+  if (["lang_title", "lang_name", "lang_progress"].includes(e.target.name)) {
+      let language_skills = [...this.state.language_skills]
+      language_skills[e.target.dataset.id][e.target.name] = e.target.value;
   } else {
       this.setState({ [e.target.name]: e.target.value })
   }
 }
-addNewExtraSkillRow = (e) => {
+addNewLanguageRow = (e) => {
   this.setState((prevState) => ({
-    extra_skills: [...prevState.extra_skills, { index: Math.random(), extra_skill: "" }],
+    language_skills: [...prevState.language_skills, { index: Math.random(), lang_title: "", lang_name:"", lang_progress: "" }],
   }));
 }
 
-
-clickOnDeleteExtraSkill = (record) => {
+clickOnDeleteLanguage = (record) =>{
   this.setState({
-    extra_skills: this.state.extra_skills.filter(r => r !== record)
+    language_skills: this.state.language_skills.filter(r => r !== record)
   });
 }
+
+
+
+addExtraskills = e => {
+
+  this.setState({ extra_skills: [...this.state.extra_skills, ""] })
+}
+
+chaneExtraskillsValue = (event, index) => {
+  this.state.extra_skills[index] = event.target.value;
+  this.setState({ extra_skills: this.state.extra_skills });
+}
+removeExtraskills = (sidx) => {
+  if (sidx > 0) {
+    this.setState({
+      extra_skills: this.state.extra_skills.filter((s, idx) => idx !== sidx)
+    });
+  }
+
+};
+
+
+
 
   handleChange = e => {
     this.setState({
@@ -100,14 +142,14 @@ clickOnDeleteExtraSkill = (record) => {
   submitHandler = event => {
     event.preventDefault();
 
-    let { extra_skills, professional_skills, status } = this.state;
+    let { extra_skills, professional_skills, programming_skills,language_skills, status } = this.state;
 
-     this.props.createSkills({ extra_skills, professional_skills, status}, addFlashMessage, this.props.history);
+     this.props.createSkills({ extra_skills, professional_skills, programming_skills, language_skills, status}, addFlashMessage, this.props.history);
       console.log(this.state);
   };
 
   render() {
-    let { extra_skills, professional_skills, status, error } = this.state;
+    let { extra_skills, professional_skills, programming_skills, language_skills, status , error} = this.state;
     return (
       <div class="container-fluid">
         <div class="row">
@@ -139,19 +181,47 @@ clickOnDeleteExtraSkill = (record) => {
                 <Form onSubmit={this.submitHandler}>
                  
                  
-                  <Form.Group controlId="extra_skills">
-                    <Form.Label>Extra Skills</Form.Label>
-                  <ExtraSkills add={this.addNewExtraSkillRow} delete={this.clickOnDeleteExtraSkill.bind(this)} extra_skills={extra_skills}  handlechange={this.handleExtraSkillChange} error={error} />
 
+                <Form.Group controlId="extra_skills">
+                    <Form.Label>Extra Skills</Form.Label>
+                    {extra_skills.map((value, index) => {
+                      return (
+
+                        <div>
+
+                          <Form.Control type="text" key={index} className='w-90 d-inline-block' placeholder='Enter Your Skill Name' value={value} onChange={(e) => this.chaneExtraskillsValue(e, index)} />
+                       
+                        
+                          <button type='button' className='btn btn-danger float-right ml-2' onClick={() => this.removeExtraskills(index)}><i className="fa fa-close" aria-hidden="true"></i></button>
+                        
+                        </div>
+                      )
+                    })}
+                    <button className="btn btn-primary float-right mt-2" onClick={(e) => { e.preventDefault(); this.addExtraskills(e) }}><i className="fa fa-plus" aria-hidden="true"></i></button>
                   </Form.Group>
 
 
 
-              <Form.Group controlId="professional_skills">
+                  <Form.Group controlId="professional_skills">
                     <Form.Label>Professional Skills</Form.Label>
                   <ProfessionalSkills add={this.addNewProfessionalRow} delete={this.clickOnDeleteProfessional.bind(this)} professional_skills={professional_skills}  handlechange={this.handleProfessionalChange} error={error} />
 
-             </Form.Group>
+                </Form.Group>
+
+
+                <Form.Group controlId="programming_nskills">
+                    <Form.Label>Programming Skills</Form.Label>
+                  <ProgrammingSkills add={this.addNewProgramingRow} delete={this.clickOnDeletePrograming.bind(this)} programming_skills={programming_skills}  handlechange={this.handleProgramingChange} error={error} />
+
+                </Form.Group>
+
+
+
+                <Form.Group controlId="language_nskills">
+                    <Form.Label>Language Skills</Form.Label>
+                  <LanguageSkills add={this.addNewLanguageRow} delete={this.clickOnDeleteLanguage.bind(this)} language_skills={language_skills}  handlechange={this.handleLanguageChange} error={error} />
+
+                </Form.Group>
 
                   <Form.Group controlId="status.ControlSelect1">
                     <Form.Label>Status</Form.Label>
@@ -168,7 +238,7 @@ clickOnDeleteExtraSkill = (record) => {
 
                   <Form.Group className="row">
                     <div className="col-sm-12 text-right">
-                      <Link className="btn btn-primary mr-2" to="/infos">
+                      <Link className="btn btn-primary mr-2" to="/skills">
                         View List
                       </Link>
                       <button
