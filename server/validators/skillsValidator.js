@@ -2,9 +2,7 @@ const validator = require('validator');
 const validate = skills =>{
     let error ={}
    
-    if(!skills.extra_skill){
-        error.extra_skill = 'Please Provide Extra Skills';
-    }
+
     if(!skills.progress_title){
         error.progress_title = 'Please Provide Progress Title';
     }

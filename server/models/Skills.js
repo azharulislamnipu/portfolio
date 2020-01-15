@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Skillschema = new Schema({
-    extra_skills: {
-        type: Array,
-        trim:true,
-        default:[]
-    },
+    extra_skills:[],
     professional_skills:[],
     programming_skills:[{
         programming_title: {

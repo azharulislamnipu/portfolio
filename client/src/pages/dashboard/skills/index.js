@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { createSkills } from "../../../store/actions/skillsActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
 import ProfessionalSkills from './professionalSkills';
+import ExtraSkills from './extraSkills';
 
 
 class Skills extends Component {
@@ -12,7 +13,7 @@ class Skills extends Component {
     super();
 
     this.state = {
-      extra_skills: [''],
+      extra_skills: [{ index: Math.random(), extra_skill: ""}],
       professional_skills: [{ index: Math.random(), progress_title: "", progress_name: "" , progress:""}],
       status: "publish",
       error: {}
@@ -22,7 +23,7 @@ class Skills extends Component {
     this.submitHandler = this.submitHandler.bind(this);
   }
 
-  handleProfessionalChange = (e) => {
+handleProfessionalChange = (e) => {
     if (["progress_title", "progress_name", "progress"].includes(e.target.name)) {
         let professional_skills = [...this.state.professional_skills]
         professional_skills[e.target.dataset.id][e.target.name] = e.target.value;
@@ -43,7 +44,7 @@ deteteProfessionalRow = (index) => {
 }
 
 
-clickOnDeleteProfessional(record) {
+clickOnDeleteProfessional= (record) =>{
     this.setState({
       professional_skills: this.state.professional_skills.filter(r => r !== record)
     });
@@ -52,27 +53,28 @@ clickOnDeleteProfessional(record) {
 
 
 
-
-  addExtraskills = e => {
-
-    this.setState({ extra_skills: [...this.state.extra_skills, ""] })
+handleExtraSkillChange = (e) => {
+  if (["extra_skill"].includes(e.target.name)) {
+      let extra_skills = [...this.state.extra_skills]
+      extra_skills[e.target.dataset.id][e.target.name] = e.target.value;
+  } else {
+      this.setState({ [e.target.name]: e.target.value })
   }
-
-  chaneExtraskillsValue = (event, index) => {
-    this.state.extra_skills[index] = event.target.value;
-    this.setState({ extra_skills: this.state.extra_skills });
-  }
-  removeExtraskills = (sidx) => {
-    if (sidx > 0) {
-      this.setState({
-        extra_skills: this.state.extra_skills.filter((s, idx) => idx !== sidx)
-      });
-    }
-
-  };
+}
+addNewExtraSkillRow = (e) => {
+  this.setState((prevState) => ({
+    extra_skills: [...prevState.extra_skills, { index: Math.random(), extra_skill: "" }],
+  }));
+}
 
 
-  handleChange(e) {
+clickOnDeleteExtraSkill = (record) => {
+  this.setState({
+    extra_skills: this.state.extra_skills.filter(r => r !== record)
+  });
+}
+
+  handleChange = e => {
     this.setState({
       status: e.target.value
     });
@@ -98,14 +100,14 @@ clickOnDeleteProfessional(record) {
   submitHandler = event => {
     event.preventDefault();
 
-    let { extra_skills, professional_skills, professional_title, professional_progress_name, professional_progress, status } = this.state;
+    let { extra_skills, professional_skills, status } = this.state;
 
-    this.props.createSkills({ extra_skills, status, professional_skills}, addFlashMessage, this.props.history);
+     this.props.createSkills({ extra_skills, professional_skills, status}, addFlashMessage, this.props.history);
       console.log(this.state);
   };
 
   render() {
-    let { extra_skills, professional_skills, professional_title, professional_progress_name, professional_progress, status, error } = this.state;
+    let { extra_skills, professional_skills, status, error } = this.state;
     return (
       <div class="container-fluid">
         <div class="row">
@@ -137,36 +139,15 @@ clickOnDeleteProfessional(record) {
                 <Form onSubmit={this.submitHandler}>
                  
                  
-
                   <Form.Group controlId="extra_skills">
                     <Form.Label>Extra Skills</Form.Label>
-                    {this.state.extra_skills.map((value, index) => {
-                      return (
+                  <ExtraSkills add={this.addNewExtraSkillRow} delete={this.clickOnDeleteExtraSkill.bind(this)} extra_skills={extra_skills}  handlechange={this.handleExtraSkillChange} error={error} />
 
-                        <div>
-
-                          <Form.Control type="text" key={index} className='w-90 d-inline-block' placeholder='Enter Your Skill Name' value={value} onChange={(e) => this.chaneExtraskillsValue(e, index)} />
-                          {error.extra_skill && (
-                      <span
-                        className={
-                          error.extra_skill
-                            ? "invalid-feedback d-block"
-                            : "invalid-feedback"
-                        }
-                      >
-                        {error.extra_skill}
-                      </span>
-                    )}
-                          
-                          <button type='button' className='btn btn-danger float-right ml-2' onClick={() => this.removeExtraskills(index)}>X</button>
-                        
-                        </div>
-                      )
-                    })}
-                    <button className="btn btn-primary float-right mt-2" onClick={(e) => { e.preventDefault(); this.addExtraskills(e) }}>Add new Info</button>
                   </Form.Group>
 
-              <Form.Group controlId="info_name">
+
+
+              <Form.Group controlId="professional_skills">
                     <Form.Label>Professional Skills</Form.Label>
                   <ProfessionalSkills add={this.addNewProfessionalRow} delete={this.clickOnDeleteProfessional.bind(this)} professional_skills={professional_skills}  handlechange={this.handleProfessionalChange} error={error} />
 
