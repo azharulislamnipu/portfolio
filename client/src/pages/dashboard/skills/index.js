@@ -114,13 +114,6 @@ removeExtraskills = (sidx) => {
 };
 
 
-
-
-  handleChange = e => {
-    this.setState({
-      status: e.target.value
-    });
-  }
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
       JSON.stringify(nextProps.skills.error) !==
@@ -133,6 +126,11 @@ removeExtraskills = (sidx) => {
     return null;
   }
 
+  handleChange = e => {
+    this.setState({
+      status: e.target.value
+    });
+  }
 
   changeHandler = event => {
     this.setState({
@@ -179,8 +177,6 @@ removeExtraskills = (sidx) => {
                 <h2 className="text-uppercase text-center">Skills Create</h2>
 
                 <Form onSubmit={this.submitHandler}>
-                 
-                 
 
                 <Form.Group controlId="extra_skills">
                     <Form.Label>Extra Skills</Form.Label>
@@ -200,8 +196,6 @@ removeExtraskills = (sidx) => {
                     <button className="btn btn-primary float-right mt-2" onClick={(e) => { e.preventDefault(); this.addExtraskills(e) }}><i className="fa fa-plus" aria-hidden="true"></i></button>
                   </Form.Group>
 
-
-
                   <Form.Group controlId="professional_skills">
                     <Form.Label>Professional Skills</Form.Label>
                   <ProfessionalSkills add={this.addNewProfessionalRow} delete={this.clickOnDeleteProfessional.bind(this)} professional_skills={professional_skills}  handlechange={this.handleProfessionalChange} error={error} />
@@ -214,8 +208,6 @@ removeExtraskills = (sidx) => {
                   <ProgrammingSkills add={this.addNewProgramingRow} delete={this.clickOnDeletePrograming.bind(this)} programming_skills={programming_skills}  handlechange={this.handleProgramingChange} error={error} />
 
                 </Form.Group>
-
-
 
                 <Form.Group controlId="language_nskills">
                     <Form.Label>Language Skills</Form.Label>

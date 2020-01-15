@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
 import { loadSkills, removeSkills } from "../../../store/actions/skillsActions";
-import  UpdateCounter from './updateCounter';
+import  UpdateSkills from './updateSkills';
 import { Link } from 'react-router-dom';
  class SkillsList extends Component {
 
@@ -33,7 +33,7 @@ import { Link } from 'react-router-dom';
   
     render() {
 
-        console.log(this.props)
+     
 
        let { skills } = this.props.skills;
 
@@ -149,7 +149,8 @@ import { Link } from 'react-router-dom';
                                             <td>{skill.status =='publish' ? <span class="badge badge-success">{skill.status}</span> : <span class="badge badge-danger">{skill.status}</span> }</td>
                                             <td className='text-center'>
                                             
-
+                                            {this.state.id === skill._id?   <UpdateSkills show={this.state.updateModalOpen}
+        onHide={this.closeUpdateModal}  skill={skill} /> : null }
 
 
                                                     <button className='btn btn-primary btn-sm m-1' onClick={() => this.openUpdateModal(skill._id)} >Edit</button>
