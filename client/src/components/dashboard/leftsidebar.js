@@ -56,13 +56,9 @@ export default class LeftSideBar extends Component {
                             </li>
 
                             <li className="menu-title">
-                            <a href="javascript:void(0);" className="waves-effect"><i className="fa fa-archive fa-2x"></i> <span> Banner </span> </a>
+                            <Link to='/experience' className="waves-effect"><i class="fa fa-plug" aria-hidden="true"></i><span> Experience </span></Link> 
                             </li>
 
-
-                            <li className="menu-title">
-                            <a href="javascript:void(0);" className="waves-effect"><i className="fa fa-archive fa-2x"></i> <span> Banner </span> </a>
-                            </li>
 
 
                             <li className="menu-title">

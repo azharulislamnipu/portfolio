@@ -32,6 +32,9 @@ import Infos from './pages/dashboard/info/infos';
 import Skill from './pages/dashboard/skills';
 import SkillsList from './pages/dashboard/skills/skillsList';
 
+import Experience from './pages/dashboard/experience';
+import Experiences from './pages/dashboard/experience/experiences';
+
 import Portfolio from './pages/dashboard/portfolio';
 import Portfolios from './pages/dashboard/portfolio/portfolios';
 
@@ -61,6 +64,10 @@ class App extends Component {
                     <Route path='/fileupload' component={FileUpload}/>
 
                     <PrivateRoute path="/banner" component={Banner} auth={this.props.auth}/>
+
+
+                    <PrivateRoute path="/experience" component={Experience} auth={this.props.auth}/>
+                    <PrivateRoute path="/experiences" component={Experiences} auth={this.props.auth}/>
 
                     <PrivateRoute path="/counter" component={Counter} auth={this.props.auth}/>
                     <PrivateRoute path="/counters" component={Counters} auth={this.props.auth}/>
