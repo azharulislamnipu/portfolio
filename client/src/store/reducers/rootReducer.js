@@ -8,6 +8,7 @@ import contactReducer from './contactReducer';
 import portfolioReducer from './portfolioReducer';
 import skillsReducer from './skillsReducer';
 import serviceReducer from './serviceReducer';
+import experienceReducer from './experienceReducer';
 import infoReducer from './infoReducer';
 import flashMessages from './flashMessages';
 const rootReducer = combineReducers({
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   info:infoReducer,
   portfolio:portfolioReducer,
   service:serviceReducer,
-  skill:skillsReducer
+  skill:skillsReducer,
+  experience:experienceReducer
 })
 
 export default rootReducer;

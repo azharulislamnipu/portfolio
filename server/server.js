@@ -14,6 +14,7 @@ const infoRoute = require('./routers/infoRoute');
 const portfolioRoute = require('./routers/portfolioRoute');
 const serviceRoute = require('./routers/serviceRoute');
 const skillsRoute = require('./routers/skillsRoute');
+const experienceRoute = require('./routers/experienceRoute');
 const passport = require('passport');
 const path = require('path');
 const app = express();
@@ -54,6 +55,7 @@ app.use('/api/infos', infoRoute);
 app.use('/api/portfolios', portfolioRoute);
 app.use('/api/services', serviceRoute);
 app.use('/api/skills', skillsRoute);
+app.use('/api/experience', experienceRoute);
 
 app.get('/', (req, res)=>{
     res.send('Welcome to Server side');
