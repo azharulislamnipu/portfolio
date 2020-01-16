@@ -51,7 +51,7 @@ class UpdatePortfolio extends Component {
       }
  
   componentDidMount() {
-    const date = new Date(this.props.portfolio.completed_date)
+    const date = new Date(this.props.portfolio.completed_date);
     this.setState({
       title: this.props.portfolios.error.title?  this.state.title : this.props.portfolio.title,
       description: this.props.portfolios.error.description?  this.state.description : this.props.portfolio.description,

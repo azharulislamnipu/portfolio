@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
-import { loadInfos, removeInfo } from "../../../store/actions/infoActions";
-import  UpdateCounter from './updateCounter';
 import { Link } from 'react-router-dom';
- class Infos extends Component {
+import { loadExperience, removeExperience } from "../../../store/actions/experienceActions";
+import UpdateExperience from './updateExperience';
+ class Experiences extends Component {
 
 
     state = {
@@ -26,16 +26,16 @@ import { Link } from 'react-router-dom';
     }
 
     componentDidMount(){
-        this.props.loadInfos();
+        this.props.loadExperience();
     }
   
 
   
     render() {
 
-       let { infos } = this.props.infos;
+       let { experiences } = this.props.experiences;
 
-    
+    console.log( this.props);
         return (
             <div class="container-fluid"> 
               
@@ -69,9 +69,11 @@ import { Link } from 'react-router-dom';
                                     <thead>
                                         <tr>
                                             <th scope="col">(#) Id</th>
-                                            <th scope="col">Title</th>
-                                            <th scope="col">Info Icon</th>
-                                            <th scope="col">Info Name</th>
+                                            <th scope="col">Company Name</th>
+                                            <th scope="col">Icon</th>
+                                            <th scope="col">Designation</th>
+                                            <th scope="col">Start Date</th>
+                                            <th scope="col">End Date</th>
                                             <th scope="col">Status</th>
                                             <th scope="col" className='text-center'>Actions</th>
                                       
@@ -80,39 +82,45 @@ import { Link } from 'react-router-dom';
                                     </thead>
 
  
-                                  { (Array.isArray(infos) && infos.length) > 0 ? 
+                                  { (Array.isArray(experiences) && experiences.length) > 0 ? 
                                     <tbody>
                                     {
-                                        infos.map((info, index) => {
+                                        experiences.map((experience, index) => {
                                         
                                             let count = index + 1;
-                                       
+                                           let start_date = new Date(experience.start_date);
+                                           start_date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(start_date);
+
+                                           let end_date = new Date(experience.end_date);
+                                           end_date = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(end_date);
                                                 return(
-                                                <tr key={info._id}>
+                                                <tr key={experience._id}>
                                             <th scope="row">#{count}</th>
                                         
-                                            <td>{info.title}</td>
-                                            <td>{info.info_icon}</td>
+                                            <td>{experience.company_name}</td>
+                                            <td>{experience.icon}</td>
                                             <td>
-                                            {
-
-                                                info.info_name.length > 0 ?
-                                                info.info_name.map(infoname => (
-                                                <span>{`${infoname.length >0 ? infoname+ ' , ' : infoname }`}</span>
-                                                )) : <span>No info name</span>
-                                                }
+                                            {experience.designation}
                                             
                                             </td>
-                                            <td>{info.status =='publish' ? <span class="badge badge-success">{info.status}</span> : <span class="badge badge-danger">{info.status}</span> }</td>
+                                            <td>
+                                            {start_date}
+                                            
+                                            </td>
+                                            <td>
+                                            {end_date}
+                                            
+                                            </td>
+                                            <td>{experience.status =='publish' ? <span class="badge badge-success">{experience.status}</span> : <span class="badge badge-danger">{experience.status}</span> }</td>
                                             <td className='text-center'>
                                             
 
-                                            {this.state.id === info._id?   <UpdateCounter show={this.state.updateModalOpen}
-        onHide={this.closeUpdateModal}  info={info} /> : null }
+                                            {this.state.id === experience._id?   <UpdateExperience show={this.state.updateModalOpen}
+        onHide={this.closeUpdateModal}  experience={experience} /> : null }
 
 
-                                                    <button className='btn btn-primary btn-sm m-1' onClick={() => this.openUpdateModal(info._id)} >Edit</button>
-                                                    <button className='btn btn-danger btn-sm m-1' onClick={ ()=> { this.props.removeInfo(info._id)}} >Delete</button>
+                                                    <button className='btn btn-primary btn-sm m-1' onClick={() => this.openUpdateModal(experience._id)} >Edit</button>
+                                                    <button className='btn btn-danger btn-sm m-1' onClick={ ()=> { this.props.removeExperience(experience._id)}} >Delete</button>
                                                   
                                             </td>
                                         </tr>
@@ -140,7 +148,7 @@ import { Link } from 'react-router-dom';
 }
 
 const mapStateToProps = state => ({
-    infos: state.info,
+    experiences: state.experience
 })
 
-export default connect(mapStateToProps, { loadInfos, removeInfo })(Infos)
+export default connect(mapStateToProps, { loadExperience, removeExperience })(Experiences)

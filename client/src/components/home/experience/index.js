@@ -4,7 +4,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Title from '../../../../src/ui/title';
 import Slider from "react-slick";
-
+import {connect} from 'react-redux';
+import {  loadExperience } from '../../../store/actions/experienceActions';
 function SampleNextArrow(props) {
     const { className, onClick } = props;
     return (
@@ -32,9 +33,12 @@ function SampleNextArrow(props) {
   }
 class Experience extends Component {
 
-  
+    componentDidMount(){
+        this.props.loadExperience()
+      }
     render() {
 
+    console.log(this.props)
         const settings = {
             dots: false,
             infinite: true,
@@ -76,6 +80,29 @@ class Experience extends Component {
                 }
             ]
         };
+
+        let { experiences } = this.props.experiences;
+
+        const experienceItem = experiences.length> 0 ? experiences.map((experience,key)=>{
+            let start_date = new Date(experience.start_date);
+            start_date = new Intl.DateTimeFormat('en-US', { year: 'numeric' }).format(start_date);
+
+            let end_date = new Date(experience.end_date);
+            end_date = new Intl.DateTimeFormat('en-US', { year: 'numeric' }).format(end_date);
+              
+          if(experience.status === 'publish'){
+            return (
+                <div className="feature-box">
+                <div className="feature-icon"><i className={experience.icon}></i></div>
+                <div className="box-content">
+                    <h4 className="feature-title">{start_date} - {end_date} ({experience.designation})</h4>
+                    <div className="feature-content"><p>{experience.company_name}</p></div>
+                </div>
+            </div>
+            )
+          }
+        }) : <span>No Counter Data Available</span> ;
+
         return (
             <section className='experience-area'>
                 <Container>
@@ -84,35 +111,9 @@ class Experience extends Component {
 
                     <Row className='align-items-center'>
                         <Col lg={6} md={6} sm={12}>
-                            <div className="feature-box">
-                                <div className="feature-icon"><i className="fa fa-google"></i></div>
-                                <div className="box-content">
-                                    <h4 className="feature-title">2000 - 2008 (UX Designer)</h4>
-                                    <div className="feature-content"><p>Google Corporation.</p></div>
-                                </div>
-                            </div>
 
-                            <div className="feature-box">
-                                <div className="feature-icon"><i className="fa fa-google"></i></div>
-                                <div className="box-content">
-                                    <h4 className="feature-title">2000 - 2008 (UX Designer)</h4>
-                                    <div className="feature-content"><p>Google Corporation.</p></div>
-                                </div>
-                            </div>
-                            <div className="feature-box">
-                                <div className="feature-icon"><i className="fa fa-google"></i></div>
-                                <div className="box-content">
-                                    <h4 className="feature-title">2000 - 2008 (UX Designer)</h4>
-                                    <div className="feature-content"><p>Google Corporation.</p></div>
-                                </div>
-                            </div>
-                            <div className="feature-box">
-                                <div className="feature-icon"><i className="fa fa-google"></i></div>
-                                <div className="box-content">
-                                    <h4 className="feature-title">2000 - 2008 (UX Designer)</h4>
-                                    <div className="feature-content"><p>Google Corporation.</p></div>
-                                </div>
-                            </div>
+                            {experienceItem}
+                            
                         </Col>
                         <Col lg={6} md={6} sm={12}>
 
@@ -255,4 +256,7 @@ class Experience extends Component {
     }
 }
 
-export default Experience;
+const mapStateToProps = state => ({
+    experiences: state.experience
+  })
+export default connect(mapStateToProps, { loadExperience })(Experience)

@@ -1,29 +1,57 @@
-import React, { Component } from "react";
+import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import { creatExperience } from "../../../store/actions/experienceActions";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { updateExperience } from "../../../store/actions/experienceActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
+class UpdateExperience extends Component {
 
 
-class Experience extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      company_name: "",
-      icon: "",
-      designation: "",
-      start_date:new Date(),
-      end_date: new Date(),
-      status: "publish",
-      error: {}
-    };
-    this.changeHandler = this.changeHandler.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.submitHandler = this.submitHandler.bind(this);
+    constructor(props) {
+        super(props);
+        this.state = {
+          company_name: "",
+          icon: "",
+          designation: "",
+          start_date:new Date(),
+          end_date: new Date(),
+          status: "",
+          error: {}
+        };
+        this.changeHandler = this.changeHandler.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.submitHandler = this.submitHandler.bind(this);
+      }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      JSON.stringify(nextProps.experiences.error) !==
+      JSON.stringify(prevState.error)
+    ) {
+      return {
+        error: nextProps.experiences.error
+      };
+    }
+    return null;
+  }
+
+  componentDidMount() {
+
+    let startdate = new Date(this.props.experience.start_date);
+    let enddate = new Date(this.props.experience.end_date);
+    
+     
+    this.setState({
+      company_name: this.props.experiences.error.company_name?  this.state.company_name : this.props.experience.company_name,
+      icon: this.props.experiences.error.icon?  this.state.icon : this.props.experience.icon,
+      designation: this.props.experiences.error.designation?  this.state.designation : this.props.experience.designation,
+      start_date: startdate,
+      end_date: enddate,
+      status: this.props.experience.status
+    });
   }
 
   handleStartDate = date => {
@@ -37,55 +65,28 @@ class Experience extends Component {
     });
   };
 
-  handleChange = e => {
-    this.setState({
-      status: e.target.value
-    });
-  };
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (
-      JSON.stringify(nextProps.experiences.error) !==
-      JSON.stringify(prevState.error)
-    ) {
-      return {
-        error: nextProps.experiences.error
-      };
-    }
-    return null;
-  }
 
   changeHandler = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
   };
+  handleChange(e) {
+    this.setState({
+      status: e.target.value
+    });
+  }
+
   submitHandler = event => {
     event.preventDefault();
+    this.props.updateExperience(this.props.experience._id, this.state, this.props.addFlashMessage, this.props);
 
-    let {
-      company_name,
-      icon,
-      designation,
-      start_date,
-      end_date,
-      status
-    } = this.state;
-
-    console.log(this.state);
-
-    this.props.creatExperience(
-      { company_name,
-        icon,
-        designation,
-        start_date,
-        end_date,
-        status },
-      this.props.addFlashMessage,
-      this.props.history
-    );
   };
 
+
   render() {
+   
+
     let {
       company_name,
       icon,
@@ -95,39 +96,23 @@ class Experience extends Component {
       status,
       error
     } = this.state;
+
     return (
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="page-title-box">
-              <div class="row align-items-center">
-                <div class="col-md-8">
-                  <h4 class="page-title mb-0">Dashboard</h4>
-                  <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item">
-                      <Link to={"/experiences"}>Experiences</Link>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                      Experiences Create
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-xl-12">
-            <div className="card">
-              <div className="card-body">
-                <h2 className="text-uppercase text-center">
-                  Experiences Create
-                </h2>
-
-                <Form onSubmit={this.submitHandler}>
-                  
-                  <Form.Group controlId="company_name">
+      <Modal
+        {...this.props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            <h3 className="text-dark"> Update Info</h3>
+          </Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={this.submitHandler}>
+          <Modal.Body>
+             
+          <Form.Group controlId="company_name">
                     <Form.Label>Company Name</Form.Label>
                     <Form.Control
                       type="text"
@@ -234,38 +219,25 @@ class Experience extends Component {
                     </Form.Group>
                   </Col>
                   </Row>
-                  <Form.Group controlId="status.ControlSelect1">
-                    <Form.Label>Status</Form.Label>
-                    <Form.Control
-                      as="select"
-                      name="status"
-                      onChange={this.handleChange.bind(this)}
-                      value={status}
-                    >
-                      <option value="publish">Publish</option>
-                      <option value="revoke">Revoke</option>
-                    </Form.Control>
-                  </Form.Group>
 
-                  <Form.Group className="row">
-                    <div className="col-sm-12 text-right">
-                      <Link className="btn btn-primary mr-2" to="/experiences">
-                        View List
-                      </Link>
-                      <button
-                        className="btn submit-btn btn-primary"
-                        type="submit"
-                      >
-                        Create Experience
-                      </button>
-                    </div>
-                  </Form.Group>
-                </Form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            <Form.Group controlId="status.ControlSelect1">
+              <Form.Label>Status</Form.Label>
+              <Form.Control as="select" name="status" value={status}  onChange={this.handleChange.bind(this)}>
+                <option value="publish">Publish</option>
+                <option value="revoke">Revoke</option>
+              </Form.Control>
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <button className="btn btn-dark ml-2" type="submit">
+              Update
+            </button>
+            <button className="btn btn-danger" onClick={this.props.onHide}>
+              Close
+            </button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
     );
   }
 }
@@ -274,6 +246,4 @@ const mapStateToProps = state => ({
   experiences: state.experience
 });
 
-export default connect(mapStateToProps, { creatExperience, addFlashMessage })(
-  Experience
-);
+export default connect(mapStateToProps, { updateExperience, addFlashMessage })(UpdateExperience);
