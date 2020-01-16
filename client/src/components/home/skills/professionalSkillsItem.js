@@ -9,14 +9,13 @@ const ProfessionaSkillItem = props => {
       {props.professional_skills.map((professional_skill, index) => {
         let {
           prof_progress_title,
-          prof_progress_name,
           prof_progress
         } = professional_skill;
         return (
           <div>
             <h4 className="text-uppercase">{prof_progress_title}</h4>
 
-            <div className={`progress-wrrap  ${prof_progress_name}`}>
+            <div className={`progress-wrrap  percent-${prof_progress}`}>
               <div className="progress-title">{prof_progress}%</div>
               <ProgressBar now={prof_progress} />
             </div>

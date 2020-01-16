@@ -5,11 +5,6 @@ const langValidate = skills =>{
     if(!skills.lang_title){
         error.lang_title = 'Please Provide language Title';
     }
-
-    if(!skills.lang_name){
-        error.lang_name = 'Please Provide language Name';
-    }
-    
     if(!skills.lang_progress){
         error.lang_progress = 'Please Provide language Progress';
     }else if(!validator.isNumeric(skills.lang_progress)){

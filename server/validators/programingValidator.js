@@ -6,10 +6,6 @@ const progValidate = skills =>{
         error.programming_lang_title = 'Please Provide programming lang Title';
     }
 
-    if(!skills.programming_lang_name){
-        error.programming_lang_name = 'Please Provide programming lang Name';
-    }
-    
     if(!skills.programming_lang_progress){
         error.programming_lang_progress = 'Please Provide programming lang Progress';
     }else if(!validator.isNumeric(skills.programming_lang_progress)){

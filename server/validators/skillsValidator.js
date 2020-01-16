@@ -5,9 +5,6 @@ const validate = skills =>{
     if(!skills.prof_progress_title){
         error.prof_progress_title = 'Please Provide Professional Progress Title';
     }
-    if(!skills.prof_progress_name){
-        error.prof_progress_name = 'Please Provide Professional Progress Name';
-    }
     if(!skills.prof_progress){
         error.prof_progress = 'Please Provide Professional Progress';
     }else if(!validator.isNumeric(skills.prof_progress)){

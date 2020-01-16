@@ -13,9 +13,9 @@ class UpdateSkills extends Component {
       
     this.state = {
       extra_skills: [''],
-      professional_skills: [{ index: Math.random(), prof_progress_title: "", prof_progress_name: "" , prof_progress:""}],
-      programming_skills: [{ index: Math.random(), programming_lang_title: "", programming_lang_name: "" , programming_lang_progress:""}],
-      language_skills: [{ index: Math.random(), lang_title: "", lang_name: "" , lang_progress:""}],
+      professional_skills: [{ index: Math.random(), prof_progress_title: "" , prof_progress:""}],
+      programming_skills: [{ index: Math.random(), programming_lang_title: "", programming_lang_progress:""}],
+      language_skills: [{ index: Math.random(), lang_title: "" , lang_progress:""}],
       status: "publish",
       error: {}
     };
@@ -57,7 +57,7 @@ class UpdateSkills extends Component {
 
   addProfeClick = () => {
     this.setState(prevState => ({ 
-      professional_skills: [...prevState.professional_skills, { index: Math.random(), prof_progress_title: "", prof_progress_name: "", prof_progress:"" }]
+      professional_skills: [...prevState.professional_skills, { index: Math.random(), prof_progress_title: "", prof_progress:"" }]
     }))
   }
   
@@ -94,20 +94,7 @@ class UpdateSkills extends Component {
                         </span>
                       )}
           </td>
-      <td>   
-         <Form.Control type="text"  className='d-inline-block' name="prof_progress_name" placeholder="Professional Progress Name" value={el.prof_progress_name ||''}  onChange={this.handleChangedProfe.bind(this, i)}/>
-         {error.prof_progress_name && (
-                        <span
-                          className={
-                            error.prof_progress_name
-                              ? "invalid-feedback d-block"
-                              : "invalid-feedback"
-                          }
-                        >
-                          {error.prof_progress_name}
-                        </span>
-                      )}
-     </td>
+   
       <td>
       <Form.Control type="text"  className='d-inline-block' name="prof_progress" placeholder="Professional Progress " value={el.prof_progress ||''}  onChange={this.handleChangedProfe.bind(this, i)}/>
       {error.prof_progress && (
@@ -138,7 +125,7 @@ class UpdateSkills extends Component {
   
   addProgClick = () => {
     this.setState(prevState => ({ 
-      programming_skills: [...prevState.programming_skills, { index: Math.random(), programming_lang_title: "", programming_lang_name: "", programming_lang_progress:"" }]
+      programming_skills: [...prevState.programming_skills, { index: Math.random(), programming_lang_title: "", programming_lang_progress:"" }]
     }))
   }
   
@@ -175,20 +162,7 @@ class UpdateSkills extends Component {
                         </span>
                       )}
           </td>
-      <td>   
-         <Form.Control type="text"  className='d-inline-block' name="programming_lang_name" placeholder="Programming language Progress Name" value={el.programming_lang_name ||''}  onChange={this.handleChangedProg.bind(this, i)}/>
-         {error.programming_lang_name && (
-                        <span
-                          className={
-                            error.programming_lang_name
-                              ? "invalid-feedback d-block"
-                              : "invalid-feedback"
-                          }
-                        >
-                          {error.programming_lang_name}
-                        </span>
-                      )}
-     </td>
+
       <td>
       <Form.Control type="text"  className='d-inline-block' name="programming_lang_progress" placeholder="Programming language Progress " value={el.programming_lang_progress ||''}  onChange={this.handleChangedProg.bind(this, i)}/>
       {error.programming_lang_progress && (
@@ -218,7 +192,7 @@ class UpdateSkills extends Component {
   
   addLangClick = () => {
     this.setState(prevState => ({ 
-      language_skills: [...prevState.language_skills, { index: Math.random(), lang_title: "", lang_name: "", lang_progress:"" }]
+      language_skills: [...prevState.language_skills, { index: Math.random(), lang_title: "", lang_progress:"" }]
     }))
   }
   
@@ -255,20 +229,7 @@ class UpdateSkills extends Component {
                         </span>
                       )}
           </td>
-      <td>   
-         <Form.Control type="text"  className='d-inline-block' name="lang_name" placeholder="Language Progress Name" value={el.lang_name ||''}  onChange={this.handleChangedLang.bind(this, i)}/>
-         {error.lang_name && (
-                        <span
-                          className={
-                            error.lang_name
-                              ? "invalid-feedback d-block"
-                              : "invalid-feedback"
-                          }
-                        >
-                          {error.lang_name}
-                        </span>
-                      )}
-     </td>
+      
       <td>
       <Form.Control type="text"  className='d-inline-block' name="lang_progress" placeholder="language Progress " value={el.lang_progress ||''}  onChange={this.handleChangedLang.bind(this, i)}/>
       {error.lang_progress && (

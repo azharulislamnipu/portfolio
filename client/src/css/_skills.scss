@@ -35,8 +35,7 @@
             .progress-bar {
                 background-color: #1f2235;
             }
-            
-            .fourtypercent {
+            .percent-40{
                 position: relative;
                 .progress-title {
                     left: 0;
@@ -63,8 +62,37 @@
                     }
                 }
             }
+
+            .percent-45{
+                position: relative;
+                .progress-title {
+                    left: 0;
+                    animation: textanimation 2s ease-in-out forwards;
+                }
+                .progress-bar {
+                    width: 0;
+                    animation: fourtyfivepercent 2s ease-in-out forwards;
+                }
+                @keyframes fourtyfivepercent {
+                    from {
+                        width: 0;
+                    }
+                    to {
+                        width: 45%;
+                    }
+                }
+                @keyframes textanimation {
+                    from {
+                        left: 0;
+                    }
+                    to {
+                        left: 45%;
+                    }
+                }
+            }
+         
             
-            .fiftypercent {
+            .percent-50 {
                 position: relative;
                 .progress-bar {
                     width: 0;
@@ -91,8 +119,35 @@
                     }
                 }
             }
-            
-            .sixtypercent {
+            .percent-55 {
+                position: relative;
+                .progress-bar {
+                    width: 0;
+                    animation: fiftyfivepercent 2.5s ease-in-out forwards;
+                }
+                .progress-title {
+                    left: 0;
+                    animation: fiftyfivetextanimation 2.5s ease-in-out forwards;
+                }
+                @keyframes fiftyfivetextanimation {
+                    from {
+                        left: 0;
+                    }
+                    to {
+                        left: 55%;
+                    }
+                }
+                @keyframes fiftyfivepercent {
+                    from {
+                        width: 0;
+                    }
+                    to {
+                        width: 55%;
+                    }
+                }
+            }
+
+            .percent-60 {
                 position: relative;
                 .progress-bar {
                     width: 0;
@@ -120,7 +175,7 @@
                 }
             }
             
-            .sixtyfivepercent {
+            .percent-65 {
                 position: relative;
                 .progress-bar {
                     width: 0;
@@ -148,7 +203,7 @@
                 }
             }
             
-            .seventyepercent {
+            .percent-70 {
                 position: relative;
                 .progress-bar {
                     width: 0;
@@ -176,7 +231,7 @@
                 }
             }
             
-            .seventyfivepercent {
+            .percent-75 {
                 position: relative;
                 .progress-bar {
                     width: 0;
@@ -204,7 +259,7 @@
                 }
             }
             
-            .eightypercent {
+            .percent-80 {
                 position: relative;
                 .progress-bar {
                     width: 0;
@@ -232,7 +287,7 @@
                 }
             }
             
-            .eightyfivepercent {
+            .percent-85 {
                 position: relative;
                 .progress-bar {
                     width: 0;
@@ -260,7 +315,7 @@
                 }
             }
             
-            .ninetypercent {
+            .percent-90 {
                 position: relative;
                 .progress-bar {
                     width: 0;
@@ -288,7 +343,7 @@
                 }
             }
             
-            .ninetyfivepercent {
+            .percent-95 {
                 position: relative;
                 .progress-bar {
                     width: 0;
@@ -316,7 +371,7 @@
                 }
             }
             
-            .hundreadpercent {
+            .percent-100 {
                 position: relative;
                 .progress-bar {
                     width: 0;
