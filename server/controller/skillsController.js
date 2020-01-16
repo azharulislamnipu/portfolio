@@ -12,9 +12,9 @@ module.exports = {
     let validate, progValidate, langValidate;
 
     for (var i = 0; i < professional_skills.length; i++) {
-      let {index, progress_title, progress_name, progress } = professional_skills[i];
+      let {index, prof_progress_title, prof_progress_name, prof_progress } = professional_skills[i];
       validate = skillsValidator({
-        progress_title, progress_name, progress
+        prof_progress_title, prof_progress_name, prof_progress
       });
   }
 
@@ -44,7 +44,6 @@ for (var i = 0; i < language_skills.length; i++) {
         professional_skills,
         programming_skills,
         language_skills,
-        learning_skills,
         status,
         user_id
       });
@@ -85,9 +84,9 @@ for (var i = 0; i < language_skills.length; i++) {
     let validate, progValidate, langValidate;
 
     for (var i = 0; i < professional_skills.length; i++) {
-      let {index, progress_title, progress_name, progress } = professional_skills[i];
+      let {index, prof_progress_title, prof_progress_name, prof_progress } = professional_skills[i];
       validate = skillsValidator({
-        progress_title, progress_name, progress
+        prof_progress_title, prof_progress_name, prof_progress
       });
   }
 

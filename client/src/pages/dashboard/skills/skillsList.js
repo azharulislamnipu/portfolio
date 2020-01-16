@@ -113,7 +113,7 @@ import { Link } from 'react-router-dom';
                                                 skill.professional_skills.length > 0 ?
                                                 skill.professional_skills.map(professional_skill=> (
 
-                                                <span>{`${professional_skill.progress_title}-${professional_skill.progress}`} ,  </span>
+                                                <span>{`${professional_skill.prof_progress_title}-${professional_skill.prof_progress}`} ,  </span>
                                                 )) : <span>No extra skill </span>
                                                 }
                                             

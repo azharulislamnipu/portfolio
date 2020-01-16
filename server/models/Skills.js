@@ -9,7 +9,6 @@ const Skillschema = new Schema({
     professional_skills:[],
     programming_skills:[],
     language_skills:[],
-    learning_skills:[],
     status: {
         type: String,
         trim:true
