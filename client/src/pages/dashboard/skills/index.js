@@ -4,10 +4,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { createSkills } from "../../../store/actions/skillsActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
-import ProfessionalSkills from './professionalSkills';
-import ProgrammingSkills from './programmingSkills';
-import LanguageSkills from './languageSkills';
-
 
 class Skills extends Component {
   constructor(props) {
@@ -101,7 +97,7 @@ createProfessionalUI = (error) => {
 
               {
              i ===0?<button onClick={this.addProfeClick.bind(this)} type="button" className="btn btn-primary w-100 text-center"><i className="fa fa-plus-circle" aria-hidden="true"></i></button>
-            : <button className="btn btn-danger w-100" onClick={this.removeClickProfe.bind(this, i)} ><i className="fa fa-close" aria-hidden="true"></i></button>
+            : <button type="button" className="btn btn-danger w-100" onClick={this.removeClickProfe.bind(this, i)} ><i className="fa fa-close" aria-hidden="true"></i></button>
             }
 
      </td>
@@ -182,7 +178,7 @@ createProgrammingUI = (error) => {
 
               {
              i ===0?<button onClick={this.addProgClick.bind(this)} type="button" className="btn btn-primary w-100 text-center"><i className="fa fa-plus-circle" aria-hidden="true"></i></button>
-            : <button className="btn btn-danger w-100" onClick={this.removeClickProg.bind(this, i)} ><i className="fa fa-close" aria-hidden="true"></i></button>
+            : <button type="button" className="btn btn-danger w-100" onClick={this.removeClickProg.bind(this, i)} ><i className="fa fa-close" aria-hidden="true"></i></button>
             }
 
      </td>
@@ -262,7 +258,7 @@ createLanguageUI = (error) => {
 
               {
              i ===0?<button onClick={this.addLangClick.bind(this)} type="button" className="btn btn-primary w-100 text-center"><i className="fa fa-plus-circle" aria-hidden="true"></i></button>
-            : <button className="btn btn-danger w-100" onClick={this.removeClickLang.bind(this, i)} ><i className="fa fa-close" aria-hidden="true"></i></button>
+            : <button type="button" className="btn btn-danger w-100" onClick={this.removeClickLang.bind(this, i)} ><i className="fa fa-close" aria-hidden="true"></i></button>
             }
 
      </td>
@@ -370,7 +366,7 @@ removeExtraskills = (sidx) => {
                          <td>
                          {
                             index ===0?<button onClick={(e) => { e.preventDefault(); this.addExtraskills(e) }} type="button" className="btn btn-primary ml-2"><i className="fa fa-plus" aria-hidden="true"></i></button>
-            : <button className="btn btn-danger ml-2" onClick={() => this.removeExtraskills(index)} ><i className="fa fa-close" aria-hidden="true"></i></button>
+            : <button type="button" className="btn btn-danger ml-2" onClick={() => this.removeExtraskills(index)} ><i className="fa fa-close" aria-hidden="true"></i></button>
             }
                          </td>
                        </tr>

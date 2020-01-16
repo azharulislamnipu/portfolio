@@ -7,6 +7,8 @@ import Title from '../../../../src/ui/title';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { loadSkills } from '../../../store/actions/skillsActions';
 import ProfessionaSkillItem from './professionalSkillsItem';
+import ProgrammingSkillItem from './programmingSkillItem';
+import LanguageSkillItem from './languageSkillItem';
 class Skills extends Component {
 
   componentDidMount(){
@@ -18,10 +20,10 @@ class Skills extends Component {
 
     const extraSkillsItem = skills.length > 0 ? skills.map((skill,key)=>{
       if(skill.status === 'publish'){
-        return (
-     
-        <li Key={key}>{skill.extra_skills}</li>
-        )
+        return  skill.extra_skills.map((extra_skill, i) => (
+            <li Key={i}>{extra_skill}</li>
+         ))
+      
       }
     }) : <span>No Extra Skills Available</span> ;
 
@@ -30,14 +32,27 @@ class Skills extends Component {
     const professionaSkillItem = skills.length > 0 ? skills.map((skill,key)=>{
       if(skill.status === 'publish'){
         return (
-
-
      <ProfessionaSkillItem professional_skills ={skill.professional_skills}/>
-
-
         )
       }
-    }) : <span>No Extra Skills Available</span> ;
+    }) : <span>No Professional Skills Available</span> ;
+
+
+    const programmingSkillItem = skills.length > 0 ? skills.map((skill,key)=>{
+      if(skill.status === 'publish'){
+        return (
+     <ProgrammingSkillItem programming_skills ={skill.programming_skills}/>
+        )
+      }
+    }) : <span>No Programing Skills Available</span> ;
+
+    const languageSkillItem = skills.length > 0 ? skills.map((skill,key)=>{
+      if(skill.status === 'publish'){
+        return (
+     <LanguageSkillItem language_skills ={skill.language_skills}/>
+        )
+      }
+    }) : <span>No Language Skills Available</span> ;
 
 
     return (
@@ -55,95 +70,20 @@ class Skills extends Component {
 
               {professionaSkillItem}
 
-              <div className="single-skille">
-                <h4>PHOTOSHOP</h4>
-
-                <div className="progress-wrrap  fourtypercent">
-                  <div className="progress-title">40%</div>
-                  <ProgressBar now={40} />
-                </div>
-              </div>
-              <div className="single-skille">
-                <h4>HTML</h4>
-
-                <div className="progress-wrrap  fiftypercent">
-                  <div className="progress-title">50%</div>
-                  <ProgressBar now={50} />
-                </div>
-              </div>
-
-              <div className="single-skille">
-
-                <h4>JAVASCRIPT</h4>
-
-                <div className="progress-wrrap  ninetypercent">
-                  <div className="progress-title">90%</div>
-                  <ProgressBar now={90} />
-                </div>
-              </div>
-
-              <div className="single-skille ">
-
-                <h4>React JS</h4>
-
-                <div className="progress-wrrap  ninetyfivepercent">
-                  <div className="progress-title">95%</div>
-                  <ProgressBar now={95} />
-                </div>
-              </div>
-              <div className="single-skille ">
-
-               <h4>Node JS</h4>
-
-            <div className="progress-wrrap  hundreadpercent">
-              <div className="progress-title">100%</div>
-              <ProgressBar now={100} />
-            </div>
-            </div>
             </Col>
           </Row>
           <Row className='skrill_row2'>
             <Col lg={6} md={6} sm={12}>
 
               <h4 className="heding">Programming Language Skills</h4>
+              {programmingSkillItem}
 
-              <div className="single-skille">
-                <h4>PHOTOSHOP</h4>
-
-                <div className="progress-wrrap  fourtypercent">
-                  <div className="progress-title">40%</div>
-                  <ProgressBar now={40} />
-                </div>
-              </div>
-              <div className="single-skille">
-                <h4>HTML</h4>
-
-                <div className="progress-wrrap  fiftypercent">
-                  <div className="progress-title">50%</div>
-                  <ProgressBar now={50} />
-                </div>
-              </div>
             </Col>
             <Col lg={6} md={6} sm={12}>
 
               <h4 className="heding">language Skills</h4>
 
-              <div className="single-skille">
-                <h4>PHOTOSHOP</h4>
-
-                <div className="progress-wrrap  fourtypercent">
-                  <div className="progress-title">40%</div>
-                  <ProgressBar now={40} />
-                </div>
-              </div>
-              <div className="single-skille">
-                <h4>HTML</h4>
-
-                <div className="progress-wrrap  fiftypercent">
-                  <div className="progress-title">50%</div>
-                  <ProgressBar now={50} />
-                </div>
-              </div>
+              {languageSkillItem}
             </Col>
           </Row>
         </Container>

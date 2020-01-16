@@ -126,7 +126,7 @@ class UpdateSkills extends Component {
   
                 {
                i ===0?<button onClick={this.addProfeClick.bind(this)} type="button" className="btn btn-primary w-100 text-center"><i className="fa fa-plus-circle" aria-hidden="true"></i></button>
-              : <button className="btn btn-danger w-100" onClick={this.removeClickProfe.bind(this, i)} ><i className="fa fa-close" aria-hidden="true"></i></button>
+              : <button type="button" className="btn btn-danger w-100" onClick={this.removeClickProfe.bind(this, i)} ><i className="fa fa-close" aria-hidden="true"></i></button>
               }
   
        </td>
@@ -207,7 +207,7 @@ class UpdateSkills extends Component {
   
                 {
                i ===0?<button onClick={this.addProgClick.bind(this)} type="button" className="btn btn-primary w-100 text-center"><i className="fa fa-plus-circle" aria-hidden="true"></i></button>
-              : <button className="btn btn-danger w-100" onClick={this.removeClickProg.bind(this, i)} ><i className="fa fa-close" aria-hidden="true"></i></button>
+              : <button type="button" className="btn btn-danger w-100" onClick={this.removeClickProg.bind(this, i)} ><i className="fa fa-close" aria-hidden="true"></i></button>
               }
   
        </td>
@@ -287,7 +287,7 @@ class UpdateSkills extends Component {
   
                 {
                i ===0?<button onClick={this.addLangClick.bind(this)} type="button" className="btn btn-primary w-100 text-center"><i className="fa fa-plus-circle" aria-hidden="true"></i></button>
-              : <button className="btn btn-danger w-100" onClick={this.removeClickLang.bind(this, i)} ><i className="fa fa-close" aria-hidden="true"></i></button>
+              : <button type="button" className="btn btn-danger w-100" onClick={this.removeClickLang.bind(this, i)} ><i className="fa fa-close" aria-hidden="true"></i></button>
               }
   
        </td>
