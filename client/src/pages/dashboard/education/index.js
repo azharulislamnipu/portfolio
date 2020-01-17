@@ -5,17 +5,15 @@ import Col from 'react-bootstrap/Col';
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import { creatExperience } from "../../../store/actions/experienceActions";
+import { createEducation } from "../../../store/actions/educationActions";
 import { addFlashMessage } from "../../../store/actions/flashMessages";
-
-
-class Experience extends Component {
+class Education extends Component {
   constructor(props) {
     super();
     this.state = {
-      company_name: "",
-      icon: "",
-      designation: "",
+      organization_name:"",
+      program_title:"",
+      description:"",
       start_date:new Date(),
       end_date: new Date(),
       status: "publish",
@@ -44,11 +42,11 @@ class Experience extends Component {
   };
   static getDerivedStateFromProps(nextProps, prevState) {
     if (
-      JSON.stringify(nextProps.experiences.error) !==
+      JSON.stringify(nextProps.educations.error) !==
       JSON.stringify(prevState.error)
     ) {
       return {
-        error: nextProps.experiences.error
+        error: nextProps.educations.error
       };
     }
     return null;
@@ -63,19 +61,20 @@ class Experience extends Component {
     event.preventDefault();
 
     let {
-      company_name,
-      icon,
-      designation,
+      organization_name,
+      program_title,
+      description,
       start_date,
       end_date,
       status
     } = this.state;
 
-  
-    this.props.creatExperience(
-      { company_name,
-        icon,
-        designation,
+
+    this.props.createEducation(
+      {  
+        organization_name,
+        program_title,
+        description,
         start_date,
         end_date,
         status },
@@ -86,9 +85,9 @@ class Experience extends Component {
 
   render() {
     let {
-      company_name,
-      icon,
-      designation,
+      organization_name,
+      program_title,
+      description,
       start_date,
       end_date,
       status,
@@ -104,10 +103,10 @@ class Experience extends Component {
                   <h4 class="page-title mb-0">Dashboard</h4>
                   <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item">
-                      <Link to={"/experiences"}>Experiences</Link>
+                      <Link to={"/educations"}>Educations</Link>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Experiences Create
+                      Education Create
                     </li>
                   </ol>
                 </div>
@@ -121,82 +120,83 @@ class Experience extends Component {
             <div className="card">
               <div className="card-body">
                 <h2 className="text-uppercase text-center">
-                  Experiences Create
+                  Education Create
                 </h2>
 
                 <Form onSubmit={this.submitHandler}>
                   
-                  <Form.Group controlId="company_name">
-                    <Form.Label>Company Name</Form.Label>
+                  <Form.Group controlId="organization_name">
+                    <Form.Label>Organization Name</Form.Label>
                     <Form.Control
                       type="text"
-                      name="company_name"
-                      autoComplete="new-company_name"
-                      placeholder="Enter Your Compnay Name"
-                      value={company_name}
+                      name="organization_name"
+                      autoComplete="new-organization_name"
+                      placeholder="Enter Your Organization Name"
+                      value={organization_name}
                       onChange={this.changeHandler}
                     />
 
-                    {error.company_name && (
+                    {error.organization_name && (
                       <span
                         className={
-                          error.company_name
+                          error.organization_name
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.company_name}
+                        {error.organization_name}
                       </span>
                     )}
                   </Form.Group>
 
-                  <Form.Group controlId="icon">
-                    <Form.Label>Company Icon</Form.Label>
+                  <Form.Group controlId="program_title">
+                    <Form.Label>Program  Title</Form.Label>
                     <Form.Control
                       type="text"
-                      name="icon"
-                      autoComplete="new-icon"
-                      placeholder="Enter Your Compnay Icon"
-                      value={icon}
+                      name="program_title"
+                      autoComplete="new-program_title"
+                      placeholder="Enter Your Program Title"
+                      value={program_title}
                       onChange={this.changeHandler}
                     />
 
-                    {error.icon && (
+                    {error.program_title && (
                       <span
                         className={
-                          error.icon
+                          error.program_title
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.icon}
+                        {error.program_title}
                       </span>
                     )}
                   </Form.Group>
 
-                  <Form.Group controlId="designation">
-                    <Form.Label>Designation</Form.Label>
+                  <Form.Group controlId="description">
+                    <Form.Label>Description</Form.Label>
                     <Form.Control
                       type="text"
-                      name="designation"
-                      autoComplete="new-designation"
-                      placeholder="Enter Your Designation"
-                      value={designation}
+                      name="description"
+                      autoComplete="new-description"
+                      placeholder="Enter Your Description"
+                      value={description}
                       onChange={this.changeHandler}
                     />
 
-                    {error.designation && (
+                    {error.description && (
                       <span
                         className={
-                          error.designation
+                          error.description
                             ? "invalid-feedback d-block"
                             : "invalid-feedback"
                         }
                       >
-                        {error.designation}
+                        {error.description}
                       </span>
                     )}
                   </Form.Group>
+                  
                   <Row>
                   <Col lg={6} md={6} sm={12}>
                   <Form.Group controlId="start_date">
@@ -248,14 +248,14 @@ class Experience extends Component {
 
                   <Form.Group className="row">
                     <div className="col-sm-12 text-right">
-                      <Link className="btn btn-primary mr-2" to="/experiences">
+                      <Link className="btn btn-primary mr-2" to="/educations">
                         View List
                       </Link>
                       <button
                         className="btn submit-btn btn-primary"
                         type="submit"
                       >
-                        Create Experience
+                        Create Education
                       </button>
                     </div>
                   </Form.Group>
@@ -270,9 +270,9 @@ class Experience extends Component {
 }
 
 const mapStateToProps = state => ({
-  experiences: state.experience
+  educations: state.education
 });
 
-export default connect(mapStateToProps, { creatExperience, addFlashMessage })(
-  Experience
+export default connect(mapStateToProps, { createEducation, addFlashMessage })(
+  Education
 );

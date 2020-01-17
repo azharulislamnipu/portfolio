@@ -24,6 +24,9 @@ import Socials from './pages/dashboard/social/socials';
 import About from './pages/dashboard/about';
 import Abouts from './pages/dashboard/about/abouts';
 
+import Education from './pages/dashboard/education';
+import Educations from './pages/dashboard/education/educations';
+
 
 import Contact from './pages/dashboard/contact';
 import Info from './pages/dashboard/info';
@@ -64,6 +67,9 @@ class App extends Component {
                     <Route path='/fileupload' component={FileUpload}/>
 
                     <PrivateRoute path="/banner" component={Banner} auth={this.props.auth}/>
+
+                    <PrivateRoute path="/education" component={Education} auth={this.props.auth}/>
+                    <PrivateRoute path="/educations" component={Educations} auth={this.props.auth}/>
 
 
                     <PrivateRoute path="/experience" component={Experience} auth={this.props.auth}/>

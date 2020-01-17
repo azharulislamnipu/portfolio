@@ -6,6 +6,7 @@ import Title from '../../../../src/ui/title';
 import Slider from "react-slick";
 import {connect} from 'react-redux';
 import {  loadExperience } from '../../../store/actions/experienceActions';
+import {  loadEducation } from '../../../store/actions/educationActions';
 function SampleNextArrow(props) {
     const { className, onClick } = props;
     return (
@@ -35,6 +36,7 @@ class Experience extends Component {
 
     componentDidMount(){
         this.props.loadExperience()
+        this.props.loadEducation()
       }
     render() {
         const settings = {
@@ -80,6 +82,7 @@ class Experience extends Component {
         };
 
         let { experiences } = this.props.experiences;
+        let { educations } = this.props.educations;
 
         const experienceItem = experiences.length> 0 ? experiences.map((experience,key)=>{
             let start_date = new Date(experience.start_date);
@@ -99,7 +102,35 @@ class Experience extends Component {
             </div>
             )
           }
-        }) : <span>No Counter Data Available</span> ;
+        }) : <span>No Experience Data Available</span> ;
+
+
+        const educationItem = educations.length> 0 ? educations.map((education,key)=>{
+            let start_date = new Date(education.start_date);
+            start_date = new Intl.DateTimeFormat('en-US', { year: 'numeric' }).format(start_date);
+
+            let end_date = new Date(education.end_date);
+            end_date = new Intl.DateTimeFormat('en-US', { year: 'numeric' }).format(end_date);
+              
+          if(education.status === 'publish'){
+            return (
+               
+                          
+                                    <div className="qualifi-item"><div className="qualifi-box">
+                                        <div className="qualifi-info">
+                                            <div className="session">
+                                                ({start_date}-{end_date})</div>
+                                            <div className="collage">{education.organization_name}</div>
+                                        </div>
+                                        <div className="qualifi-content">
+                                            <h4 className="title">{education.program_title}</h4>
+                                            <div className="desc">{education.description}</div>
+                                        </div>
+                                    </div>
+                                    </div>
+            )
+          }
+        }) : <span>No Education Data Available</span> ;
 
         return (
             <section className='experience-area'>
@@ -116,132 +147,8 @@ class Experience extends Component {
                         <Col lg={6} md={6} sm={12}>
 
                             <Slider {...settings} className='qualifi-box-area'>
-                             
-                                    <div className="qualifi-item"><div className="qualifi-box">
-                                        <div className="qualifi-info">
-                                            <div className="session">
-                                                (2010-2014)</div>
-                                            <div className="collage">BM College</div>
-                                        </div>
-                                        <div className="qualifi-content">
-                                            <h4 className="title">Diploma In Computer</h4>
-                                            <div className="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                             sed do eiusmod tempor incididunt ut labore.
-                                             </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                              
-                                    <div className="qualifi-item"><div className="qualifi-box">
-                                        <div className="qualifi-info">
-                                            <div className="session">
-                                                (2010-2014)</div>
-                                            <div className="collage">BM College</div>
-                                        </div>
-                                        <div className="qualifi-content">
-                                            <h4 className="title">Diploma In Computer</h4>
-                                            <div className="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                             sed do eiusmod tempor incididunt ut labore.
-                                             </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                              
-                               
-                                    <div className="qualifi-item"><div className="qualifi-box">
-                                        <div className="qualifi-info">
-                                            <div className="session">
-                                                (2010-2014)</div>
-                                            <div className="collage">BM College</div>
-                                        </div>
-                                        <div className="qualifi-content">
-                                            <h4 className="title">Diploma In Computer</h4>
-                                            <div className="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                             sed do eiusmod tempor incididunt ut labore.
-                                             </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                              
-                               
-                                    <div className="qualifi-item"><div className="qualifi-box">
-                                        <div className="qualifi-info">
-                                            <div className="session">
-                                                (2010-2014)</div>
-                                            <div className="collage">BM College</div>
-                                        </div>
-                                        <div className="qualifi-content">
-                                            <h4 className="title">Diploma In Computer</h4>
-                                            <div className="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                             sed do eiusmod tempor incididunt ut labore.
-                                             </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                              
-                               
-                                    <div className="qualifi-item"><div className="qualifi-box">
-                                        <div className="qualifi-info">
-                                            <div className="session">
-                                                (2010-2014)</div>
-                                            <div className="collage">BM College</div>
-                                        </div>
-                                        <div className="qualifi-content">
-                                            <h4 className="title">Diploma In Computer</h4>
-                                            <div className="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                             sed do eiusmod tempor incididunt ut labore.
-                                             </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                              
-                               
-                                    <div className="qualifi-item"><div className="qualifi-box">
-                                        <div className="qualifi-info">
-                                            <div className="session">
-                                                (2010-2014)</div>
-                                            <div className="collage">BM College</div>
-                                        </div>
-                                        <div className="qualifi-content">
-                                            <h4 className="title">Diploma In Computer</h4>
-                                            <div className="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                             sed do eiusmod tempor incididunt ut labore.
-                                             </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                              
-                               
-                                    <div className="qualifi-item"><div className="qualifi-box">
-                                        <div className="qualifi-info">
-                                            <div className="session">
-                                                (2010-2014)</div>
-                                            <div className="collage">BM College</div>
-                                        </div>
-                                        <div className="qualifi-content">
-                                            <h4 className="title">Diploma In Computer</h4>
-                                            <div className="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                             sed do eiusmod tempor incididunt ut labore.
-                                             </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                              
-                               
-                                    <div className="qualifi-item"><div className="qualifi-box">
-                                        <div className="qualifi-info">
-                                            <div className="session">
-                                                (2010-2014)</div>
-                                            <div className="collage">BM College</div>
-                                        </div>
-                                        <div className="qualifi-content">
-                                            <h4 className="title">Diploma In Computer</h4>
-                                            <div className="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                             sed do eiusmod tempor incididunt ut labore.
-                                             </div>
-                                        </div>
-                                    </div>
-                                    </div>
+
+                                {educationItem}
                             </Slider>
 
                         </Col>
@@ -255,6 +162,7 @@ class Experience extends Component {
 }
 
 const mapStateToProps = state => ({
-    experiences: state.experience
+    experiences: state.experience,
+    educations: state.education
   })
-export default connect(mapStateToProps, { loadExperience })(Experience)
+export default connect(mapStateToProps, { loadExperience , loadEducation })(Experience)

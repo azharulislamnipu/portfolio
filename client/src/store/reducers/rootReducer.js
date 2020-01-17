@@ -9,6 +9,7 @@ import portfolioReducer from './portfolioReducer';
 import skillsReducer from './skillsReducer';
 import serviceReducer from './serviceReducer';
 import experienceReducer from './experienceReducer';
+import educationReducer from './educationReducer';
 import infoReducer from './infoReducer';
 import flashMessages from './flashMessages';
 const rootReducer = combineReducers({
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   portfolio:portfolioReducer,
   service:serviceReducer,
   skill:skillsReducer,
-  experience:experienceReducer
+  experience:experienceReducer,
+  education:educationReducer,
 })
 
 export default rootReducer;

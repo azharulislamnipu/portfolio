@@ -49,6 +49,9 @@ class LeftSideBar extends Component {
                             <li className="menu-title">
                             <Link to='/experience' className="waves-effect"><i class="fa fa-plug" aria-hidden="true"></i><span> Experience </span></Link> 
                             </li>
+                            <li className="menu-title">
+                            <Link to='/education' className="waves-effect"><i class="fa fa-graduation-cap" aria-hidden="true"></i><span> Education </span></Link> 
+                            </li>
                         </ul>
 
         :
