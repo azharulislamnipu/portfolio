@@ -52,7 +52,7 @@ import Notfound from './pages/404';
 import Banners from './pages/dashboard/banner/banners';
 class App extends Component {
     render() {
-     
+        // console.log(this.props.auth);
         return (
             <Fragment>
                 <FlashMessagesList/>
@@ -86,7 +86,7 @@ class App extends Component {
                     <PrivateRoute path="/portfolios" component={Portfolios} auth={this.props.auth}/>
 
 
-                    <PrivateRoute path="/about" component={About} auth={this.props.auth}/>
+                    <PrivateRoute path="/about" component={About} auth={this.props.auth} />
                     <PrivateRoute path="/abouts" component={Abouts} auth={this.props.auth}/>
 
                     <PrivateRoute path="/social" component={Social} auth={this.props.auth}/>

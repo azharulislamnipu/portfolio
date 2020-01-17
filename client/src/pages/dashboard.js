@@ -5,7 +5,7 @@ class DashBoard extends Component {
   render() {
 
     let {auth} = this.props;
-    // console.log(this.props);
+
     return (
             <div class="container-fluid"> 
               

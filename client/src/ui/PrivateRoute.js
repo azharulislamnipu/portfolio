@@ -4,16 +4,18 @@ import {
     Route
   } from "react-router-dom";
 import DashboardLayout from '../layouts/DashboardLayout';
- 
-const PrivateRoute = ({ component: Component, auth, ...rest }) => ( 
+
+const PrivateRoute = ({ component: Component, auth , ...rest }) => ( 
    
   <Route {...rest} render={props => (
-    auth.isAuthenticated ? (
+
+    auth.isAuthenticated  ? (
       <DashboardLayout>
-         <Component {...props} />
+         <Component {...props}/>
       </DashboardLayout>
     ) : ( 
       <Redirect to={{pathname: '/login', state: { from: props.location }}}/>)
+      
       )} />
 );
 

@@ -37,8 +37,6 @@ class Experience extends Component {
         this.props.loadExperience()
       }
     render() {
-
-    console.log(this.props)
         const settings = {
             dots: false,
             infinite: true,

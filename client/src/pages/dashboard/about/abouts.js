@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import { Link } from "react-router-dom";
 import UpdateAbout from "./updateAbout";
 import ViewDetails from "./viewDetails";
-
  class Abouts extends Component {
 
     state = {
@@ -54,7 +53,7 @@ import ViewDetails from "./viewDetails";
     render() {
         let { abouts } = this.props.abouts;
 
-        return (
+        return   this.props.auth.isAdmin ?(
             <div class="container-fluid"> 
               
                 <div class="row">
@@ -154,12 +153,26 @@ import ViewDetails from "./viewDetails";
              
 
            </div>
-    )
+    ): (
+        <div class="container-fluid">
+          <div class="row align-items-center">
+            <div class="col-sm-12 text-center">
+              <div class="card pt-5 pb-5">
+                <div class="card-body">
+                  <h1>Opps.....! Sorry 😞</h1>
+                  <h3>Its Only admin can Access </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
     }
 }
 
 const mapStateToProps = state => ({
     abouts: state.about,
+    auth: state.auth
 })
 
 export default connect(mapStateToProps, { loadAbouts, removeAbout })(Abouts)

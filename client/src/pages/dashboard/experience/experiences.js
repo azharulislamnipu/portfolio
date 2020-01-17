@@ -46,7 +46,7 @@ import UpdateExperience from './updateExperience';
                                 <div class="col-md-8">
                                     <h4 class="page-title mb-0">Dashboard</h4>
                                     <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><Link to={'/info'}>Info</Link> </li>
+                                        <li class="breadcrumb-item"><Link to={'/experience'}>Experience</Link> </li>
                                         <li class="breadcrumb-item active" aria-current="page">List</li>
                                     </ol>
                                 </div>
@@ -63,7 +63,7 @@ import UpdateExperience from './updateExperience';
                  <div className="col-12">
                  <div class="card">
                         <div class="card-body">
-                            <h4 class="mt-0 header-title">Latest Info</h4>
+                            <h4 class="mt-0 header-title">Latest Experience</h4>
                             <div class="table-responsive mt-4">
                                 <table class="table table-hover mb-0">
                                     <thead>
@@ -130,7 +130,7 @@ import UpdateExperience from './updateExperience';
                                           
                                         })
                                     }
-                                 </tbody> : <p>There is no Info</p>}
+                                 </tbody> : <p>There is no Experience</p>}
                                 </table>
                             </div>
                         </div>

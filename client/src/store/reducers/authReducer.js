@@ -2,6 +2,7 @@ import * as Types from '../actions/types';
 
 const init ={
     isAuthenticated: false,
+    isAdmin: false,
     user:{},
     error:{}
 }
@@ -12,6 +13,7 @@ const authReducer = (state=init, action) => {
             return{
                 user: action.payload.user,
                 isAuthenticated: Object.keys(action.payload.user).length !== 0,
+                isAdmin: action.payload.user.role === 'admin',
                 error:{}
                 
             }

@@ -1,24 +1,15 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
-
-export default class LeftSideBar extends Component {
+import {connect} from 'react-redux';
+class LeftSideBar extends Component {
     render() {
-        return (
-                  
-            <div className={this.props.sibarSate? "slide-menu left side-menu" : "left side-menu"}>
-                <div className="slimscroll-menu" id="remove-scroll">
+        let {auth} = this.props;
 
-                  
-                    <div id="sidebar-menu">
-                    
-                        <ul className="metismenu" id="side-menu">
+        const Menu = auth.user.role ==='admin' ? 
+                       <ul className="metismenu" id="side-menu">
                             <li className="menu-title text-center">Main</li>
-                            <li>
-                            <Link to='dashboard' className="waves-effect"> <i className="fa fa-pie-chart fa-2x" aria-hidden="true"></i>
-                                  <span> Dashboard </span> </Link>     
-                            </li>
-                    
-                            <li class="menu-title">
+                            <li></li>
+                           <li class="menu-title">
                                <Link to='/banner' className="waves-effect"><i className="fa fa-archive fa-2x"></i> <span> Banner </span></Link>   
                             </li>
 
@@ -58,14 +49,31 @@ export default class LeftSideBar extends Component {
                             <li className="menu-title">
                             <Link to='/experience' className="waves-effect"><i class="fa fa-plug" aria-hidden="true"></i><span> Experience </span></Link> 
                             </li>
-
-
-
-                            <li className="menu-title">
-                            <a href="javascript:void(0);" className="waves-effect"><i className="fa fa-archive fa-2x"></i> <span> Banner </span> </a>
-                            </li>
-
                         </ul>
+
+        :
+         <ul className="metismenu" id="side-menu">
+        <li className="menu-title text-center">Main</li>
+        <li>
+        <Link to='dashboard' className="waves-effect"> <i className="fa fa-pie-chart fa-2x" aria-hidden="true"></i>
+              <span> Dashboard </span> </Link>     
+        </li>
+
+        <li class="menu-title">
+           <Link to='/account' className="waves-effect"><i className="fa fa-user fa-2x"></i> <span> Profile </span></Link>   
+        </li>
+        </ul>;
+      
+
+        return (
+                  
+            <div className={this.props.sibarSate? "slide-menu left side-menu" : "left side-menu"}>
+                <div className="slimscroll-menu" id="remove-scroll">
+
+                  
+                    <div id="sidebar-menu">
+                    
+                        {Menu}
 
                     </div>
                  
@@ -79,3 +87,8 @@ export default class LeftSideBar extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    auth: state.auth
+ });
+export default connect(mapStateToProps)(LeftSideBar);
