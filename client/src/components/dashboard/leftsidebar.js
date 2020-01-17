@@ -7,8 +7,11 @@ class LeftSideBar extends Component {
 
         const Menu = auth.user.role ==='admin' ? 
                        <ul className="metismenu" id="side-menu">
-                            <li className="menu-title text-center">Main</li>
-                            <li></li>
+                       <li className="menu-title text-center">Main</li>
+                        <li>
+                        <Link to='dashboard' className="waves-effect"> <i className="fa fa-pie-chart fa-2x" aria-hidden="true"></i>
+                            <span> Dashboard </span> </Link>     
+                        </li>
                            <li class="menu-title">
                                <Link to='/banner' className="waves-effect"><i className="fa fa-archive fa-2x"></i> <span> Banner </span></Link>   
                             </li>

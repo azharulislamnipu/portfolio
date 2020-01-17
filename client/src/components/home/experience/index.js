@@ -42,7 +42,7 @@ class Experience extends Component {
         const settings = {
             dots: false,
             infinite: true,
-            slidesToShow: 4,
+            slidesToShow: 3,
             slidesToScroll: 1,
             initialSlide: 0,
             vertical: true,
@@ -149,6 +149,8 @@ class Experience extends Component {
                             <Slider {...settings} className='qualifi-box-area'>
 
                                 {educationItem}
+
+                            
                             </Slider>
 
                         </Col>
